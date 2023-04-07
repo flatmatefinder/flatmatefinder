@@ -19,6 +19,7 @@ import NotAuthorized from '../pages/NotAuthorized';
 import LoadingSpinner from '../components/LoadingSpinner';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
+// getting here lowkey kinda hard
 const App = () => {
   const { ready } = useTracker(() => {
     const rdy = Roles.subscription.ready();
