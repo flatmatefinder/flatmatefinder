@@ -2,7 +2,7 @@ import { Mongo } from 'meteor/mongo';
 import SimpleSchema from 'simpl-schema';
 
 /**
- * The DataCollection. It encapsulates state and variable values for stuff.
+ * The DataCollection. It encapsulates state and variable values for UserData.
  */
 class DataCollection {
   constructor() {
@@ -14,7 +14,7 @@ class DataCollection {
     this.schema = new SimpleSchema({
       data: String,
       contactId: String,
-      owner: String,
+      owner: String, // This is the link between the UserData, Account, and User collections.
       type: {
         type: String,
         allowedValues: ['need', 'dealbreaker', 'contact', 'habit'],
@@ -30,7 +30,7 @@ class DataCollection {
 }
 
 /**
- * The singleton instance of the NotesCollection.
+ * The singleton instance of the DataCollection.
  * @type {DataCollection}
  */
 export const UserData = new DataCollection();
