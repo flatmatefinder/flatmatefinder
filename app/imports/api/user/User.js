@@ -2,7 +2,7 @@ import { Mongo } from 'meteor/mongo';
 import SimpleSchema from 'simpl-schema';
 
 /**
- * The UsersCollection. It encapsulates state and variable values for stuff.
+ * The UsersCollection. It encapsulates state and variable values for users.
  */
 class UsersCollection {
   constructor() {
@@ -13,8 +13,8 @@ class UsersCollection {
     // Define the structure of each document in the collection.
     this.schema = new SimpleSchema({
       pfp: String, // Profile pic
-      name: Number,
-      owner: String, // This string will link their "User" Collection to their "Account" collection.
+      name: String, // Don't know why I had this as a number before... Maybe I was insane?
+      owner: String, // This is the link between the UserData, Account, and User collections.
       alcohol: Boolean, // whether they drink alcohol
       alcohol_preference: Boolean, // whether they care if anyone else drinks alcohol.
       sleep: {
@@ -29,12 +29,12 @@ class UsersCollection {
       },
       sex: {
         type: Number,
-        allowedValues: [0, 1, 2],
+        allowedValues: [0, 1, 2], // 0: Male, 1: Female, 3: Other
         defaultValue: 2,
       },
       sex_preference: {
         type: Number,
-        allowedValues: [0, 1, 2, 3],
+        allowedValues: [0, 1, 2, 3], // 0: Male, 1: Female, 2: Don't care, 3: Other
         defaultValue: 2,
       },
     });
@@ -47,7 +47,7 @@ class UsersCollection {
 }
 
 /**
- * The singleton instance of the StuffsCollection.
+ * The singleton instance of the UsersCollection.
  * @type {UsersCollection}
  */
 export const Users = new UsersCollection();
