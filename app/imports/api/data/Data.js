@@ -13,7 +13,7 @@ class DataCollection {
     // Define the structure of each document in the collection.
     this.schema = new SimpleSchema({
       data: String,
-      contactId: String,
+      // I don't know why I thought we needed this.
       owner: String, // This is the link between the UserData, Account, and User collections.
       type: {
         type: String,
