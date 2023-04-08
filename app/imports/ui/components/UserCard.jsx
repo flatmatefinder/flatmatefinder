@@ -30,7 +30,8 @@ const UserCard = ({ user, userData }) => (
         </ListGroup>
       </Card.Text>
       <Card.Footer>
-        <Link to={`/foryou#${user.owner}`}> <ThreeDots /> </Link>
+        <Link to="/foryou"> <ThreeDots /> </Link>
+        {/* <Link to={`/foryou#${user.owner}`}> <ThreeDots /> </Link> is the code for the counterpart, CollapsedCard. */}
       </Card.Footer>
     </Card.Body>
   </Card>
