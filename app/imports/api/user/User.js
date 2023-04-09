@@ -12,11 +12,23 @@ class UsersCollection {
     this.collection = new Mongo.Collection(this.name);
     // Define the structure of each document in the collection.
     this.schema = new SimpleSchema({
-      pfp: String, // Profile pic
-      name: String, // Don't know why I had this as a number before... Maybe I was insane?
-      owner: String, // This is the link between the UserData, Account, and User collections.
-      alcohol: Boolean, // whether they drink alcohol
-      alcohol_preference: Boolean, // whether they care if anyone else drinks alcohol.
+      pfp: {
+        type: String,
+        defaultValue: 'DEFAULT',
+      }, // Profile pic
+      name: {
+        type: String,
+        defaultValue: 'DEFAULT',
+      }, // Don't know why I had this as a number before... Maybe I was insane?
+      owner: String, // This is the link between the UserData, Account, and User collections. the field is necessary.
+      alcohol: {
+        type: Boolean,
+        defaultValue: true,
+      }, // whether they drink alcohol
+      alcohol_preference: {
+        type: Boolean,
+        defaultValue: false,
+      }, // whether they care if anyone else drinks alcohol.
       sleep: {
         type: Number,
         allowedValues: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
