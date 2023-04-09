@@ -16,14 +16,15 @@ const SignUp = ({ location }) => {
 
   const schema = new SimpleSchema({
     email: String,
+    username: String,
     password: String,
   });
   const bridge = new SimpleSchema2Bridge(schema);
 
   /* Handle SignUp submission. Create user account and a profile entry, then redirect to the home page. */
   const submit = (doc) => {
-    const { email, password } = doc;
-    Accounts.createUser({ email, username: email, password }, (err) => {
+    const { email, username, password } = doc;
+    Accounts.createUser({ email, username, password }, (err) => {
       if (err) {
         setError(err.reason);
       } else {
@@ -49,6 +50,7 @@ const SignUp = ({ location }) => {
           <AutoForm schema={bridge} onSubmit={data => submit(data)}>
             <Card>
               <Card.Body>
+                <TextField name="username" placeholder="Username" />
                 <TextField name="email" placeholder="E-mail address" />
                 <TextField name="password" placeholder="Password" type="password" />
                 <ErrorsField />
