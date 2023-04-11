@@ -27,7 +27,6 @@ body {
   padding-bottom: 20px;
 }
 
-<<<<<<< HEAD
 #landing-page-image1 {
   background: url('/images/LandingPageBackground.png') no-repeat center center fixed;
   background-size: cover;
@@ -37,7 +36,8 @@ body {
   width: 100%;
   text-align: center;
   z-index: -1;
-=======
+}
+
 #suggestions {
     text-decoration:none;
     color: white;
