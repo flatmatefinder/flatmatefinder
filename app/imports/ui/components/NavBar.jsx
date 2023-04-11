@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-indent */
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
@@ -26,9 +27,10 @@ const NavBar = () => {
               <Nav.Link id="add-stuff-nav" as={NavLink} to="/add" key="add">For You</Nav.Link>,
               <Nav.Link id="list-stuff-nav" as={NavLink} to="/list" key="list">Map</Nav.Link>,
             ]) : ''}
-            {Roles.userIsInRole(Meteor.userId(), 'admin') ? (
-              <Nav.Link id="list-stuff-admin-nav" as={NavLink} to="/admin" key="admin">All Users</Nav.Link>
-            ) : ''}
+            {Roles.userIsInRole(Meteor.userId(), 'admin') ? ([
+              <Nav.Link id="list-stuff-admin-nav" as={NavLink} to="/admin" key="admin">Statistics</Nav.Link>,
+              <Nav.Link id="list-stuff-admin-nav" as={NavLink} to="/admin" key="admin">All Users</Nav.Link>,
+            ]) : ''}
           </Nav>
           <Nav className="justify-content-end">
             {currentUser === '' ? (
