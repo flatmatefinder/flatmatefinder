@@ -48,7 +48,7 @@ const NavBar = () => {
               </NavDropdown>
             ) : (
               <NavDropdown id="navbar-current-user" title={<ProfilePicture userName={currentUser} />}>
-                <NavDropdown.Header id="navbar-header"> {`Currently Logged in as ${currentUser}`} </NavDropdown.Header>
+                <NavDropdown.Header id="navbar-header"> {`${currentUser}`} </NavDropdown.Header>
                 <NavDropdown.Item id="navbar-sign-out" as={NavLink} to="/signout">
                   <BoxArrowRight />
                   {' '}
