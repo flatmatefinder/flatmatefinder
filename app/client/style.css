@@ -42,3 +42,8 @@ body {
     text-decoration:none;
     color: white;
 }
+
+#meet-team-text {
+  text-decoration: underline;
+  color: black;
+}

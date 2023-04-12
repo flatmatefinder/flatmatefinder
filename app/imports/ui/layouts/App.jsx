@@ -20,6 +20,7 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import PrivacyPolicy from '../pages/PrivacyPolicy';
 import TermsAndConditions from '../pages/TermsAndConditions';
 import Suggestions from '../pages/Suggestions';
+import MeettheTeam from '../pages/MeettheTeam';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 // getting here lowkey kinda hard
@@ -41,6 +42,7 @@ const App = () => {
           <Route path="/signout" element={<SignOut />} />
           <Route path="/privacypolicy" element={<PrivacyPolicy />} />
           <Route path="/termsandconditions" element={<TermsAndConditions />} />
+          <Route path="/meettheteam" element={<MeettheTeam />} />
           <Route path="/suggestions" element={<Suggestions />} />
           <Route path="/home" element={<ProtectedRoute><Landing /></ProtectedRoute>} />
           <Route path="/list" element={<ProtectedRoute><ListStuff /></ProtectedRoute>} />
