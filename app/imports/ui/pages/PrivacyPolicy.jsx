@@ -12,7 +12,7 @@ const PrivacyPolicy = () => (
       </Row>
     </Row>
     <Row id="PP" className="justify-content-center">
-      <object data="/PrivacyPolicy.pdf" type="application/pdf" height="150%">
+      <object data="/PrivacyPolicy.pdf" type="application/pdf" width="100%" height="80%">
         <p>Alternative text - include a link <a href="/PrivacyPolicy.pdf">to the PDF!</a></p>
       </object>
     </Row>
