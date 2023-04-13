@@ -4,7 +4,7 @@ import { useTracker } from 'meteor/react-meteor-data';
 import { NavLink } from 'react-router-dom';
 import { Roles } from 'meteor/alanning:roles';
 import { Nav, Navbar, NavDropdown, Image } from 'react-bootstrap';
-import { BoxArrowRight, PersonFill, PersonPlusFill, PersonAdd } from 'react-bootstrap-icons';
+import { BoxArrowRight, PersonFill, PersonPlusFill, PersonAdd, GearFill } from 'react-bootstrap-icons';
 import ProfilePicture from './ProfilePicture';
 
 const NavBar = () => {
@@ -53,6 +53,11 @@ const NavBar = () => {
                   <PersonAdd />
                   {' '}
                   Profile
+                </NavDropdown.Item>
+                <NavDropdown.Item id="navbar-profile" as={NavLink} to="/settings">
+                  <GearFill />
+                  {' '}
+                  Settings
                 </NavDropdown.Item>
                 <NavDropdown.Item id="navbar-sign-out" as={NavLink} to="/signout">
                   <BoxArrowRight />
