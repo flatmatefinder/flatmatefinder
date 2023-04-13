@@ -16,7 +16,7 @@ const NavBar = () => {
   return (
     <Navbar bg="light" expand="lg" className="justify-content-center px-5">
       <>
-        <Navbar.Brand href="#home"><Image src="FlatmateLogo.png" width={80} /></Navbar.Brand>
+        <Navbar.Brand href="#home"><Image src="FlatmateLogo.png" width={70} /></Navbar.Brand>
         <Navbar.Brand as={NavLink} to="/">
           <h2>Flatmate Finder</h2>
         </Navbar.Brand>
