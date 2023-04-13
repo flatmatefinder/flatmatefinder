@@ -43,15 +43,15 @@ body {
     color: white;
 }
 
-#meet-team-text {
-  text-decoration: underline;
-  color: black;
-}
-
-#PP {
-  height: 45vh; /* Magic here */
+#TOS {
+  width: 40hv;
+  height: 100vh; /* Magic here */
   display: flex;
   justify-content: center;
   align-items: center;
   padding-bottom: 20px;
+
+#meet-team-text {
+  text-decoration: underline;
+  color: black;
 }
