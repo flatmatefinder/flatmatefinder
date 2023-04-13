@@ -41,5 +41,13 @@ body {
 #suggestions {
     text-decoration:none;
     color: white;
->>>>>>> Issue-19
+}
+
+#TOS {
+  width: 40hv;
+  height: 100vh; /* Magic here */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 20px;
 }
