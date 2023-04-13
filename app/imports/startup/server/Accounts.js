@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import { Roles } from 'meteor/alanning:roles';
+import { Users } from '../../api/user/User';
 
 /* eslint-disable no-console */
 
@@ -22,6 +23,7 @@ if (Meteor.users.find().count() === 0) {
   if (Meteor.settings.defaultAccounts) {
     console.log('Creating the default user(s)');
     Meteor.settings.defaultAccounts.forEach(({ email, password, role }) => createUser(email, password, role));
+    Meteor.settings.defaultAccounts.forEach(({ email }) => Users.collection.insert({ owner: email }));
   } else {
     console.log('Cannot initialize the database!  Please invoke meteor with a settings file.');
   }
