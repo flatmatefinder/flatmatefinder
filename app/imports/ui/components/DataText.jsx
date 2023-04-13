@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { ListGroup } from 'react-bootstrap';
 
-/** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
+/** Renders the text for the data to be displayed on the UserCard.jsx */
 const DataText = ({ data }) => (
   <ListGroup.Item>
     <p>{data.type}s: {data.data}</p>

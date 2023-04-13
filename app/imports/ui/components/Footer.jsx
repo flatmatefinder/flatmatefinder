@@ -13,15 +13,18 @@ const Footer = () => (
       <Row className="py-3 text-center">
         <Col />
         <Col>
-          <div>Meet the Team
-
-          </div>
+          <a href="/meettheteam" id="suggestions">Meet the Team</a>
         </Col>
         <Col>
           <a href="/suggestions" id="suggestions">Suggestions</a>
         </Col>
         <Col>
-          <div>Github</div>
+          <a href="https://docs.google.com/document/d/15glZaHxvn-8OiJt8GSdNYwgJU4knJpIULpwFodKEaSY/edit" id="suggestions">Github</a>
+        </Col>
+        <Col>
+          <p>
+            <a href="https://docs.google.com/document/d/15glZaHxvn-8OiJt8GSdNYwgJU4knJpIULpwFodKEaSY/edit" id="suggestions">Team Contract</a>
+          </p>
         </Col>
         <Col />
       </Row>
