@@ -49,7 +49,8 @@ body {
 }
 
 #PP {
-  height: 45vh; /* Magic here */
+  width: 40hv;
+  height: 100vh; /* Magic here */
   display: flex;
   justify-content: center;
   align-items: center;
