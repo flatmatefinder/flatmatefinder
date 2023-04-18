@@ -23,8 +23,6 @@ body {
 .gray-background {
   background-color: var(--matr-navbar-bg);
   color: var(--bs-dark);
-  padding-top: 10px;
-  padding-bottom: 20px;
 }
 
 #landing-page-image1 {
@@ -36,9 +34,43 @@ body {
   width: 100%;
   text-align: center;
   z-index: -1;
+  height: auto;
+}
+
+
+#landing-page-image2 {
+  background: url('/images/LandingPageBackground.png') no-repeat center center fixed;
+  background-size: cover;
+  opacity: 0.95;
+  color: white;
+  width: 100%;
+  text-align: center;
+  margin: auto;
+  padding-top: 40px;
+  padding-bottom: 20px;
+  height: auto;
+}
+
+h1 {
+  height: auto;
 }
 
 #suggestions {
     text-decoration:none;
     color: white;
 }
+
+#button {
+  border-radius: 12px;
+  width: auto;
+  transition-duration: 0.4s;
+  background: #3F4540;
+}
+
+#button:hover {
+  background: #3F4540;
+  color: white;
+
+}
+
+
