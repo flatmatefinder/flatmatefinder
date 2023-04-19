@@ -35,19 +35,18 @@ const Landing = () => {
           <h3 style={{ fontSize: '35px' }}>Where Do I Start?</h3>
         </Row>,
         <Row style={{ background: '#434F54', color: 'white', padding: '100px' }}>
-          <h3 style={{ fontSize: '35px' }}>Step 1</h3>
-          <p style={{ fontSize: '30px' }}> Start with creating your profile. Add a profile picture. Finish off with descriptions
-            about yourself and socials!
+          <h3 style={{ fontSize: '35px' }}>Edit the Content Pages</h3>
+          <p style={{ fontSize: '30px' }}> Look over the For You and Map pages to ensure everything is in good standing and users have appropriate profiles.
           </p>
-          <a href="/suggestions" className="btn btn-secondary btn-lg" role="button" id="button">Create Your Profile</a>
         </Row>,
         <Row style={{ background: '#586266', color: 'white', padding: '100px' }}>
-          <h3 style={{ fontSize: '35px' }}>Step 2</h3>
-          <p style={{ fontSize: '35px' }}>Find your perfect flatmate based on your interests and theirs.</p>
+          <h3 style={{ fontSize: '35px' }}>Overlook the Statistics of the Website</h3>
+          <p style={{ fontSize: '35px' }}>Here you can view all the users on the platform with the option of adding or removing users.</p>
         </Row>,
         <Row style={{ background: '#606566', color: 'white', padding: '100px' }}>
-          <h3 style={{ fontSize: '35px' }}>Step 3</h3>
-          <p style={{ fontSize: '35px' }}>Connect with your potential flatmate using their email or socials.</p>
+          <h3 style={{ fontSize: '35px' }}>Review the Suggestion Feedback Form</h3>
+          <p style={{ fontSize: '35px' }}>There is always room for improvement. Read over the Suggestions Feedback Form to see if there is anything that needs to be fixed or improved.</p>
+          <a href="/suggestions" className="btn btn-secondary btn-lg" role="button" id="button">Suggestions Page</a>
         </Row>,
       ]) : currentUser ? ([
         <div id="landing-page-image2">
