@@ -3,6 +3,8 @@ import { Col, Row, Container } from 'react-bootstrap';
 import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
 import { Roles } from 'meteor/alanning:roles';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
 
 /* A simple static component to render some text for the landing page. */
 
@@ -34,12 +36,29 @@ const Landing = () => {
         <Row className="text-center" style={{ background: '#323933', color: 'white', padding: '10px' }}>
           <h3 style={{ fontSize: '35px' }}>Where Do I Start?</h3>
         </Row>,
+
         <Row style={{ background: '#434F54', color: 'white', padding: '100px' }}>
-          <h3 style={{ fontSize: '35px' }}>Step 1</h3>
-          <p style={{ fontSize: '30px' }}> Start with creating your profile. Add a profile picture. Finish off with descriptions
-            about yourself and socials!
-          </p>
-          <a href="/profile" className="btn btn-secondary" role="button" id="button">Create Your Profile</a>
+          <Col>
+            <h3 style={{ fontSize: '35px' }}>Step 1</h3>
+            <p style={{ fontSize: '30px' }}> Start with creating your profile. Add a profile picture. Finish off with descriptions
+              about yourself and socials!
+            </p>
+            <a href="/profile" className="btn btn-secondary" role="button" id="button">Create Your Profile</a>
+          </Col>
+          <Col>
+            <Container className="mt-2 d-flex justify-content-center">
+              <Card style={{ width: '18rem', background: '#586266' }} className="landing-card">
+                <Card.Img variant="top" src="https://lumiere-a.akamaihd.net/v1/images/c94eed56a5e84479a2939c9172434567c0147d4f.jpeg?region=0,0,600,600&width=480" />
+                <Card.Body>
+                  <Card.Title>Winnie the Pooh</Card.Title>
+                  <Card.Text>
+                    He is a bear who loves honey and can eat honey all day!
+                  </Card.Text>
+                  <a href="/profile" className="btn btn-secondary" role="button" id="button">Edit Profile</a>
+                </Card.Body>
+              </Card>
+            </Container>
+          </Col>
         </Row>,
         <Row style={{ background: '#586266', color: 'white', padding: '100px' }}>
           <h3 style={{ fontSize: '35px' }}>Step 2</h3>
@@ -49,6 +68,7 @@ const Landing = () => {
           <h3 style={{ fontSize: '35px' }}>Step 3</h3>
           <p style={{ fontSize: '35px' }}>Connect with your potential flatmate using their email or socials.</p>
         </Row>,
+
       ]) : currentUser ? ([
         <div id="landing-page-image2">
           <Row className="d-flex justify-content-center py-5">

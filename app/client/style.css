@@ -74,16 +74,19 @@ h1 {
   padding-bottom: 20px;
 }
 
-.btn {
+#button {
   border-radius: 12px;
   width: auto;
   transition-duration: 0.4s;
   background: #3F4540;
 }
 
-#btn:hover {
+#button:hover {
   background: #3F4540;
   color: white;
+}
+
+.landing-card {
 
 }
 
