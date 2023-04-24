@@ -3,7 +3,6 @@ import { Col, Row, Container } from 'react-bootstrap';
 import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
 import { Roles } from 'meteor/alanning:roles';
-import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
 /* A simple static component to render some text for the landing page. */
@@ -113,7 +112,7 @@ const Landing = () => {
               </Card.Body>
             </Card>
           </Container>
-        </Col>
+        </Col>,
         <Row style={{ background: '#586266', color: 'white', padding: '100px' }}>
           <h3 style={{ fontSize: '35px' }}>Step 2</h3>
           <p style={{ fontSize: '35px' }}>Find your perfect flatmate based on your interests and theirs.</p>
