@@ -8,7 +8,7 @@ import { sleepIntToString } from '../../utils/Utils';
 
 const UserCardAux = ({ user, userData }) => (
   <Card className="h-100">
-    <Card.Header className="text-center"><img src={user.pfp} alt="the profile pic couldn't load" width="200" style={{ borderRadius: '50%', borderColor: 'black', borderStyle: 'solid' }} /></Card.Header>
+    <Card.Header className="text-center"><img src={user.pfp} alt="the profile pic couldn't load" width="200" style={{ borderRadius: '50%' }} /></Card.Header>
     <Card.Body className="text-center">
       <Card.Title>{user.name}</Card.Title>
       {/* eslint-disable-next-line no-nested-ternary */}
