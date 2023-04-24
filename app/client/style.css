@@ -74,14 +74,14 @@ h1 {
   padding-bottom: 20px;
 }
 
-#button {
+.btn {
   border-radius: 12px;
   width: auto;
   transition-duration: 0.4s;
   background: #3F4540;
 }
 
-#button:hover {
+#btn:hover {
   background: #3F4540;
   color: white;
 

@@ -39,7 +39,7 @@ const Landing = () => {
           <p style={{ fontSize: '30px' }}> Start with creating your profile. Add a profile picture. Finish off with descriptions
             about yourself and socials!
           </p>
-          <a href="/suggestions" className="btn btn-secondary btn-lg" role="button" id="button">Create Your Profile</a>
+          <a href="/profile" className="btn btn-secondary" role="button" id="button">Create Your Profile</a>
         </Row>,
         <Row style={{ background: '#586266', color: 'white', padding: '100px' }}>
           <h3 style={{ fontSize: '35px' }}>Step 2</h3>
@@ -73,7 +73,7 @@ const Landing = () => {
           <p style={{ fontSize: '30px' }}> Start with creating your profile. Add a profile picture. Finish off with descriptions
             about yourself and socials!
           </p>
-          <a href="/suggestions" className="btn btn-secondary btn-lg" role="button" id="button">Create Your Profile</a>
+          <a href="/profile" className="btn btn-secondary btn-lg" role="button" id="button">Create Your Profile</a>
         </Row>,
         <Row style={{ background: '#586266', color: 'white', padding: '100px' }}>
           <h3 style={{ fontSize: '35px' }}>Step 2</h3>
