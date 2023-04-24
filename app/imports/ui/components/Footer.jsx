@@ -19,7 +19,12 @@ const Footer = () => (
           <a href="/suggestions" id="suggestions">Suggestions</a>
         </Col>
         <Col>
-          <a href="/" id="suggestions">Github</a>
+          <a href="https://flatmatefinder.github.io/" id="suggestions">Github</a>
+        </Col>
+        <Col>
+          <p>
+            <a href="https://docs.google.com/document/d/15glZaHxvn-8OiJt8GSdNYwgJU4knJpIULpwFodKEaSY/edit" id="suggestions">Team Contract</a>
+          </p>
         </Col>
         <Col />
       </Row>

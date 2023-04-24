@@ -10,7 +10,59 @@
     { "name": "Banana", "quantity": 2, "owner": "admin@foo.com", "condition": "good" },
     { "name": "Boogie Board", "quantity": 2, "owner": "admin@foo.com", "condition": "excellent" }
   ],
+  
   "public": {
     "cloudinary": {"cloud_name": "dlhx8lig8", "upload_preset": "wyyv97cf"}
-  }
+  },
+
+  "defaultContacts": [
+    {
+      "firstName": "Carelton",
+      "lastName": "Moore",
+      "address": "POST 307, University of Hawaii",
+      "image": "https://cammoore.github.io/img/cam-moore.jpg",
+      "description": "I am studying for a B.S. in Computer Science in the Department of Information and Computer Sciences at the University of Hawaii. I expect to graduate in Spring, 2025.",
+      "owner": "john@foo.com"
+    },
+    {
+      "firstName": "Nicholas",
+      "lastName": "Beydler",
+      "address": "POST 307, University of Hawaii",
+      "image": "https://avatars.githubusercontent.com/u/66411207?v=4",
+      "description": "I am studying for a B.S. in Computer Science in the Department of Information and Computer Sciences at the University of Hawaii. I expect to graduate in Spring, 2025.",
+      "owner": "admin@foo.com"
+    },
+    {
+      "firstName": "Xavier",
+      "lastName": "Burt",
+      "address": "POST 307, University of Hawaii",
+      "image": "https://avatars.githubusercontent.com/u/97270148?v=4",
+      "description": "I am currently studying Physics and Computer Science at the Univeristy of Hawaii at Manoa. I expect to graduate in Spring, 2024.",
+      "owner": "admin@foo.com"
+    },
+    {
+      "firstName": "Kaysha",
+      "lastName": "Kealalio",
+      "address": "POST 307, University of Hawaii",
+      "image": "https://avatars.githubusercontent.com/u/78561598?v=4",
+      "description": "I am studying for a B.S. in Computer Science - Security Science in the Department of Information and Computer Sciences at the University of Hawaii. I expect to graduate in Spring, 2024.",
+      "owner": "admin@foo.com"
+    },
+    {
+      "firstName": "Briana",
+      "lastName": "Lee",
+      "address": "POST 307, University of Hawaii",
+      "image": "https://avatars.githubusercontent.com/u/97265599?v=4",
+      "description": "I am studying for a B.S. in Computer Science in the Department of Information and Computer Sciences at the University of Hawaii. I expect to graduate in Spring, 2025.",
+      "owner": "admin@foo.com"
+    },
+    {
+      "firstName": "Erick",
+      "lastName": "Orozco-Ciprian",
+      "address": "POST 307, University of Hawaii",
+      "image": "https://avatars.githubusercontent.com/u/122927817?v=4",
+      "description": "I am studying for a B.S. in Computer Science in the Department of Information and Computer Sciences at the University of Hawaii. I expect to graduate in Spring, 2024.",
+      "owner": "admin@foo.com"
+    }
+  ]
 }
