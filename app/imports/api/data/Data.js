@@ -15,10 +15,10 @@ class DataCollection {
       data: String,
       // I don't know why I thought we needed this.
       owner: String, // This is the link between the UserData, Account, and User collections.
-      type: {
+      data_type: {
         type: String,
-        allowedValues: ['need', 'dealbreaker', 'contact', 'habit'],
-        defaultValue: 'need',
+        allowedValues: ['preference', 'dealbreaker', 'contact', 'habit'],
+        defaultValue: 'preference',
       },
     });
     // Attach the schema to the collection, so all attempts to insert a document are checked against schema.
