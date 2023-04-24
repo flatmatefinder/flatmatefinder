@@ -21,6 +21,7 @@ import TermsAndConditions from '../pages/TermsAndConditions';
 import Suggestions from '../pages/Suggestions';
 import MeettheTeam from '../pages/MeettheTeam';
 import Profile from '../pages/Profile';
+import Settings from '../pages/Settings';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 // getting here lowkey kinda hard
@@ -48,6 +49,7 @@ const App = () => {
           <Route path="/list" element={<ProtectedRoute><ListStuff /></ProtectedRoute>} />
           <Route path="/add" element={<ProtectedRoute><AddStuff /></ProtectedRoute>} />
           <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+          <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
           <Route path="/admin" element={<AdminProtectedRoute ready={ready}><ListStuffAdmin /></AdminProtectedRoute>} />
           <Route path="/notauthorized" element={<NotAuthorized />} />
           <Route path="*" element={<NotFound />} />
