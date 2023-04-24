@@ -1,61 +1,35 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Card, ListGroup } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import { ThreeDots } from 'react-bootstrap-icons';
+import { Meteor } from 'meteor/meteor';
+import { useTracker } from 'meteor/react-meteor-data';
 import { UserData } from '../../api/data/Data';
-import DataText from './DataText';
+import { Users } from '../../api/user/User';
+import UserCardAux from './UserCardAux';
+import LoadingSpinner from './LoadingSpinner';
 
-const UserCard = ({ user, userData }) => (
-  <Card className="h-100">
-    <Card.Header> <img src={user.pfp} alt="pfp" width="75" /></Card.Header>
-    <Card.Body>
-      <Card.Title>{user.name}</Card.Title>
-      <Card.Subtitle>Sex: {user.sex}, Alcohol: {user.alcohol} Sleep: {user.sleep}</Card.Subtitle>
-      <Card.Text>
-        <ListGroup variant="flush">
-          {userData.map((data) => {
-            if (data.type !== 'contact') {
-              return <DataText key={data._id} data={data} />;
-            }
-            return '';
-          })}
-          {userData.map((data) => {
-            if (data.type === 'contact') {
-              return <DataText key={data._id} data={data} />;
-            }
-            return '';
-          })}
-          {/* All this did was make it so that all of their information loads first, and then the contact information. */}
-        </ListGroup>
-      </Card.Text>
-      <Card.Footer>
-        <Link to="/foryou"> <ThreeDots /> </Link>
-        {/* <Link to={`/foryou#${user.owner}`}> <ThreeDots /> </Link> is the code for the counterpart, CollapsedCard. */}
-      </Card.Footer>
-    </Card.Body>
-  </Card>
-);
+const UserCard = () => {
+  const { ready, user, data } = useTracker(() => {
+    // Note that this subscription will get cleaned up
+    // when your component is unmounted or deps change.
+    // Get access to Stuff documents.
+    const subscription = Meteor.subscribe(Users.userPublicationName);
+    const subscriptionData = Meteor.subscribe(UserData.userPublicationName);
+    // Determine if the subscription is ready
+    const rdy1 = subscription.ready();
+    const rdy2 = subscriptionData.ready();
+    const rdy = rdy1 && rdy2;
+    // Get the Stuff documents
+    const userItems = Users.collection.find({}).fetch();
+    const userItem = _.find(userItems, () => true);
+    const userData = UserData.collection.find({}).fetch();
 
-UserCard.propTypes = {
-  user: PropTypes.shape({
-    pfp: PropTypes.string,
-    name: PropTypes.string,
-    owner: PropTypes.string,
-    alcohol: PropTypes.string,
-    alcohol_preferences: PropTypes.string,
-    sleep: PropTypes.number,
-    sleep_preferences: PropTypes.number,
-    sex: PropTypes.number,
-    sex_preference: PropTypes.number,
-  }).isRequired,
-  userData: PropTypes.arrayOf((propValue, key, componentName, location, propFullName) => {
-    if (!UserData.test(propValue[key])) {
-      return new Error(
-        `Invalid prop \`${propFullName}\` supplied to` +
-          ` \`${componentName}\`. Validation failed.`,
-      );
-    }
-    return true;
-  }).isRequired,
+    return {
+      data: userData,
+      user: userItem,
+      ready: rdy,
+    };
+  }, []);
+
+  return ready ? <UserCardAux user={user} userData={data} /> : <LoadingSpinner />;
 };
+
+export default UserCard;

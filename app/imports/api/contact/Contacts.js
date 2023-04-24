@@ -1,25 +1,20 @@
 import { Mongo } from 'meteor/mongo';
 import SimpleSchema from 'simpl-schema';
 
-/**
- * The DataCollection. It encapsulates state and variable values for UserData.
- */
-class DataCollection {
+class ContactsCollection {
   constructor() {
     // The name of this collection.
-    this.name = 'DataCollection';
+    this.name = 'ContactsCollection';
     // Define the Mongo collection.
     this.collection = new Mongo.Collection(this.name);
     // Define the structure of each document in the collection.
     this.schema = new SimpleSchema({
-      data: String,
-      // I don't know why I thought we needed this.
-      owner: String, // This is the link between the UserData, Account, and User collections.
-      data_type: {
-        type: String,
-        allowedValues: ['preference', 'dealbreaker', 'contact', 'habit'],
-        defaultValue: 'preference',
-      },
+      firstName: String,
+      lastName: String,
+      address: String,
+      image: String,
+      description: String,
+      owner: String,
     });
     // Attach the schema to the collection, so all attempts to insert a document are checked against schema.
     this.collection.attachSchema(this.schema);
@@ -30,7 +25,7 @@ class DataCollection {
 }
 
 /**
- * The singleton instance of the DataCollection.
- * @type {DataCollection}
+ * The singleton instance of the ContactsCollection.
+ * @type {ContactsCollection}
  */
-export const UserData = new DataCollection();
+export const Contacts = new ContactsCollection();
