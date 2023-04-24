@@ -4,6 +4,7 @@ import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
 import { Roles } from 'meteor/alanning:roles';
 import Card from 'react-bootstrap/Card';
+import UserCard from '../components/UserCard';
 
 /* A simple static component to render some text for the landing page. */
 
@@ -99,10 +100,11 @@ const Landing = () => {
           </p>
           <a href="/profile" className="btn btn-secondary" role="button" id="button">Create Your Profile</a>
         </Col>,
-        <Col>
-          <Container className="mt-2 d-flex justify-content-center">
-            <Card style={{ width: '18rem', background: '#586266' }} className="landing-card">
-              <Card.Img variant="top" src="https://lumiere-a.akamaihd.net/v1/images/c94eed56a5e84479a2939c9172434567c0147d4f.jpeg?region=0,0,600,600&width=480" />
+        <Col xs={3}>
+          {/* <Container className="mt-2 d-flex justify-content-center">
+            <Card style={{width: '18rem', background: '#586266'}} className="landing-card">
+              <Card.Img variant="top"
+                        src="https://lumiere-a.akamaihd.net/v1/images/c94eed56a5e84479a2939c9172434567c0147d4f.jpeg?region=0,0,600,600&width=480"/>
               <Card.Body>
                 <Card.Title>Winnie the Pooh</Card.Title>
                 <Card.Text>
@@ -111,8 +113,13 @@ const Landing = () => {
                 <a href="/profile" className="btn btn-secondary" role="button" id="button">Edit Profile</a>
               </Card.Body>
             </Card>
-          </Container>
+          </Container> */}
         </Col>,
+        <Row className="justify-content-center">
+          <Col xs={3}>
+            <UserCard />
+          </Col>
+        </Row>,
         <Row style={{ background: '#586266', color: 'white', padding: '100px' }}>
           <h3 style={{ fontSize: '35px' }}>Step 2</h3>
           <p style={{ fontSize: '35px' }}>Find your perfect flatmate based on your interests and theirs.</p>
