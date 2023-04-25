@@ -6,10 +6,10 @@ import { PublicUsers } from '../../api/user/PublicUser';
 
 /* eslint-disable no-console */
 
-const createUser = (email, password, role) => {
+const createUser = (email, username, password, role) => {
   console.log(`  Creating user ${email}.`);
   const userID = Accounts.createUser({
-    username: email,
+    username: username,
     email: email,
     password: password,
   });
@@ -23,9 +23,34 @@ const createUser = (email, password, role) => {
 if (Meteor.users.find().count() === 0) {
   if (Meteor.settings.defaultAccounts) {
     console.log('Creating the default user(s)');
-    Meteor.settings.defaultAccounts.forEach(({ email, password, role }) => createUser(email, password, role));
-    Meteor.settings.defaultAccounts.forEach(({ email }) => Users.collection.insert({ owner: email }));
-    Meteor.settings.defaultAccounts.forEach(({ email }) => PublicUsers.collection.insert({ owner: email }));
+    Meteor.settings.defaultAccounts.forEach(({ email, username, password, role }) => createUser(email, username, password, role));
+
+  } else {
+    console.log('Cannot initialize the database!  Please invoke meteor with a settings file.');
+  }
+  if (Meteor.settings.defaultUsers) {
+    Meteor.settings.defaultUsers.forEach(
+      ({ owner, pfp, name, alcohol, alcohol_preference, sleep, sleep_preference, sex, sex_preference, accountsuspended }) => Users.collection.insert({
+        owner: owner,
+        pfp: pfp,
+        name: name,
+        alcohol: alcohol,
+        alcohol_preference: alcohol_preference,
+        sleep: sleep,
+        sleep_preference: sleep_preference,
+        sex: sex,
+        sex_preference: sex_preference,
+        accountsuspended: accountsuspended,
+      }),
+    );
+    Meteor.settings.defaultUsers.forEach(({ owner, pfp, name, alcohol, sleep, sex }) => PublicUsers.collection.insert({
+      owner: owner,
+      pfp: pfp,
+      name: name,
+      alcohol: alcohol ? 0 : 1,
+      sleep: sleep,
+      sex: sex,
+    }));
   } else {
     console.log('Cannot initialize the database!  Please invoke meteor with a settings file.');
   }
