@@ -24,12 +24,12 @@ const NavBar = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto justify-content-start">
             {currentUser ? ([
-              <Nav.Link id="list-stuff-nav" as={NavLink} to="/foryou" key="add">For You</Nav.Link>,
-              <Nav.Link id="list-stuff-nav" as={NavLink} to="/map" key="list">Map</Nav.Link>,
+              <Nav.Link id="foryou-nav" as={NavLink} to="/foryou" key="add">For You</Nav.Link>,
+              <Nav.Link id="map-nav" as={NavLink} to="/map" key="list">Map</Nav.Link>,
             ]) : ''}
             {Roles.userIsInRole(Meteor.userId(), 'admin') ? ([
               <Nav.Link id="list-contact-admin-nav" as={NavLink} to="/suggestions" key="add">Statistics</Nav.Link>,
-              <Nav.Link id="list-stuff-nav" as={NavLink} to="/admin" key="admin">Admin</Nav.Link>,
+              <Nav.Link id="admin-nav" as={NavLink} to="/admin" key="admin">Admin</Nav.Link>,
             ]) : ''}
           </Nav>
           <Nav className="justify-content-end">
@@ -54,7 +54,7 @@ const NavBar = () => {
                   {' '}
                   Profile
                 </NavDropdown.Item>
-                <NavDropdown.Item id="navbar-profile" as={NavLink} to="/settings">
+                <NavDropdown.Item id="navbar-settings" as={NavLink} to="/settings">
                   <GearFill />
                   {' '}
                   Settings

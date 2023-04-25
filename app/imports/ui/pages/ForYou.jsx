@@ -26,8 +26,27 @@ const ForYou = () => {
     };
   }, []);
 
+  // On submit, insert the data.
+  const submit = (data, formRef) => {
+    const { name, quantity, condition } = data;
+    const owner = Meteor.user().username;
+    Stuffs.collection.insert(
+      { name, quantity, condition, owner },
+      (error) => {
+        if (error) {
+          swal('Error', error.message, 'error');
+        } else {
+          swal('Success', 'Item added successfully', 'success');
+          formRef.reset();
+        }
+      },
+    );
+  };
+
+  // Render the form. Use Uniforms: https://github.com/vazco/uniforms
+  let fRef = null;
   return (ready ? (
-    <Container className="py-3">
+    <Container id="foryou-page" className="py-3">
       <Row className="justify-content-center">
         <Col md={7}>
           <Col className="text-center">

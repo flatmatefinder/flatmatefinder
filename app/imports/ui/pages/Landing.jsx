@@ -15,7 +15,7 @@ const Landing = () => {
   }), []);
 
   return (
-    <>
+    <div id="landing-page">
       {Roles.userIsInRole(Meteor.userId(), 'admin') ? ([
         <div id="landing-page-image2">
           <Row className="d-flex justify-content-center py-5">
@@ -172,7 +172,7 @@ const Landing = () => {
         </Row>,
       ])}
 
-    </>
+    </div>
 
   );
 };
