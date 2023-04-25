@@ -60,6 +60,13 @@ Meteor.publish(Contacts.adminPublicationName, function () {
   return this.ready();
 });
 
+Meteor.publish(Users.adminPublicationName, function () {
+  if (this.userId && Roles.userIsInRole(this.userId, 'admin')) {
+    return Users.collection.find({});
+  }
+  return this.ready();
+});
+
 Meteor.publish(PublicUsers.adminPublicationName, function () {
   if (this.userId && Roles.userIsInRole(this.userId, 'admin')) {
     return PublicUsers.collection.find();

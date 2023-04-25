@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, ListGroup, Button } from 'react-bootstrap';
+import { Card, ListGroup } from 'react-bootstrap';
 import { UserData } from '../../api/data/Data';
-import { Users } from '../../api/user/User';
-import { PublicUsers } from '../../api/user/PublicUser';
 import DataText from './DataText';
 import { sleepIntToString } from '../../utils/Utils';
+import SuspendButton from './SuspendButton';
 
 const fallBackSrc = 'https://wallpapers.com/images/featured/en3dnh2zi84sgt3t.jpg';
 const PublicUserCardAux = ({ user, userData, admin }) => (
@@ -47,12 +46,12 @@ const PublicUserCardAux = ({ user, userData, admin }) => (
         {/* All this did was make it so that all of their information loads first, and then the contact information. */}
       </ListGroup>
       <Card.Text />
-      {
-        admin ? <a href="/profile" className="btn btn-secondary" role="button" id="button">Edit Profile</a> : ''
-      }
+      {[
+        admin ? <a href="/profile" className="btn btn-secondary" role="button" id="button">Edit Profile</a> : '',
+        admin ? <SuspendButton publicUser={user} /> : '',
+      ]}
       {
         // eslint-disable-next-line max-len
-        user.accountsuspended ? <Button variant="success" onClick={(e) => { e.preventDefault(); PublicUsers.collection.update(user._id, { $set: { accountsuspended: false } }, (error) => (error ? console.log(error.message) : 'NO ERROR')); }}>Unsuspend</Button> : <Button variant="danger" onClick={(e) => { e.preventDefault(); PublicUsers.collection.update(user._id, { $set: { accountsuspended: true } }, (error) => (error ? console.log(error.message) : 'NO ERROR')); }}>Suspend</Button>
       }
     </Card.Body>
   </Card>
