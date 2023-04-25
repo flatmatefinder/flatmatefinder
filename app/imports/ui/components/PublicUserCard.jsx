@@ -20,6 +20,8 @@ const PublicUserCard = ({ username }) => {
     const rdy = rdy1 && rdy2;
     // Get the Stuff documents
     const userItems = PublicUsers.collection.find({ owner: username }).fetch();
+    // The following is ran by Underscore package
+    // eslint-disable-next-line no-undef
     const userItem = _.find(userItems, () => true);
     const userData = UserData.collection.find({ owner: username }).fetch();
 

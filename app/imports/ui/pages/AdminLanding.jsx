@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 /* A simple static component to render some text for the landing page. */
 const AdminLanding = () => (
   <div id="adminlanding-page">

@@ -4,7 +4,6 @@ import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
 import { PublicUsers } from '../../api/user/PublicUser';
 import LoadingSpinner from '../components/LoadingSpinner';
-import PublicUserCard from '../components/PublicUserCard';
 import AdminUserCard from '../components/AdminUserCard';
 
 /* Renders the ForYou page for adding a document. */

@@ -1,3 +1,4 @@
+/* eslint-disable no-undef  */
 import React, { useState } from 'react';
 import swal from 'sweetalert';
 import { Col, Dropdown, Row, Button } from 'react-bootstrap';
@@ -97,6 +98,7 @@ const Profile = () => {
       PublicUsers.collection.update(publicUser._id, { $set: { sleep: sleep } });
     }
     if (publicUser.sex !== 3) {
+      // eslint-disable-next-line no-nested-ternary
       PublicUsers.collection.update(publicUser._id, { $set: { sex: gender === 'Male' ? 0 : gender === 'Female' ? 1 : 2 } });
       // TODO Fix it
     }

@@ -40,7 +40,11 @@ const DataVisibilityForm = () => {
   const [shareSocials, setShareSocials] = useState(false);
 
   if (ready && initial === 0) {
+    // The following is ran by Underscore package
+    // eslint-disable-next-line no-undef
     user = _.find(users, () => true);
+    // The following is ran by Underscore package
+    // eslint-disable-next-line no-undef
     publicUser = _.find(publicUsers, (publicUserItem) => publicUserItem.owner === user.owner);
 
     setShareAlcohol(publicUser.alcohol !== 2);
