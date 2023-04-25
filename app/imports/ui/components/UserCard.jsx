@@ -20,7 +20,8 @@ const UserCard = () => {
     // Get the Stuff documents
     const userItems = Users.collection.find({}).fetch();
     const userItem = _.find(userItems, () => true);
-    const userData = UserData.collection.find({}).fetch();
+    console.log(userItems);
+    const userData = UserData.collection.find({ owner: userItems.owner }).fetch();
 
     return {
       data: userData,

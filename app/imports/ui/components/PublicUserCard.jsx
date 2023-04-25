@@ -22,7 +22,6 @@ const PublicUserCard = ({ username }) => {
     const userItems = PublicUsers.collection.find({ owner: username }).fetch();
     const userItem = _.find(userItems, () => true);
     const userData = UserData.collection.find({ owner: username }).fetch();
-    userItems.forEach((usersssssss) => console.log("hello"));
 
     return {
       data: userData,
