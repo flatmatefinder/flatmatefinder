@@ -139,3 +139,12 @@ h1 {
 .landing-card {
 
 }
+
+#card-img {
+  border-radius: 50%;
+  width: 220px;
+  height: 220px;
+  padding: 15px;
+  display: block;
+  object-fit: cover;
+}
