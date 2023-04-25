@@ -23,7 +23,6 @@ import Profile from '../pages/Profile';
 import Settings from '../pages/Settings';
 import ListContacts from '../pages/ListContacts';
 import ListContactsAdmin from '../pages/ListContactsAdmin';
-import ListStuffAdmin from '../pages/ListStuffAdmin';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 // getting here lowkey kinda hard
@@ -55,7 +54,6 @@ const App = () => {
           <Route path="/foryou" element={<ProtectedRoute><ForYou /></ProtectedRoute>} />
           <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
           <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
-          <Route path="/admin" element={<AdminProtectedRoute ready={ready}><ListStuffAdmin /></AdminProtectedRoute>} />
           <Route path="/admin" element={<AdminProtectedRoute ready={ready}><ListContactsAdmin /></AdminProtectedRoute>} />
           <Route path="/notauthorized" element={<NotAuthorized />} />
           <Route path="*" element={<NotFound />} />
