@@ -6,7 +6,7 @@ const Suggestions = () => (
   <Container id="suggestions-page" className="py-3">
     <Row className="justify-content-center">
       <Col xs={4} className="text-center">
-        <h2>Suggestions</h2>
+        <h2>Suggestions<p style={{ color: 'red' }}> ADMIN </p></h2>
       </Col>
     </Row>
   </Container>

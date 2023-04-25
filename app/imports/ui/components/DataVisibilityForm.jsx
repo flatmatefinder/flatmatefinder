@@ -42,6 +42,7 @@ const DataVisibilityForm = () => {
   if (ready && initial === 0) {
     user = _.find(users, () => true);
     publicUser = _.find(publicUsers, (publicUserItem) => publicUserItem.owner === user.owner);
+
     setShareAlcohol(publicUser.alcohol !== 2);
     setShareSleep(publicUser.sleep !== 24);
     setShareSex(publicUser.sex !== 3);
