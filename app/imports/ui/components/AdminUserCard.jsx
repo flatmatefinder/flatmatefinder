@@ -7,7 +7,7 @@ import LoadingSpinner from './LoadingSpinner';
 import { PublicUsers } from '../../api/user/PublicUser';
 import PublicUserCardAux from './PublicUserCardAux';
 
-const PublicUserCard = ({ username }) => {
+const AdminUserCard = ({ username }) => {
   const { ready, user, data } = useTracker(() => {
     // Note that this subscription will get cleaned up
     // when your component is unmounted or deps change.
@@ -30,11 +30,11 @@ const PublicUserCard = ({ username }) => {
     };
   }, []);
 
-  return ready ? <PublicUserCardAux user={user} userData={data} admin={false} /> : <LoadingSpinner />;
+  return ready ? <PublicUserCardAux user={user} userData={data} admin /> : <LoadingSpinner />;
 };
 
-PublicUserCard.propTypes = {
+AdminUserCard.propTypes = {
   username: PropTypes.string.isRequired,
 };
 
-export default PublicUserCard;
+export default AdminUserCard;

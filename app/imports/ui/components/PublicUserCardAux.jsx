@@ -6,7 +6,7 @@ import DataText from './DataText';
 import { sleepIntToString } from '../../utils/Utils';
 
 const fallBackSrc = 'https://wallpapers.com/images/featured/en3dnh2zi84sgt3t.jpg';
-const PublicUserCardAux = ({ user, userData }) => (
+const PublicUserCardAux = ({ user, userData, admin }) => (
 
   <Card style={{ width: '18rem', background: '#586266' }} className="landing-card">
     <Card.Img onError={(e) => { e.target.src = fallBackSrc; }} src={user.pfp} alt="profile picture" className="mx-auto" id="card-img" />
@@ -44,8 +44,9 @@ const PublicUserCardAux = ({ user, userData }) => (
         {/* All this did was make it so that all of their information loads first, and then the contact information. */}
       </ListGroup>
       <Card.Text />
-      <a href="/profile" className="btn btn-secondary" role="button" id="button">Edit Profile</a>
-
+      {
+        admin ? <a href="/profile" className="btn btn-secondary" role="button" id="button">Edit Profile</a> : ''
+      }
     </Card.Body>
   </Card>
 );
@@ -72,6 +73,7 @@ PublicUserCardAux.propTypes = {
     }
     return true;
   }).isRequired,
+  admin: PropTypes.bool.isRequired,
 };
 
 export default PublicUserCardAux;

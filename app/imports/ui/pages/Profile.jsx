@@ -203,7 +203,7 @@ const Profile = () => {
     }
     if (tempSocial !== '') {
       if (_.find(socials, social => social === tempSocial) === undefined) {
-        if (dealbreakers.length === 10) {
+        if (socials.length === 10) {
           swal('Error', 'Too many Contact Methods!', 'error').then();
         } else {
           setSocials([...socials, tempSocial]);
@@ -506,7 +506,7 @@ const Profile = () => {
             {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
             <label>
               What are your Contact Methods? <br />
-              <input name="social" placeholder="9702868161, discord: Opal#0000" type="text" />
+              <input name="social" placeholder="Opal#42069" type="text" />
               <p style={{ color: 'gray' }}> Press submit after every entry. it can be multiple words, should have all information needed to contact you. </p>
             </label>
             <p> Linked Contact Methods: </p>
