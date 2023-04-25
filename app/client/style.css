@@ -55,9 +55,14 @@ h1 {
   height: auto;
 }
 
-#suggestions {
+#suggestions-footer {
     text-decoration:none;
     color: white;
+}
+
+#meettheteam-footer {
+  text-decoration:none;
+  color: white;
 }
 
 #meet-team-text {

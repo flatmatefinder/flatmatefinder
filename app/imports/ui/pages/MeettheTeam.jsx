@@ -2,7 +2,7 @@ import React from 'react';
 import { Col, Row, Container, Image } from 'react-bootstrap';
 
 const MeettheTeam = () => (
-  <Container className="py-3 text-center" fluid>
+  <Container id="meettheteam-page" className="py-3 text-center" fluid>
     <Row className="py-3">
       <Col>
         <h1>Meet the Team</h1>

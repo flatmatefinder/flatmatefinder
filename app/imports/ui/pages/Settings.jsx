@@ -26,7 +26,7 @@ const Settings = () => {
   };
 
   return (
-    <Container>
+    <Container id="settings-page">
       <h1 className="text-center mt-5">Settings</h1>
       <SideNav selectedOption={selectedOption} setSelectedOption={setSelectedOption} handleDeleteAccountPopup={handleShowDeleteAccountPopup} />
       <DeleteAccountPopup show={showDeleteAccountPopup} handleClose={handleCloseDeleteAccountPopup} handleDeleteAccount={handleDeleteAccount} handleLogout={handleLogout} />
