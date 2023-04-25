@@ -10,11 +10,14 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import { sleepIntToString } from '../../utils/Utils';
 import { PublicUsers } from '../../api/user/PublicUser';
 
+let user = null;
+let publicUser = null;
+let data = null;
 let initial = 0;
 let suspended = false;
 
 const Profile = () => {
-  const { ready, user, data, publicUser } = useTracker(() => {
+  const { ready, users, datas, publicUsers } = useTracker(() => {
     // Note that this subscription will get cleaned up
     // when your component is unmounted or deps change.
     // Get access to Stuff documents.
@@ -29,16 +32,13 @@ const Profile = () => {
     // Get the Stuff documents
     const userItems = Users.collection.find({}).fetch();
     const publicUserItems = PublicUsers.collection.find({}).fetch();
-
-    const userItem = _.find(userItems, () => true);
     const userData = UserData.collection.find({}).fetch();
-    const publicUserItem = _.find(publicUserItems, (publicUserItemThing) => publicUserItemThing.owner === userItem.owner);
 
     return {
-      data: userData,
-      user: userItem,
+      datas: userData,
+      users: userItems,
       ready: rdy,
-      publicUser: publicUserItem,
+      publicUsers: publicUserItems,
     };
   }, []);
   // const pfpGetter = (e) => {
@@ -50,6 +50,9 @@ const Profile = () => {
   // };
 
   if (ready) {
+    user = _.find(users, () => true);
+    publicUser = _.find(publicUsers, (publicUserItemThing) => publicUserItemThing.owner === user.owner);
+    data = _.find(datas, (dat) => dat.owner === user.owner);
     suspended = user.accountsuspended; // check if the user is suspended
   }
 

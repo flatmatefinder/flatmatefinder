@@ -1,11 +1,10 @@
 import React from 'react';
-import { Card, Col, Container, Row } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
 import { PublicUsers } from '../../api/user/PublicUser';
 import LoadingSpinner from '../components/LoadingSpinner';
 import PublicUserCard from '../components/PublicUserCard';
-import UserCard from '../components/UserCard';
 
 /* Renders the ForYou page for adding a document. */
 const ForYou = () => {
@@ -25,26 +24,6 @@ const ForYou = () => {
       ready: rdy,
     };
   }, []);
-
-  // On submit, insert the data.
-  const submit = (data, formRef) => {
-    const { name, quantity, condition } = data;
-    const owner = Meteor.user().username;
-    Stuffs.collection.insert(
-      { name, quantity, condition, owner },
-      (error) => {
-        if (error) {
-          swal('Error', error.message, 'error');
-        } else {
-          swal('Success', 'Item added successfully', 'success');
-          formRef.reset();
-        }
-      },
-    );
-  };
-
-  // Render the form. Use Uniforms: https://github.com/vazco/uniforms
-  const fRef = null;
   return (ready ? (
     <Container id="foryou-page" className="py-3">
       <Row className="justify-content-center">
@@ -57,7 +36,7 @@ const ForYou = () => {
       <Row xs={1} md={4} className="justify-content-center">
         {/* eslint-disable-next-line no-shadow */}
         {users.map(user => (
-          <Col style={{ padding: '20px', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>
+          <Col key={`col-${user._id}`} style={{ padding: '20px', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>
             <PublicUserCard username={user.owner} />
           </Col>
         ))}
