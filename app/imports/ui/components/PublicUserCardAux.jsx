@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, ListGroup} from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Card, ListGroup, Button } from 'react-bootstrap';
 import { UserData } from '../../api/data/Data';
 import { Users } from '../../api/user/User';
 import { PublicUsers } from '../../api/user/PublicUser';
@@ -49,7 +48,7 @@ const PublicUserCardAux = ({ user, userData, admin }) => (
       </ListGroup>
       <Card.Text />
       {
-        admin ? <Link to={`/profile/${user._id}`} className="btn btn-secondary" role="button" id="button">Edit Profile</Link> : ''
+        admin ? <a href="/profile" className="btn btn-secondary" role="button" id="button">Edit Profile</a> : ''
       }
       {
         // eslint-disable-next-line max-len
