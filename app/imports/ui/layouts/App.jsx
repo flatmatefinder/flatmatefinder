@@ -23,6 +23,7 @@ import Profile from '../pages/Profile';
 import Settings from '../pages/Settings';
 import ListContacts from '../pages/ListContacts';
 import ForYouAdmin from '../pages/ForYouAdmin';
+import EditContact from '../pages/EditContact';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 // getting here lowkey kinda hard
@@ -49,6 +50,7 @@ const App = () => {
           <Route path="/home" element={<ProtectedRoute><Landing /></ProtectedRoute>} />
           <Route path="/list" element={<ProtectedRoute><ListContacts /></ProtectedRoute>} />
           <Route path="/SOMETHING IDK MAYBE COULD EVEN DELETE THIS" element={<ProtectedRoute>{/* PUT THING HERE */}</ProtectedRoute>} />
+          <Route path="/edit/:_id" element={<ProtectedRoute><EditContact /></ProtectedRoute>} />
           <Route path="/map" element={<ProtectedRoute><MapStuff /></ProtectedRoute>} />
           <Route path="/foryou" element={<ProtectedRoute><ForYou /></ProtectedRoute>} />
           <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
