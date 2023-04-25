@@ -1,66 +1,52 @@
 import React from 'react';
 import { Card, Col, Container, Row } from 'react-bootstrap';
-import { AutoForm, ErrorsField, NumField, SelectField, SubmitField, TextField } from 'uniforms-bootstrap5';
-import swal from 'sweetalert';
 import { Meteor } from 'meteor/meteor';
-import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
-import SimpleSchema from 'simpl-schema';
-import { Stuffs } from '../../api/stuff/Stuff';
-
-// Create a schema to specify the structure of the data to appear in the form.
-const formSchema = new SimpleSchema({
-  name: String,
-  quantity: Number,
-  condition: {
-    type: String,
-    allowedValues: ['excellent', 'good', 'fair', 'poor'],
-    defaultValue: 'good',
-  },
-});
-
-const bridge = new SimpleSchema2Bridge(formSchema);
+import { useTracker } from 'meteor/react-meteor-data';
+import UserCard from '../components/UserCard';
 
 /* Renders the ForYou page for adding a document. */
 const ForYou = () => {
+  const { currentUser } = useTracker(() => ({
+    currentUser: Meteor.user() ? Meteor.user().username : '',
+  }), []);
 
-  // On submit, insert the data.
-  const submit = (data, formRef) => {
-    const { name, quantity, condition } = data;
-    const owner = Meteor.user().username;
-    Stuffs.collection.insert(
-      { name, quantity, condition, owner },
-      (error) => {
-        if (error) {
-          swal('Error', error.message, 'error');
-        } else {
-          swal('Success', 'Item added successfully', 'success');
-          formRef.reset();
-        }
-      },
-    );
-  };
-
-  // Render the form. Use Uniforms: https://github.com/vazco/uniforms
-  let fRef = null;
   return (
-    <Container className="py-3">
-      <Row className="justify-content-center">
-        <Col xs={5}>
-          <Col className="text-center"><h2>Add Stuff</h2></Col>
-          <AutoForm ref={ref => { fRef = ref; }} schema={bridge} onSubmit={data => submit(data, fRef)}>
-            <Card>
+    <>
+      {Roles.userIsInRole(Meteor.userId(), 'admin') ? ([
+        <Col>
+          <Container className="mt-2 d-flex justify-content-center">
+            <Card style={{ width: '18rem', background: '#586266' }} className="landing-card">
+              <Card.Img variant="top" src="https://lumiere-a.akamaihd.net/v1/images/c94eed56a5e84479a2939c9172434567c0147d4f.jpeg?region=0,0,600,600&width=480" />
               <Card.Body>
-                <TextField name="name" />
-                <NumField name="quantity" decimal={null} />
-                <SelectField name="condition" />
-                <SubmitField value="Submit" />
-                <ErrorsField />
+                <Card.Title>Winnie the Pooh</Card.Title>
+                <Card.Text>
+                  He is a bear who loves honey and can eat honey all day!
+                </Card.Text>
+                <a href="/profile" className="btn btn-secondary" role="button" id="button">Edit Profile</a>
               </Card.Body>
             </Card>
-          </AutoForm>
-        </Col>
-      </Row>
-    </Container>
+          </Container>
+        </Col>,
+
+      ]) : currentUser ? ([
+        <Col>
+          <Container className="mt-2 d-flex justify-content-center">
+            <Card style={{ width: '18rem', background: '#586266' }} className="landing-card">
+              <Card.Img variant="top" src="https://lumiere-a.akamaihd.net/v1/images/c94eed56a5e84479a2939c9172434567c0147d4f.jpeg?region=0,0,600,600&width=480" />
+              <Card.Body>
+                <Card.Title>Winnie the Pooh (2) </Card.Title>
+                <Card.Text>
+                  He is a bear who loves honey and can eat honey all day!
+                </Card.Text>
+                <a href="/profile" className="btn btn-secondary" role="button" id="button">Edit Profile</a>
+              </Card.Body>
+            </Card>
+          </Container>
+        </Col>,
+      ]) : ''}
+
+    </>
+
   );
 };
 
