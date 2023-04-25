@@ -44,7 +44,7 @@ const ForYou = () => {
   };
 
   // Render the form. Use Uniforms: https://github.com/vazco/uniforms
-  let fRef = null;
+  const fRef = null;
   return (ready ? (
     <Container id="foryou-page" className="py-3">
       <Row className="justify-content-center">
