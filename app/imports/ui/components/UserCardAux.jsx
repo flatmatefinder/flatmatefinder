@@ -1,19 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, ListGroup } from 'react-bootstrap';
-import { ThreeDots } from 'react-bootstrap-icons';
 import { UserData } from '../../api/data/Data';
 import DataText from './DataText';
 import { sleepIntToString } from '../../utils/Utils';
 
 const UserCardAux = ({ user, userData }) => (
-  <Card className="h-100">
-    <Card.Header className="text-center"><img src={user.pfp} alt="the profile pic couldn't load" width="200" style={{ borderRadius: '50%' }} /></Card.Header>
-    <Card.Body className="text-center">
-      <Card.Title>{user.name}</Card.Title>
-      {/* eslint-disable-next-line no-nested-ternary */}
-      <Card.Subtitle>Sex: {user.sex === 0 ? 'Male' : user.sex === 1 ? 'Female' : 'Other'}, Alcohol: {user.alcohol ? 'True' : 'False'}, Sleep Time: {sleepIntToString(user.sleep)}</Card.Subtitle>
-      <ListGroup variant="flush" style={{ height: '200px', overflowY: 'scroll', maxHeight: '200px', overflowX: 'hidden' }}>
+
+  <Card style={{ width: '18rem', background: '#586266' }} className="landing-card">
+    <Card.Img style={{ borderRadius: '50%', width: '70%', padding: '15px' }} src={user.pfp} alt="profile picture" className="mx-auto" />
+    <Card.Body>
+      <Card.Title className="text-center" style={{ color: 'white' }}>{user.name}</Card.Title>
+      <Card.Subtitle />
+      <ListGroup variant="flush" style={{ height: '100px', overflowY: 'scroll', maxHeight: '100px', overflowX: 'hidden' }}>
+        <ListGroup.Item>Sex: {user.sex === 0 ? 'Male' : user.sex === 1 ? 'Female' : 'Other'}</ListGroup.Item>
+        <ListGroup.Item>Alcohol: {user.alcohol ? ' True' : ' False'}</ListGroup.Item>
+        <ListGroup.Item>Sleep Time: {sleepIntToString(user.sleep)}</ListGroup.Item>
         {userData.map((data) => {
           if (data.data_type !== 'contact') {
             return <DataText key={data._id} data={data} />;
@@ -28,7 +30,9 @@ const UserCardAux = ({ user, userData }) => (
         })}
         {/* All this did was make it so that all of their information loads first, and then the contact information. */}
       </ListGroup>
-      <ThreeDots />
+      <Card.Text />
+      <a href="/profile" className="btn btn-secondary" role="button" id="button">Edit Profile</a>
+
     </Card.Body>
   </Card>
 );

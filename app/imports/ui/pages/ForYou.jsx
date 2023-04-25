@@ -1,27 +1,30 @@
 import React from 'react';
 import { Card, Col, Container, Row } from 'react-bootstrap';
-import { AutoForm, ErrorsField, NumField, SelectField, SubmitField, TextField } from 'uniforms-bootstrap5';
-import swal from 'sweetalert';
 import { Meteor } from 'meteor/meteor';
-import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
-import SimpleSchema from 'simpl-schema';
-import { Stuffs } from '../../api/stuff/Stuff';
-
-// Create a schema to specify the structure of the data to appear in the form.
-const formSchema = new SimpleSchema({
-  name: String,
-  quantity: Number,
-  condition: {
-    type: String,
-    allowedValues: ['excellent', 'good', 'fair', 'poor'],
-    defaultValue: 'good',
-  },
-});
-
-const bridge = new SimpleSchema2Bridge(formSchema);
+import { useTracker } from 'meteor/react-meteor-data';
+import { PublicUsers } from '../../api/user/PublicUser';
+import LoadingSpinner from '../components/LoadingSpinner';
+import PublicUserCard from '../components/PublicUserCard';
+import UserCard from '../components/UserCard';
 
 /* Renders the ForYou page for adding a document. */
 const ForYou = () => {
+  const { ready, users } = useTracker(() => {
+    // Note that this subscription will get cleaned up
+    // when your component is unmounted or deps change.
+    // Get access to Stuff documents.
+    const subscription = Meteor.subscribe(PublicUsers.userPublicationName);
+    // Determine if the subscription is ready
+    const rdy1 = subscription.ready();
+    const rdy = rdy1;
+    // Get the Stuff documents
+    const userItems = PublicUsers.collection.find({}).fetch();
+    console.log(userItems);
+    return {
+      users: userItems,
+      ready: rdy,
+    };
+  }, []);
 
   // On submit, insert the data.
   const submit = (data, formRef) => {
@@ -42,26 +45,31 @@ const ForYou = () => {
 
   // Render the form. Use Uniforms: https://github.com/vazco/uniforms
   let fRef = null;
-  return (
+  return (ready ? (
     <Container id="foryou-page" className="py-3">
       <Row className="justify-content-center">
-        <Col xs={5}>
-          <Col className="text-center"><h2>Add Stuff</h2></Col>
-          <AutoForm ref={ref => { fRef = ref; }} schema={bridge} onSubmit={data => submit(data, fRef)}>
-            <Card>
-              <Card.Body>
-                <TextField name="name" />
-                <NumField name="quantity" decimal={null} />
-                <SelectField name="condition" />
-                <SubmitField value="Submit" />
-                <ErrorsField />
-              </Card.Body>
-            </Card>
-          </AutoForm>
+        <Col md={7}>
+          <Col className="text-center">
+            <h2>User Cards</h2>
+          </Col>
         </Col>
       </Row>
+      <Row xs={1} md={4} className="justify-content-center">
+        {/* eslint-disable-next-line no-shadow */}
+        {users.map(user => (
+          <Col>
+            <PublicUserCard username={user.owner} />
+          </Col>
+        ))}
+      </Row>
     </Container>
-  );
+  )
+  /** users.forEach((user) => {
+      console.log('hello');
+
+    }* */
+
+    : <LoadingSpinner />);
 };
 
 export default ForYou;

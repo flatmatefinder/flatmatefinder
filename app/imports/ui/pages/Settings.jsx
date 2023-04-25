@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
+import { Container } from 'react-bootstrap';
 import SideNav from '../components/SideNav';
 import DeleteAccountPopup from '../components/DeleteAccountPopup';
-import { Container } from 'react-bootstrap';
 
 const Settings = () => {
   const [selectedOption, setSelectedOption] = useState(null);

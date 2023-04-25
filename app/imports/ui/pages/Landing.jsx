@@ -38,14 +38,9 @@ const Landing = () => {
         </Row>,
 
         <Row style={{ background: '#434F54', color: 'white', padding: '100px' }}>
-          <h3 style={{ fontSize: '35px' }}>Edit the Content Pages</h3>
-          <p style={{ fontSize: '30px' }}> Look over the For You and Map pages to ensure everything is in good standing and users have appropriate profiles.
-          </p>
-
           <Col>
-            <h3 style={{ fontSize: '35px' }}>Step 1</h3>
-            <p style={{ fontSize: '30px' }}> Start with creating your profile. Add a profile picture. Finish off with descriptions
-              about yourself and socials!
+            <h3 style={{ fontSize: '35px' }}>Edit the Content Pages</h3>
+            <p style={{ fontSize: '30px' }}> Look over the For You and Map pages to ensure everything is in good standing and users have appropriate profiles.
             </p>
             <a href="/profile" className="btn btn-secondary" role="button" id="button">Create Your Profile</a>
           </Col>
@@ -93,18 +88,23 @@ const Landing = () => {
         <Row className="text-center" style={{ background: '#586266', color: 'white', padding: '10px' }}>
           <h3 style={{ fontSize: '35px' }}>Where Do I Start?</h3>
         </Row>,
-        <Col>
-          <h3 style={{ fontSize: '35px' }}>Step 1</h3>
-          <p style={{ fontSize: '30px' }}> Start with creating your profile. Add a profile picture. Finish off with descriptions
-            about yourself and socials!
-          </p>
-          <a href="/profile" className="btn btn-secondary" role="button" id="button">Create Your Profile</a>
-        </Col>,
-        <Col xs={3}>
-          {/* <Container className="mt-2 d-flex justify-content-center">
-            <Card style={{width: '18rem', background: '#586266'}} className="landing-card">
-              <Card.Img variant="top"
-                        src="https://lumiere-a.akamaihd.net/v1/images/c94eed56a5e84479a2939c9172434567c0147d4f.jpeg?region=0,0,600,600&width=480"/>
+
+        <Row style={{ background: '#434F54', color: 'white', padding: '100px' }}>
+          <Col>
+            <h3 style={{ fontSize: '35px' }}>Step 1</h3>
+            <p style={{ fontSize: '30px' }}> Start with creating your profile. Add a profile picture. Finish off with descriptions
+              about yourself and socials!
+            </p>
+            <a href="/profile" className="btn btn-secondary" role="button" id="button">Create Your Profile</a>
+          </Col>
+          <Col>
+            {/*
+          <Container className="mt-2 d-flex justify-content-center">
+             <Card style={{ width: '18rem', background: '#586266' }} className="landing-card">
+              <Card.Img
+                variant="top"
+                src="https://lumiere-a.akamaihd.net/v1/images/c94eed56a5e84479a2939c9172434567c0147d4f.jpeg?region=0,0,600,600&width=480"
+              />
               <Card.Body>
                 <Card.Title>Winnie the Pooh</Card.Title>
                 <Card.Text>
@@ -113,12 +113,13 @@ const Landing = () => {
                 <a href="/profile" className="btn btn-secondary" role="button" id="button">Edit Profile</a>
               </Card.Body>
             </Card>
+
           </Container> */}
-        </Col>,
-        <Row className="justify-content-center">
-          <Col xs={3}>
-            <UserCard />
+            <Container className="mt-2 d-flex justify-content-center">
+              <UserCard />
+            </Container>
           </Col>
+
         </Row>,
         <Row style={{ background: '#586266', color: 'white', padding: '100px' }}>
           <h3 style={{ fontSize: '35px' }}>Step 2</h3>
