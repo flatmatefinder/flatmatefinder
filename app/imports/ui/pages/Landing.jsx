@@ -119,6 +119,7 @@ const Landing = () => {
               <UserCard />
             </Container>
           </Col>
+
         </Row>,
         <Row style={{ background: '#586266', color: 'white', padding: '100px' }}>
           <h3 style={{ fontSize: '35px' }}>Step 2</h3>

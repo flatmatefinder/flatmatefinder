@@ -10,7 +10,7 @@ const UserCardAux = ({ user, userData }) => (
   <Card style={{ width: '18rem', background: '#586266' }} className="landing-card">
     <Card.Img style={{ borderRadius: '50%', width: '70%', padding: '15px' }} src={user.pfp} alt="profile picture" className="mx-auto" />
     <Card.Body>
-      <Card.Title className="text-center">{user.name}</Card.Title>
+      <Card.Title className="text-center" style={{ color: 'white' }}>{user.name}</Card.Title>
       <Card.Subtitle />
       <ListGroup variant="flush" style={{ height: '100px', overflowY: 'scroll', maxHeight: '100px', overflowX: 'hidden' }}>
         <ListGroup.Item>Sex: {user.sex === 0 ? 'Male' : user.sex === 1 ? 'Female' : 'Other'}</ListGroup.Item>
