@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, ListGroup } from 'react-bootstrap';
+import { Card, ListGroup, Button } from 'react-bootstrap';
 import { UserData } from '../../api/data/Data';
+import { Users } from '../../api/user/User';
+import { PublicUsers } from '../../api/user/PublicUser';
 import DataText from './DataText';
 import { sleepIntToString } from '../../utils/Utils';
 
@@ -14,6 +16,7 @@ const PublicUserCardAux = ({ user, userData, admin }) => (
       <Card.Title className="text-center" style={{ color: 'white' }}>{user.name}</Card.Title>
       <Card.Subtitle />
       <ListGroup variant="flush" style={{ height: '100px', overflowY: 'scroll', maxHeight: '100px', overflowX: 'hidden' }}>
+        {/* eslint-disable-next-line no-nested-ternary */}
         { (user.sex !== 3) ? <ListGroup.Item>Gender: {user.sex === 0 ? 'Male' : user.sex === 1 ? 'Female' : 'Other'}</ListGroup.Item> : ''}
         { (user.alcohol !== 2) ? <ListGroup.Item>Drinks Alcohol: {user.alcohol ? ' True' : ' False'}</ListGroup.Item> : ''}
         { (user.sleep !== 24) ? <ListGroup.Item>Sleep Time: {sleepIntToString(user.sleep)}</ListGroup.Item> : ''}
@@ -35,7 +38,7 @@ const PublicUserCardAux = ({ user, userData, admin }) => (
           }
           return '';
         })}
-        {userData.map((data) => {
+        { userData.map((data) => {
           if (data.data_type === 'contact' && user.share_contacts === 0) {
             return <DataText key={data._id} data={data} />;
           }
@@ -46,6 +49,10 @@ const PublicUserCardAux = ({ user, userData, admin }) => (
       <Card.Text />
       {
         admin ? <a href="/profile" className="btn btn-secondary" role="button" id="button">Edit Profile</a> : ''
+      }
+      {
+        // eslint-disable-next-line max-len
+        user.accountsuspended ? <Button variant="success" onClick={(e) => { e.preventDefault(); PublicUsers.collection.update(user._id, { $set: { accountsuspended: false } }, (error) => (error ? console.log(error.message) : 'NO ERROR')); }}>Unsuspend</Button> : <Button variant="danger" onClick={(e) => { e.preventDefault(); PublicUsers.collection.update(user._id, { $set: { accountsuspended: true } }, (error) => (error ? console.log(error.message) : 'NO ERROR')); }}>Suspend</Button>
       }
     </Card.Body>
   </Card>
@@ -63,6 +70,8 @@ PublicUserCardAux.propTypes = {
     share_habits: PropTypes.number,
     share_dealbreakers: PropTypes.number,
     share_contacts: PropTypes.number,
+    accountsuspended: PropTypes.bool,
+    _id: PropTypes.string,
   }).isRequired,
   userData: PropTypes.arrayOf((propValue, key, componentName, location, propFullName) => {
     if (!UserData.test(propValue[key])) {
