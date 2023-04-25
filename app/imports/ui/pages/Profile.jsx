@@ -167,7 +167,7 @@ const Profile = () => {
         console.log(error.message) : ''));
     }
     if (tempPfp !== '') {
-      setUrl(tempName);
+      setUrl(tempPfp);
       Users.collection.update(user._id, { $set: { pfp: tempPfp } }, (error) => (error ?
         console.log(error.message) : ''));
     }

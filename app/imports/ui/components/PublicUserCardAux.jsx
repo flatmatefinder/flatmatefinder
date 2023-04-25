@@ -16,15 +16,27 @@ const PublicUserCardAux = ({ user, userData }) => (
       <ListGroup variant="flush" style={{ height: '100px', overflowY: 'scroll', maxHeight: '100px', overflowX: 'hidden' }}>
         { (user.sex !== 3) ? <ListGroup.Item>Sex: {user.sex === 0 ? 'Male' : user.sex === 1 ? 'Female' : 'Other'}</ListGroup.Item> : ''}
         { (user.alcohol !== 2) ? <ListGroup.Item>Alcohol: {user.alcohol ? ' True' : ' False'}</ListGroup.Item> : ''}
-        { (user.alcohol !== 24) ? <ListGroup.Item>Sleep Time: {sleepIntToString(user.sleep)}</ListGroup.Item> : ''}
-        {userData.map((data) => {
-          if (data.data_type !== 'contact') {
+        { (user.sleep !== 24) ? <ListGroup.Item>Sleep Time: {sleepIntToString(user.sleep)}</ListGroup.Item> : ''}
+        { userData.map((data) => {
+          if (data.data_type === 'preference' && user.share_preferences === 0) {
+            return <DataText key={data._id} data={data} />;
+          }
+          return '';
+        })}
+        { userData.map((data) => {
+          if (data.data_type === 'habit' && user.share_habits === 0) {
+            return <DataText key={data._id} data={data} />;
+          }
+          return '';
+        })}
+        { userData.map((data) => {
+          if (data.data_type === 'dealbreaker' && user.share_dealbreakers === 0) {
             return <DataText key={data._id} data={data} />;
           }
           return '';
         })}
         {userData.map((data) => {
-          if (data.data_type === 'contact') {
+          if (data.data_type === 'contact' && user.share_contacts === 0) {
             return <DataText key={data._id} data={data} />;
           }
           return '';
@@ -46,6 +58,10 @@ PublicUserCardAux.propTypes = {
     alcohol: PropTypes.number,
     sleep: PropTypes.number,
     sex: PropTypes.number,
+    share_preferences: PropTypes.number,
+    share_habits: PropTypes.number,
+    share_dealbreakers: PropTypes.number,
+    share_contacts: PropTypes.number,
   }).isRequired,
   userData: PropTypes.arrayOf((propValue, key, componentName, location, propFullName) => {
     if (!UserData.test(propValue[key])) {
