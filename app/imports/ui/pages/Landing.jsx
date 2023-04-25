@@ -3,9 +3,8 @@ import { Col, Row, Container } from 'react-bootstrap';
 import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
 import { Roles } from 'meteor/alanning:roles';
-import Card from 'react-bootstrap/Card';
 import UserCard from '../components/UserCard';
-import PublicUserCard from "../components/PublicUserCard";
+import PublicUserCard from '../components/PublicUserCard';
 
 /* A simple static component to render some text for the landing page. */
 
@@ -14,9 +13,10 @@ const Landing = () => {
   const { currentUser } = useTracker(() => ({
     currentUser: Meteor.user() ? Meteor.user().username : '',
   }), []);
-// TODO We seriously gotta fix the thing where we can scroll over to the right.
+  // TODO We seriously gotta fix the thing where we can scroll over to the right.
   return (
     <div id="landing-page">
+      {/* eslint-disable-next-line no-nested-ternary */}
       {Roles.userIsInRole(Meteor.userId(), 'admin') ? ([
         <div id="landing-page-image2">
           <Row className="d-flex justify-content-center py-5">
