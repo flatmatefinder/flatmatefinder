@@ -1,8 +1,8 @@
 import React from 'react';
-import { Col, Container, Image, Row } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 /* A simple static component to render some text for the landing page. */
 const AdminLanding = () => (
-  <>
+  <div id="adminlanding-page">
     <div id="landing-page-image1">
       <Row className="d-flex justify-content-center py-5 mt-7">
         <Col xs={9} className="text-center mb-3" style={{ padding: '175px', color: 'white', fontSize: '65px' }}>
@@ -26,7 +26,7 @@ const AdminLanding = () => (
       {/* eslint-disable-next-line max-len */}
       <p style={{ fontSize: '35px' }}>Input information about yourself and your likes/dislikes, indicate your preferred sleeping times, and optional social medias. Then you can either actively look for people to take to the UH Manoa campus or wait for someone to message you through the application to ask for a ride.</p>
     </Row>
-  </>
+  </div>
 );
 
 export default AdminLanding;

@@ -55,9 +55,14 @@ h1 {
   height: auto;
 }
 
-#suggestions {
+#suggestions-footer {
     text-decoration:none;
     color: white;
+}
+
+#meettheteam-footer {
+  text-decoration:none;
+  color: white;
 }
 
 #meet-team-text {
@@ -133,4 +138,13 @@ h1 {
 
 .landing-card {
 
+}
+
+#card-img {
+  border-radius: 50%;
+  width: 220px;
+  height: 220px;
+  padding: 15px;
+  display: block;
+  object-fit: cover;
 }

@@ -8,7 +8,7 @@ import { sleepIntToString } from '../../utils/Utils';
 const UserCardAux = ({ user, userData }) => (
 
   <Card style={{ width: '18rem', background: '#586266' }} className="landing-card">
-    <Card.Img style={{ borderRadius: '50%', width: '70%', padding: '15px' }} src={user.pfp} alt="profile picture" className="mx-auto" />
+    <Card.Img src={user.pfp} alt="profile picture" className="mx-auto circular-portrait" id="card-img" />
     <Card.Body>
       <Card.Title className="text-center" style={{ color: 'white' }}>{user.name}</Card.Title>
       <Card.Subtitle />

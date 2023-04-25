@@ -3,7 +3,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 
 /** Render a Not Found page if the user enters a URL that doesn't match any route. */
 const TermsAndConditions = () => (
-  <Container className="pt-3 text-center">
+  <Container id="termsandconditions-page" className="pt-3 text-center">
     <Row className="justify-content-center">
       <Col xs={5} className="text-center">
         <h2>FlatmateFinder Terms of Service</h2>

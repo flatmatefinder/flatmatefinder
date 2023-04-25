@@ -15,7 +15,7 @@ const Landing = () => {
   }), []);
 
   return (
-    <>
+    <div id="landing-page">
       {Roles.userIsInRole(Meteor.userId(), 'admin') ? ([
         <div id="landing-page-image2">
           <Row className="d-flex justify-content-center py-5">
@@ -45,17 +45,25 @@ const Landing = () => {
             <a href="/profile" className="btn btn-secondary" role="button" id="button">Create Your Profile</a>
           </Col>
           <Col>
+            {/*
+          <Container className="mt-2 d-flex justify-content-center">
+             <Card style={{ width: '18rem', background: '#586266' }} className="landing-card">
+              <Card.Img
+                variant="top"
+                src="https://lumiere-a.akamaihd.net/v1/images/c94eed56a5e84479a2939c9172434567c0147d4f.jpeg?region=0,0,600,600&width=480"
+              />
+              <Card.Body>
+                <Card.Title>Winnie the Pooh</Card.Title>
+                <Card.Text>
+                  He is a bear who loves honey and can eat honey all day!
+                </Card.Text>
+                <a href="/profile" className="btn btn-secondary" role="button" id="button">Edit Profile</a>
+              </Card.Body>
+            </Card>
+
+          </Container> */}
             <Container className="mt-2 d-flex justify-content-center">
-              <Card style={{ width: '18rem', background: '#586266' }} className="landing-card">
-                <Card.Img variant="top" src="https://lumiere-a.akamaihd.net/v1/images/c94eed56a5e84479a2939c9172434567c0147d4f.jpeg?region=0,0,600,600&width=480" />
-                <Card.Body>
-                  <Card.Title>Winnie the Pooh</Card.Title>
-                  <Card.Text>
-                    He is a bear who loves honey and can eat honey all day!
-                  </Card.Text>
-                  <a href="/profile" className="btn btn-secondary" role="button" id="button">Edit Profile</a>
-                </Card.Body>
-              </Card>
+              <UserCard />
             </Container>
           </Col>
         </Row>,
@@ -164,7 +172,7 @@ const Landing = () => {
         </Row>,
       ])}
 
-    </>
+    </div>
 
   );
 };
