@@ -4,6 +4,7 @@ import { Stuffs } from '../../api/stuff/Stuff';
 import { Users } from '../../api/user/User';
 import { UserData } from '../../api/data/Data';
 import { Contacts } from '../../api/contact/Contacts';
+import { PublicUsers } from '../../api/user/PublicUser';
 
 // User-level publication.
 // If logged in, then publish documents owned by this user. Otherwise publish nothing.
@@ -26,7 +27,7 @@ Meteor.publish(Users.userPublicationName, function () {
 Meteor.publish(UserData.userPublicationName, function () {
   if (this.userId) {
     const username = Meteor.users.findOne(this.userId).username;
-    return UserData.collection.find({ owner: username });
+    return UserData.collection.find();
   }
   return this.ready();
 });
@@ -35,6 +36,12 @@ Meteor.publish(Contacts.userPublicationName, function () {
   if (this.userId) {
     const username = Meteor.users.findOne(this.userId).username;
     return Contacts.collection.find({ owner: username });
+  }
+  return this.ready();
+});
+Meteor.publish(PublicUsers.userPublicationName, function () {
+  if (this.userId) {
+    return PublicUsers.collection.find();
   }
   return this.ready();
 });
