@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, ListGroup } from 'react-bootstrap';
+import { Card, ListGroup} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { UserData } from '../../api/data/Data';
+import { Users } from '../../api/user/User';
+import { PublicUsers } from '../../api/user/PublicUser';
 import DataText from './DataText';
 import { sleepIntToString } from '../../utils/Utils';
 
@@ -37,7 +39,7 @@ const PublicUserCardAux = ({ user, userData, admin }) => (
           }
           return '';
         })}
-        {userData.map((data) => {
+        { userData.map((data) => {
           if (data.data_type === 'contact' && user.share_contacts === 0) {
             return <DataText key={data._id} data={data} />;
           }
@@ -48,6 +50,10 @@ const PublicUserCardAux = ({ user, userData, admin }) => (
       <Card.Text />
       {
         admin ? <Link to={`/profile/${user._id}`} className="btn btn-secondary" role="button" id="button">Edit Profile</Link> : ''
+      }
+      {
+        // eslint-disable-next-line max-len
+        user.accountsuspended ? <Button variant="success" onClick={(e) => { e.preventDefault(); PublicUsers.collection.update(user._id, { $set: { accountsuspended: false } }, (error) => (error ? console.log(error.message) : 'NO ERROR')); }}>Unsuspend</Button> : <Button variant="danger" onClick={(e) => { e.preventDefault(); PublicUsers.collection.update(user._id, { $set: { accountsuspended: true } }, (error) => (error ? console.log(error.message) : 'NO ERROR')); }}>Suspend</Button>
       }
     </Card.Body>
   </Card>
@@ -65,6 +71,7 @@ PublicUserCardAux.propTypes = {
     share_habits: PropTypes.number,
     share_dealbreakers: PropTypes.number,
     share_contacts: PropTypes.number,
+    accountsuspended: PropTypes.bool,
     _id: PropTypes.string,
   }).isRequired,
   userData: PropTypes.arrayOf((propValue, key, componentName, location, propFullName) => {
