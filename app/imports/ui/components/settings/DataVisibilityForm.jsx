@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Form } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
-import { Users } from '../../api/user/User';
-import { PublicUsers } from '../../api/user/PublicUser';
-import LoadingSpinner from './LoadingSpinner';
+import { Users } from '../../../api/user/User';
+import { PublicUsers } from '../../../api/user/PublicUser';
+import LoadingSpinner from '../LoadingSpinner';
 
 let user = null;
 let publicUser = null;

@@ -1,10 +1,10 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
-import { UserData } from '../../api/data/Data';
-import { Users } from '../../api/user/User';
+import { UserData } from '../../../api/data/Data';
+import { Users } from '../../../api/user/User';
 import UserCardAux from './UserCardAux';
-import LoadingSpinner from './LoadingSpinner';
+import LoadingSpinner from '../LoadingSpinner';
 
 let user = null;
 let data = null;

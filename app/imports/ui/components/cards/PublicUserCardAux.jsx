@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, ListGroup } from 'react-bootstrap';
-import { UserData } from '../../api/data/Data';
-import DataText from './DataText';
-import { sleepIntToString } from '../../utils/Utils';
+import { UserData } from '../../../api/data/Data';
+import DataText from '../DataText';
+import { sleepIntToString } from '../../../utils/Utils';
 import SuspendButton from './SuspendButton';
 
 const fallBackSrc = 'https://wallpapers.com/images/featured/en3dnh2zi84sgt3t.jpg';

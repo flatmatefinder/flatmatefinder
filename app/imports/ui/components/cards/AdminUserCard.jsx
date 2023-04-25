@@ -2,9 +2,9 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
-import { UserData } from '../../api/data/Data';
-import LoadingSpinner from './LoadingSpinner';
-import { PublicUsers } from '../../api/user/PublicUser';
+import { UserData } from '../../../api/data/Data';
+import LoadingSpinner from '../LoadingSpinner';
+import { PublicUsers } from '../../../api/user/PublicUser';
 import PublicUserCardAux from './PublicUserCardAux';
 
 const AdminUserCard = ({ username }) => {

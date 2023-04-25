@@ -5,25 +5,25 @@ import { useTracker } from 'meteor/react-meteor-data';
 import { Roles } from 'meteor/alanning:roles';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Footer from '../components/Footer';
-import Landing from '../pages/Landing';
+import Landing from '../pages/landing/Landing';
 import MapStuff from '../pages/MapStuff';
-import ForYou from '../pages/ForYou';
+import ForYou from '../pages/forYou/ForYou';
 import NotFound from '../pages/NotFound';
-import SignUp from '../pages/SignUp';
-import SignOut from '../pages/SignOut';
+import SignUp from '../pages/account/SignUp';
+import SignOut from '../pages/account/SignOut';
 import NavBar from '../components/NavBar';
-import SignIn from '../pages/SignIn';
+import SignIn from '../pages/account/SignIn';
 import NotAuthorized from '../pages/NotAuthorized';
 import LoadingSpinner from '../components/LoadingSpinner';
-import PrivacyPolicy from '../pages/PrivacyPolicy';
-import TermsAndConditions from '../pages/TermsAndConditions';
+import PrivacyPolicy from '../pages/info/PrivacyPolicy';
+import TermsAndConditions from '../pages/info/TermsAndConditions';
 import Suggestions from '../pages/Suggestions';
-import MeettheTeam from '../pages/MeettheTeam';
+import MeettheTeam from '../pages/info/MeettheTeam';
 import Profile from '../pages/Profile';
 import Settings from '../pages/Settings';
-import ListContacts from '../pages/ListContacts';
-import ForYouAdmin from '../pages/ForYouAdmin';
-import EditContact from '../pages/EditContact';
+import ListContacts from '../pages/contactsAndStuff/ListContacts';
+import ForYouAdmin from '../pages/forYou/ForYouAdmin';
+import EditContact from '../pages/contactsAndStuff/EditContact';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 // getting here lowkey kinda hard

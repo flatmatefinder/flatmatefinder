@@ -3,8 +3,8 @@ import { Col, Row, Container } from 'react-bootstrap';
 import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
 import { Roles } from 'meteor/alanning:roles';
-import UserCard from '../components/UserCard';
-import PublicUserCard from '../components/PublicUserCard';
+import UserCard from '../../components/cards/UserCard';
+import PublicUserCard from '../../components/cards/PublicUserCard';
 
 /* A simple static component to render some text for the landing page. */
 

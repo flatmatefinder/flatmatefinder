@@ -4,9 +4,9 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
-import { PublicUsers } from '../../api/user/PublicUser';
-import { Users } from '../../api/user/User';
-import LoadingSpinner from './LoadingSpinner';
+import { PublicUsers } from '../../../api/user/PublicUser';
+import { Users } from '../../../api/user/User';
+import LoadingSpinner from '../LoadingSpinner';
 
 const setFalse = (publicUser, users, e) => {
   e.preventDefault();
