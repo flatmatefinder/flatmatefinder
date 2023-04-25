@@ -6,7 +6,7 @@ import { ListGroup } from 'react-bootstrap';
 const DataText = ({ data }) => (
   <ListGroup.Item>
     {/* eslint-disable-next-line no-nested-ternary */}
-    <p>{data.data_type === 'preference' ? 'I want someone who is: ' : data.data_type === 'habit' ? 'I am: ' : data.data_type === 'contact' ? 'Contact me at:' : 'You can\'t be:'} {data.data}</p>
+    <p>{data.data_type === 'preference' ? 'I want someone who is: ' : data.data_type === 'habit' ? 'I am: ' : data.data_type === 'contact' ? 'Contact me at: ' : 'You can\'t be:'} {data.data}</p>
   </ListGroup.Item>
 );
 
