@@ -13,6 +13,7 @@ const UserCardAux = ({ user, userData }) => (
       <Card.Title className="text-center" style={{ color: 'white' }}>{user.name}</Card.Title>
       <Card.Subtitle />
       <ListGroup variant="flush" style={{ height: '100px', overflowY: 'scroll', maxHeight: '100px', overflowX: 'hidden' }}>
+        {/* eslint-disable-next-line no-nested-ternary */}
         <ListGroup.Item>Sex: {user.sex === 0 ? 'Male' : user.sex === 1 ? 'Female' : 'Other'}</ListGroup.Item>
         <ListGroup.Item>Alcohol: {user.alcohol ? ' True' : ' False'}</ListGroup.Item>
         <ListGroup.Item>Sleep Time: {sleepIntToString(user.sleep)}</ListGroup.Item>
