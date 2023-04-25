@@ -8,29 +8,37 @@ import { Users } from '../../api/user/User';
 import { UserData } from '../../api/data/Data';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { sleepIntToString } from '../../utils/Utils';
+import { PublicUsers } from '../../api/user/PublicUser';
 
 let initial = 0;
+let suspended = false;
 
 const Profile = () => {
-  const { ready, user, data } = useTracker(() => {
+  const { ready, user, data, publicUser } = useTracker(() => {
     // Note that this subscription will get cleaned up
     // when your component is unmounted or deps change.
     // Get access to Stuff documents.
     const subscription = Meteor.subscribe(Users.userPublicationName);
     const subscriptionData = Meteor.subscribe(UserData.userPublicationName);
+    const subscriptionPublicUser = Meteor.subscribe(PublicUsers.userPublicationName);
     // Determine if the subscription is ready
     const rdy1 = subscription.ready();
     const rdy2 = subscriptionData.ready();
-    const rdy = rdy1 && rdy2;
+    const rdy3 = subscriptionPublicUser.ready();
+    const rdy = rdy1 && rdy2 && rdy3;
     // Get the Stuff documents
     const userItems = Users.collection.find({}).fetch();
+    const publicUserItems = PublicUsers.collection.find({}).fetch();
+
     const userItem = _.find(userItems, () => true);
     const userData = UserData.collection.find({}).fetch();
+    const publicUserItem = _.find(publicUserItems, (publicUserItemThing) => publicUserItemThing.owner === userItem.owner);
 
     return {
       data: userData,
       user: userItem,
       ready: rdy,
+      publicUser: publicUserItem,
     };
   }, []);
   // const pfpGetter = (e) => {
@@ -41,7 +49,9 @@ const Profile = () => {
   //     .then(result => console.log(result));
   // };
 
-  const suspended = user.accountsuspended; // check if the user is suspended
+  if (ready) {
+    suspended = user.accountsuspended; // check if the user is suspended
+  }
 
   const getPreferences = () => {
     const list = _.filter(data, (userData) => userData.data_type === 'preference');
@@ -67,13 +77,27 @@ const Profile = () => {
   const [habits, setHabits] = useState([]);
   const [alcohol, setAlcohol] = useState('False');
   const [alcoholPref, setAlcoholPref] = useState('False');
-  const [url, setUrl] = useState('');
-  const [name, setName] = useState('');
+  const [url, setUrl] = useState('DEFAULT');
+  const [name, setName] = useState('DEFAULT');
   const [gender, setGender] = useState('Other');
   const [genderPref, setGenderPref] = useState('No Preference');
   const [sleep, setSleep] = useState(0);
   const [sleepPref, setSleepPref] = useState(0);
 
+  if (ready) {
+    PublicUsers.collection.update(publicUser._id, { $set: { pfp: url } });
+    PublicUsers.collection.update(publicUser._id, { $set: { name: name } });
+    if (publicUser.alcohol !== 2) {
+      PublicUsers.collection.update(publicUser._id, { $set: { alcohol: alcohol ? 0 : 1 } });
+    }
+    if (publicUser.sleep !== 24) {
+      PublicUsers.collection.update(publicUser._id, { $set: { sleep: sleep } });
+    }
+    if (publicUser.sex !== 3) {
+      PublicUsers.collection.update(publicUser._id, { $set: { sex: gender === 'Male' ? 0 : gender === 'Female' ? 1 : 2 } });
+      // TODO Fix it
+    }
+  }
   const genderBender = (genderNum) => {
     switch (genderNum) {
     case 0: return 'Male';
@@ -94,7 +118,6 @@ const Profile = () => {
   };
 
   if (ready && initial === 0) {
-    console.log('here');
     setPreferences(getPreferences());
     setDealbreakers(getDealbreakers());
     setSocials(getSocials());
@@ -121,17 +144,11 @@ const Profile = () => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(`User's Id = ${user._id}`);
     const form = e.target;
     const formData = new FormData(form);
     const formJson = Object.fromEntries(formData.entries());
-    console.log(formJson); // (!) This doesn't include multiple select values
-    // Or you can get an array of name-value pairs.
-    console.log([...formData.entries()]);
-    console.log(`Stuff = ${socials} Other stuff = ${habits}`);
-
     const tempName = formData.get('name');
-    const tempPfp = formData.get('pfp'); {/* anything with tempPfp is temporary */}
+    const tempPfp = formData.get('pfp'); { /* anything with tempPfp is temporary */ }
     const tempPreference = formData.get('preference');
     const tempHabit = formData.get('habit');
     const tempDealbreaker = formData.get('dealbreaker');
@@ -780,7 +797,7 @@ const Profile = () => {
                 </Col>
               </Row>
               <hr />
-              <Button disabled={ suspended } variant={ suspended ? "danger" : "success" } type="submit">Submit</Button>
+              <Button disabled={suspended} variant={suspended ? 'danger' : 'success'} type="submit">Submit</Button>
             </div>
           </Col>
         </Row>
