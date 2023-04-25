@@ -30,7 +30,7 @@ const DataVisibilityForm = () => {
       ready: rdy,
     };
   }, []);
-
+  // TODO Whatever the hell that weird bug was, must fix
   const [shareAlcohol, setShareAlcohol] = useState(true);
   const [shareSleep, setShareSleep] = useState(true);
   const [shareSex, setShareSex] = useState(true);

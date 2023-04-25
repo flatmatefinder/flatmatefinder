@@ -1,3 +1,5 @@
+import { Users } from '../api/user/User';
+
 export const sleepIntToString = (sleepInt) => {
   switch (sleepInt) {
   case 0: return '12:00AM';
@@ -26,4 +28,13 @@ export const sleepIntToString = (sleepInt) => {
   case 23: return '11:00PM';
   default: return 'Not a time';
   }
+};
+
+// export const match = (person1, person2) => {
+//
+// };
+
+export const getUserIdFromPublicUser = (username) => {
+  const user = Users.collection.find({ owner: username });
+  return user._id;
 };
