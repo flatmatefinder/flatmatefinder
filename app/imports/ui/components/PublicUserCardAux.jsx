@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, ListGroup } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import { UserData } from '../../api/data/Data';
 import DataText from './DataText';
 import { sleepIntToString } from '../../utils/Utils';
@@ -45,7 +46,7 @@ const PublicUserCardAux = ({ user, userData, admin }) => (
       </ListGroup>
       <Card.Text />
       {
-        admin ? <a href="/profile" className="btn btn-secondary" role="button" id="button">Edit Profile</a> : ''
+        admin ? <Link to={`/profile/${user._id}`} className="btn btn-secondary" role="button" id="button">Edit Profile</Link> : ''
       }
     </Card.Body>
   </Card>
@@ -63,6 +64,7 @@ PublicUserCardAux.propTypes = {
     share_habits: PropTypes.number,
     share_dealbreakers: PropTypes.number,
     share_contacts: PropTypes.number,
+    _id: PropTypes.string,
   }).isRequired,
   userData: PropTypes.arrayOf((propValue, key, componentName, location, propFullName) => {
     if (!UserData.test(propValue[key])) {
