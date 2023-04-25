@@ -38,7 +38,7 @@ const ForYou = () => {
       <Row xs={1} md={4} className="justify-content-center">
         {/* eslint-disable-next-line no-shadow */}
         {users.map(user => (
-          <Col>
+          <Col style={{ padding: '20px', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>
             <PublicUserCard username={user.owner} />
           </Col>
         ))}
