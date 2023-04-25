@@ -7,8 +7,8 @@ import SimpleSchema from 'simpl-schema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import { AutoForm, ErrorsField, SubmitField, TextField } from 'uniforms-bootstrap5';
 import swal from 'sweetalert';
-import { Users } from '../../api/user/User';
-import { PublicUsers } from '../../api/user/PublicUser';
+import { Users } from '../../../api/user/User';
+import { PublicUsers } from '../../../api/user/PublicUser';
 
 /**
  * SignUp component is similar to signin component, but we create a new user instead.

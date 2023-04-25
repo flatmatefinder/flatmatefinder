@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, ListGroup } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import { UserData } from '../../api/data/Data';
-import DataText from './DataText';
-import { sleepIntToString } from '../../utils/Utils';
+import { UserData } from '../../../api/data/Data';
+import DataText from '../DataText';
+import { sleepIntToString } from '../../../utils/Utils';
+import SuspendButton from './SuspendButton';
 
 const fallBackSrc = 'https://wallpapers.com/images/featured/en3dnh2zi84sgt3t.jpg';
 const PublicUserCardAux = ({ user, userData, admin }) => (
@@ -37,7 +37,7 @@ const PublicUserCardAux = ({ user, userData, admin }) => (
           }
           return '';
         })}
-        {userData.map((data) => {
+        { userData.map((data) => {
           if (data.data_type === 'contact' && user.share_contacts === 0) {
             return <DataText key={data._id} data={data} />;
           }
@@ -46,8 +46,12 @@ const PublicUserCardAux = ({ user, userData, admin }) => (
         {/* All this did was make it so that all of their information loads first, and then the contact information. */}
       </ListGroup>
       <Card.Text />
+      {[
+        admin ? <a href="/profile" className="btn btn-secondary" role="button" id="button">Edit Profile</a> : '',
+        admin ? <SuspendButton publicUser={user} /> : '',
+      ]}
       {
-        admin ? <Link to={`/profile/${user._id}`} className="btn btn-secondary" role="button" id="button">Edit Profile</Link> : ''
+        // eslint-disable-next-line max-len
       }
     </Card.Body>
   </Card>
@@ -65,6 +69,7 @@ PublicUserCardAux.propTypes = {
     share_habits: PropTypes.number,
     share_dealbreakers: PropTypes.number,
     share_contacts: PropTypes.number,
+    accountsuspended: PropTypes.bool,
     _id: PropTypes.string,
   }).isRequired,
   userData: PropTypes.arrayOf((propValue, key, componentName, location, propFullName) => {

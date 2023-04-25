@@ -2,9 +2,9 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Col, Container, Row } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
-import LoadingSpinner from '../components/LoadingSpinner';
-import Contact from '../components/Contact';
-import { Contacts } from '../../api/contact/Contacts';
+import LoadingSpinner from '../../components/LoadingSpinner';
+import Contact from '../../components/contactsAndStuff/Contact';
+import { Contacts } from '../../../api/contact/Contacts';
 
 const ListContacts = () => {
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
