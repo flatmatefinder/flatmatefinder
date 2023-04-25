@@ -52,7 +52,7 @@ const Profile = () => {
   if (ready) {
     user = _.find(users, () => true);
     publicUser = _.find(publicUsers, (publicUserItemThing) => publicUserItemThing.owner === user.owner);
-    data = _.find(datas, (dat) => dat.owner === user.owner);
+    data = _.filter(datas, (dat) => dat.owner === user.owner);
     suspended = user.accountsuspended; // check if the user is suspended
   }
 

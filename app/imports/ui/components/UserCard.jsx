@@ -6,8 +6,11 @@ import { Users } from '../../api/user/User';
 import UserCardAux from './UserCardAux';
 import LoadingSpinner from './LoadingSpinner';
 
+let user = null;
+let data = null;
+
 const UserCard = () => {
-  const { ready, user, data } = useTracker(() => {
+  const { ready, users, datas } = useTracker(() => {
     // Note that this subscription will get cleaned up
     // when your component is unmounted or deps change.
     // Get access to Stuff documents.
@@ -19,18 +22,21 @@ const UserCard = () => {
     const rdy = rdy1 && rdy2;
     // Get the Stuff documents
     const userItems = Users.collection.find({}).fetch();
-    const userItem = _.find(userItems, () => true);
-    console.log(userItems);
-    const userData = UserData.collection.find({ owner: userItems.owner }).fetch();
+    const userData = UserData.collection.find({}).fetch();
 
     return {
-      data: userData,
-      user: userItem,
+      datas: userData,
+      users: userItems,
       ready: rdy,
     };
   }, []);
+  if (ready) {
+    user = _.find(users, () => true);
+    data = _.filter(datas, (dat) => dat.owner === user.owner);
+    return <UserCardAux user={user} userData={data} />;
+  }
+  return <LoadingSpinner />;
 
-  return ready ? <UserCardAux user={user} userData={data} /> : <LoadingSpinner />;
 };
 
 export default UserCard;

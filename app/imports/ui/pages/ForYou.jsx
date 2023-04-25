@@ -1,11 +1,10 @@
 import React from 'react';
-import { Card, Col, Container, Row } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
 import { PublicUsers } from '../../api/user/PublicUser';
 import LoadingSpinner from '../components/LoadingSpinner';
 import PublicUserCard from '../components/PublicUserCard';
-import UserCard from '../components/UserCard';
 
 /* Renders the ForYou page for adding a document. */
 const ForYou = () => {
