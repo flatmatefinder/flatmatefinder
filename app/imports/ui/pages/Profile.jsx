@@ -146,9 +146,8 @@ const Profile = () => {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form);
-    const formJson = Object.fromEntries(formData.entries());
     const tempName = formData.get('name');
-    const tempPfp = formData.get('pfp'); { /* anything with tempPfp is temporary */ }
+    const tempPfp = formData.get('pfp'); /* anything with tempPfp is temporary */
     const tempPreference = formData.get('preference');
     const tempHabit = formData.get('habit');
     const tempDealbreaker = formData.get('dealbreaker');
