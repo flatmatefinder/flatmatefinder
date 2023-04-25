@@ -20,6 +20,7 @@ import TermsAndConditions from '../pages/TermsAndConditions';
 import Suggestions from '../pages/Suggestions';
 import MeettheTeam from '../pages/MeettheTeam';
 import Profile from '../pages/Profile';
+import Settings from '../pages/Settings';
 import ListContacts from '../pages/ListContacts';
 import ListContactsAdmin from '../pages/ListContactsAdmin';
 
@@ -47,9 +48,13 @@ const App = () => {
           <Route path="/suggestions" element={<Suggestions />} />
           <Route path="/home" element={<ProtectedRoute><Landing /></ProtectedRoute>} />
           <Route path="/list" element={<ProtectedRoute><ListContacts /></ProtectedRoute>} />
+
+          <Route path="/SOMETHING IDK MAYBE COULD EVEN DELETE THIS" element={<ProtectedRoute>{/* PUT THING HERE */}</ProtectedRoute>} />
           <Route path="/map" element={<ProtectedRoute><MapStuff /></ProtectedRoute>} />
           <Route path="/foryou" element={<ProtectedRoute><ForYou /></ProtectedRoute>} />
           <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+          <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
+          <Route path="/admin" element={<AdminProtectedRoute ready={ready}><ListStuffAdmin /></AdminProtectedRoute>} />
           <Route path="/admin" element={<AdminProtectedRoute ready={ready}><ListContactsAdmin /></AdminProtectedRoute>} />
           <Route path="/notauthorized" element={<NotAuthorized />} />
           <Route path="*" element={<NotFound />} />
