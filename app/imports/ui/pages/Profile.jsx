@@ -40,6 +40,9 @@ const Profile = () => {
   //     .upload(`${user.name}_pfp.jpg`)
   //     .then(result => console.log(result));
   // };
+
+  const suspended = user.accountsuspended; // check if the user is suspended
+
   const getPreferences = () => {
     const list = _.filter(data, (userData) => userData.data_type === 'preference');
     const list2 = list.map(dat => dat.data);
@@ -777,7 +780,7 @@ const Profile = () => {
                 </Col>
               </Row>
               <hr />
-              <Button variant="success" type="submit">Submit</Button>
+              <Button disabled={ suspended } variant={ suspended ? "danger" : "success" } type="submit">Submit</Button>
             </div>
           </Col>
         </Row>

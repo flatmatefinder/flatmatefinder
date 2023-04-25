@@ -49,6 +49,10 @@ class UsersCollection {
         allowedValues: [0, 1, 2, 3], // 0: Male, 1: Female, 2: Don't care, 3: Other
         defaultValue: 2,
       },
+      accountsuspended: {
+        type: Boolean,
+        defaultValue: false,
+      },
     });
     // Attach the schema to the collection, so all attempts to insert a document are checked against schema.
     this.collection.attachSchema(this.schema);
