@@ -3,9 +3,9 @@ import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { UserData } from '../../api/data/Data';
-import UserCardAux from './UserCardAux';
 import LoadingSpinner from './LoadingSpinner';
 import { PublicUsers } from '../../api/user/PublicUser';
+import PublicUserCardAux from './PublicUserCardAux';
 
 const PublicUserCard = ({ username }) => {
   const { ready, user, data } = useTracker(() => {
@@ -30,7 +30,7 @@ const PublicUserCard = ({ username }) => {
     };
   }, []);
 
-  return ready ? <UserCardAux user={user} userData={data} /> : <LoadingSpinner />;
+  return ready ? <PublicUserCardAux user={user} userData={data} /> : <LoadingSpinner />;
 };
 
 PublicUserCard.propTypes = {

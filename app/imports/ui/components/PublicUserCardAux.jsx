@@ -5,17 +5,18 @@ import { UserData } from '../../api/data/Data';
 import DataText from './DataText';
 import { sleepIntToString } from '../../utils/Utils';
 
-const UserCardAux = ({ user, userData }) => (
+const fallBackSrc = 'https://wallpapers.com/images/featured/en3dnh2zi84sgt3t.jpg';
+const PublicUserCardAux = ({ user, userData }) => (
 
   <Card style={{ width: '18rem', background: '#586266' }} className="landing-card">
-    <Card.Img src={user.pfp} alt="profile picture" className="mx-auto circular-portrait card-img" id="card-img" />
+    <Card.Img onError={(e) => { e.target.src = fallBackSrc; }} src={user.pfp} alt="profile picture" className="mx-auto" id="card-img" />
     <Card.Body>
       <Card.Title className="text-center" style={{ color: 'white' }}>{user.name}</Card.Title>
       <Card.Subtitle />
       <ListGroup variant="flush" style={{ height: '100px', overflowY: 'scroll', maxHeight: '100px', overflowX: 'hidden' }}>
-        <ListGroup.Item>Sex: {user.sex === 0 ? 'Male' : user.sex === 1 ? 'Female' : 'Other'}</ListGroup.Item>
-        <ListGroup.Item>Alcohol: {user.alcohol ? ' True' : ' False'}</ListGroup.Item>
-        <ListGroup.Item>Sleep Time: {sleepIntToString(user.sleep)}</ListGroup.Item>
+        { (user.sex !== 3) ? <ListGroup.Item>Sex: {user.sex === 0 ? 'Male' : user.sex === 1 ? 'Female' : 'Other'}</ListGroup.Item> : ''}
+        { (user.alcohol !== 2) ? <ListGroup.Item>Alcohol: {user.alcohol ? ' True' : ' False'}</ListGroup.Item> : ''}
+        { (user.alcohol !== 24) ? <ListGroup.Item>Sleep Time: {sleepIntToString(user.sleep)}</ListGroup.Item> : ''}
         {userData.map((data) => {
           if (data.data_type !== 'contact') {
             return <DataText key={data._id} data={data} />;
@@ -37,17 +38,14 @@ const UserCardAux = ({ user, userData }) => (
   </Card>
 );
 
-UserCardAux.propTypes = {
+PublicUserCardAux.propTypes = {
   user: PropTypes.shape({
     pfp: PropTypes.string,
     name: PropTypes.string,
     owner: PropTypes.string,
-    alcohol: PropTypes.bool,
-    alcohol_preferences: PropTypes.bool,
+    alcohol: PropTypes.number,
     sleep: PropTypes.number,
-    sleep_preferences: PropTypes.number,
     sex: PropTypes.number,
-    sex_preference: PropTypes.number,
   }).isRequired,
   userData: PropTypes.arrayOf((propValue, key, componentName, location, propFullName) => {
     if (!UserData.test(propValue[key])) {
@@ -60,4 +58,4 @@ UserCardAux.propTypes = {
   }).isRequired,
 };
 
-export default UserCardAux;
+export default PublicUserCardAux;

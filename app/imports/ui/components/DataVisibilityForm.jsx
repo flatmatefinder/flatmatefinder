@@ -6,9 +6,11 @@ import { Users } from '../../api/user/User';
 import { PublicUsers } from '../../api/user/PublicUser';
 import LoadingSpinner from './LoadingSpinner';
 
+let user = null;
+let publicUser = null;
 let initial = 0;
 const DataVisibilityForm = () => {
-  const { ready, user, publicUser } = useTracker(() => {
+  const { ready, users, publicUsers } = useTracker(() => {
     // Note that this subscription will get cleaned up
     // when your component is unmounted or deps change.
     // Get access to Stuff documents.
@@ -21,12 +23,10 @@ const DataVisibilityForm = () => {
     // Get the Stuff documents
     const userItems = Users.collection.find({}).fetch();
     const publicUserItems = PublicUsers.collection.find({}).fetch();
-    const userItem = _.find(userItems, () => true);
-    const publicUserItem = _.find(publicUserItems, (publicUserItemThing) => publicUserItemThing.owner === userItem.owner);
 
     return {
-      publicUser: publicUserItem,
-      user: userItem,
+      publicUsers: publicUserItems,
+      users: userItems,
       ready: rdy,
     };
   }, []);
@@ -40,6 +40,8 @@ const DataVisibilityForm = () => {
   const [shareSocials, setShareSocials] = useState(false);
 
   if (ready && initial === 0) {
+    user = _.find(users, () => true);
+    publicUser = _.find(publicUsers, (publicUserItem) => publicUserItem.owner === user.owner);
     setShareAlcohol(publicUser.alcohol !== 2);
     setShareSleep(publicUser.sleep !== 24);
     setShareSex(publicUser.sex !== 3);
