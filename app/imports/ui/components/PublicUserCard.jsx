@@ -3,7 +3,6 @@ import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { UserData } from '../../api/data/Data';
-import { Users } from '../../api/user/User';
 import UserCardAux from './UserCardAux';
 import LoadingSpinner from './LoadingSpinner';
 import { PublicUsers } from '../../api/user/PublicUser';
@@ -23,6 +22,7 @@ const PublicUserCard = ({ username }) => {
     const userItems = PublicUsers.collection.find({ owner: username }).fetch();
     const userItem = _.find(userItems, () => true);
     const userData = UserData.collection.find({ owner: username }).fetch();
+    userItems.forEach((usersssssss) => console.log("hello"));
 
     return {
       data: userData,
