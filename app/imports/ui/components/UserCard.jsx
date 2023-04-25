@@ -31,7 +31,11 @@ const UserCard = () => {
     };
   }, []);
   if (ready) {
+    // The following is ran by Underscore package
+    // eslint-disable-next-line no-undef
     user = _.find(users, () => true);
+    // The following is ran by Underscore package
+    // eslint-disable-next-line no-undef
     data = _.filter(datas, (dat) => dat.owner === user.owner);
     return <UserCardAux user={user} userData={data} />;
   }
