@@ -30,3 +30,5 @@ const AdminLanding = () => (
 );
 
 export default AdminLanding;
+
+// TODO Redundant page, should delete

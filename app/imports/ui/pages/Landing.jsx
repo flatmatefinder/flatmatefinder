@@ -14,7 +14,7 @@ const Landing = () => {
   const { currentUser } = useTracker(() => ({
     currentUser: Meteor.user() ? Meteor.user().username : '',
   }), []);
-
+// TODO We seriously gotta fix the thing where we can scroll over to the right.
   return (
     <div id="landing-page">
       {Roles.userIsInRole(Meteor.userId(), 'admin') ? ([
