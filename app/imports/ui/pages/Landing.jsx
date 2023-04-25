@@ -5,6 +5,7 @@ import { useTracker } from 'meteor/react-meteor-data';
 import { Roles } from 'meteor/alanning:roles';
 import Card from 'react-bootstrap/Card';
 import UserCard from '../components/UserCard';
+import PublicUserCard from "../components/PublicUserCard";
 
 /* A simple static component to render some text for the landing page. */
 
@@ -104,6 +105,13 @@ const Landing = () => {
               about yourself and socials!
             </p>
             <a href="/profile" className="btn btn-secondary" role="button" id="button">Create Your Profile</a>
+            <br />
+            <br />
+            <h3 style={{ fontSize: '35px' }}>Step 2</h3>
+            <p style={{ fontSize: '30px' }}> Customize your visibilities! Don&apos;t want to show your gender? don&apos;t! Go to our
+              Settings page and edit what you want to show other people!
+            </p>
+            <a href="/settings" className="btn btn-secondary" role="button" id="button">Customize Your Visibilities</a>
           </Col>
           <Col>
             {/*
@@ -124,17 +132,17 @@ const Landing = () => {
 
           </Container> */}
             <Container className="mt-2 d-flex justify-content-center">
-              <UserCard />
+              <PublicUserCard username={currentUser} />
             </Container>
           </Col>
 
         </Row>,
         <Row style={{ background: '#586266', color: 'white', padding: '100px' }}>
-          <h3 style={{ fontSize: '35px' }}>Step 2</h3>
+          <h3 style={{ fontSize: '35px' }}>Step 3</h3>
           <p style={{ fontSize: '35px' }}>Find your perfect flatmate based on your interests and theirs.</p>
         </Row>,
         <Row style={{ background: '#606566', color: 'white', padding: '100px' }}>
-          <h3 style={{ fontSize: '35px' }}>Step 3</h3>
+          <h3 style={{ fontSize: '35px' }}>Step 4</h3>
           <p style={{ fontSize: '35px' }}>Connect with your potential flatmate using their email or socials.</p>
         </Row>,
       ]) : ''}
