@@ -14,8 +14,8 @@ const PublicUserCardAux = ({ user, userData }) => (
       <Card.Title className="text-center" style={{ color: 'white' }}>{user.name}</Card.Title>
       <Card.Subtitle />
       <ListGroup variant="flush" style={{ height: '100px', overflowY: 'scroll', maxHeight: '100px', overflowX: 'hidden' }}>
-        { (user.sex !== 3) ? <ListGroup.Item>Sex: {user.sex === 0 ? 'Male' : user.sex === 1 ? 'Female' : 'Other'}</ListGroup.Item> : ''}
-        { (user.alcohol !== 2) ? <ListGroup.Item>Alcohol: {user.alcohol ? ' True' : ' False'}</ListGroup.Item> : ''}
+        { (user.sex !== 3) ? <ListGroup.Item>Gender: {user.sex === 0 ? 'Male' : user.sex === 1 ? 'Female' : 'Other'}</ListGroup.Item> : ''}
+        { (user.alcohol !== 2) ? <ListGroup.Item>Drinks Alcohol: {user.alcohol ? ' True' : ' False'}</ListGroup.Item> : ''}
         { (user.sleep !== 24) ? <ListGroup.Item>Sleep Time: {sleepIntToString(user.sleep)}</ListGroup.Item> : ''}
         { userData.map((data) => {
           if (data.data_type === 'preference' && user.share_preferences === 0) {
