@@ -476,7 +476,7 @@ const Profile = () => {
   };
 
   return (ready ? (
-    <div className="px-5">
+    <div id="profile-page" className="px-5">
       <form method="post" onSubmit={handleSubmit}>
         <Row>
           <Col xs="3">
