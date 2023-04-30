@@ -15,7 +15,6 @@ import CloudinaryUploadWidget from '../components/CloudinaryUploadWidget';
 let user = null;
 let publicUser = null;
 let data = null;
-let initial = 0;
 let suspended = false;
 
 const Profile = () => {
@@ -88,8 +87,9 @@ const Profile = () => {
   const [genderPref, setGenderPref] = useState('No Preference');
   const [sleep, setSleep] = useState(0);
   const [sleepPref, setSleepPref] = useState(0);
+  const [isInitialized, setIsInitialized] = useState(0);
 
-  if (ready) {
+  if (ready) { // any time the state of these "useState" variables are changed, the code in here will be called.
     PublicUsers.collection.update(publicUser._id, { $set: { pfp: url } });
     PublicUsers.collection.update(publicUser._id, { $set: { name: name } });
     if (publicUser.alcohol !== 2) {
@@ -123,7 +123,7 @@ const Profile = () => {
     }
   };
 
-  if (ready && initial === 0) {
+  if (ready && isInitialized === 0) {
     setPreferences(getPreferences());
     setDealbreakers(getDealbreakers());
     setSocials(getSocials());
@@ -136,7 +136,7 @@ const Profile = () => {
     setGenderPref(genderPreferenceBender(user.sex_preference));
     setSleep(user.sleep);
     setSleepPref(user.sleep_preference);
-    initial = 1;
+    setIsInitialized(1);
   }
 
   const update_sleep = () => {
@@ -476,7 +476,7 @@ const Profile = () => {
     setSleepPref(23);
   };
 
-  return (ready ? (
+  return (ready && isInitialized ? (
     <div id="profile-page" className="px-5">
       <form method="post" onSubmit={handleSubmit}>
         <Row>
