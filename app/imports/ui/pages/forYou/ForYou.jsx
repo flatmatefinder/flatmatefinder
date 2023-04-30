@@ -23,31 +23,33 @@ const ForYou = () => {
       ready: rdy,
     };
   }, []);
+
+  const { currentUser } = useTracker(() => ({
+    currentUser: Meteor.user() ? Meteor.user().username : '',
+  }), []);
+
+  // eslint-disable-next-line no-nested-ternary
   return (ready ? (
-    <Container id="foryou-page" className="py-3">
-      <Row className="justify-content-center">
-        <Col md={7}>
-          <Col className="text-center">
-            <h2>Your Matched Users</h2>
+    !users.find((user) => user.owner === currentUser).accountsuspended ? (
+      <Container id="foryou-page" className="py-3">
+        <Row className="justify-content-center">
+          <Col md={7}>
+            <Col className="text-center">
+              <h2>Your Matched Users</h2>
+            </Col>
           </Col>
-        </Col>
-      </Row>
-      <Row xs={1} md={4} className="justify-content-center">
-        {/* eslint-disable-next-line no-shadow */}
-        {users.map(user => (
-          <Col key={`col-${user._id}`} style={{ padding: '20px', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>
-            <PublicUserCard username={user.owner} />
-          </Col>
-        ))}
-      </Row>
-    </Container>
-  )
-  /** users.forEach((user) => {
-      console.log('hello');
-
-    }* */
-
-    : <LoadingSpinner />);
+        </Row>
+        <Row xs={1} md={4} className="justify-content-center">
+          {/* eslint-disable-next-line no-shadow */}
+          {users.map(user => (!user.accountsuspended && currentUser !== user.owner ? (
+            <Col key={`col-${user._id}`} style={{ padding: '20px', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>
+              <PublicUserCard username={user.owner} />
+            </Col>
+          ) : ''))}
+        </Row>
+      </Container>
+    ) : <h1 className="text-center" style={{ color: 'red' }}> Your Account has been Suspended. </h1>
+  ) : <LoadingSpinner />);
 };
 
 export default ForYou;
