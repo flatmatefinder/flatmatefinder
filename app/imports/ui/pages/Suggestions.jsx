@@ -6,11 +6,12 @@ const Suggestions = () => (
   <Container id="suggestions-page" className="py-3">
     <Row className="justify-content-center">
       <Col xs={4} className="text-center">
-        <h2>Suggestions<p style={{ color: 'red' }}> ADMIN </p></h2>
+        <h2>Suggestions</h2>
       </Col>
     </Row>
     <Row>
       <iframe
+        title="suggestions"
         src="https://docs.google.com/forms/d/e/1FAIpQLSdTvYuRCeATWPROCT1r4I3DlaZWd4-5DsOE4T1yLT9QGjzQWg/viewform?embedded=true"
         width="675"
         height="444"
