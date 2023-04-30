@@ -8,6 +8,7 @@ import { sleepIntToString } from '../../../utils/Utils';
 const UserCardAux = ({ user, userData }) => (
   <Card style={{ width: '18rem', background: '#586266' }} className="landing-card">
     <Card.Img src={user.pfp} alt="profile picture" className="mx-auto circular-portrait card-img" id="card-img" />
+    {/* TODO Make this an AdvancedImage with Cloudinary */}
     <Card.Body>
       <Card.Title className="text-center" style={{ color: 'white' }}>{user.name}</Card.Title>
       <Card.Subtitle />

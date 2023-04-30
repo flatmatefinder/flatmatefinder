@@ -99,7 +99,7 @@ const CloudinaryUploadWidget = ({ url, setUrl }) => {
         src={url}
         onError={(e) => { e.target.src = 'https://cdn.icon-icons.com/icons2/2645/PNG/512/person_circle_icon_159926.png'; }}
       /> <br />
-    </div>
+    </div> // TODO Make this an AdvancedImage with Cloudinary
   );
 };
 CloudinaryUploadWidget.propTypes = {
