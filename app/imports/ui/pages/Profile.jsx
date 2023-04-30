@@ -10,6 +10,7 @@ import { UserData } from '../../api/data/Data';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { sleepIntToString } from '../../utils/Utils';
 import { PublicUsers } from '../../api/user/PublicUser';
+import CloudinaryUploadWidget from '../components/CloudinaryUploadWidget';
 
 let user = null;
 let publicUser = null;
@@ -100,7 +101,7 @@ const Profile = () => {
     if (publicUser.sex !== 3) {
       // eslint-disable-next-line no-nested-ternary
       PublicUsers.collection.update(publicUser._id, { $set: { sex: gender === 'Male' ? 0 : gender === 'Female' ? 1 : 2 } });
-      // TODO Fix it
+      // TODO Fix nested ternary
     }
   }
   const genderBender = (genderNum) => {
@@ -152,7 +153,7 @@ const Profile = () => {
     const form = e.target;
     const formData = new FormData(form);
     const tempName = formData.get('name');
-    const tempPfp = formData.get('pfp'); /* anything with tempPfp is temporary */
+    // const tempPfp = formData.get('pfp'); /* anything with tempPfp is temporary */
     const tempPreference = formData.get('preference');
     const tempHabit = formData.get('habit');
     const tempDealbreaker = formData.get('dealbreaker');
@@ -166,11 +167,6 @@ const Profile = () => {
     if (tempName !== '') {
       setName(tempName);
       Users.collection.update(user._id, { $set: { name: tempName } }, (error) => (error ?
-        console.log(error.message) : ''));
-    }
-    if (tempPfp !== '') {
-      setUrl(tempPfp);
-      Users.collection.update(user._id, { $set: { pfp: tempPfp } }, (error) => (error ?
         console.log(error.message) : ''));
     }
     if (tempPreference !== '') {
@@ -496,7 +492,14 @@ const Profile = () => {
                 /> <br />
               </div>
               {/* <Button variant="danger" onClick={(e) => pfpGetter(e)} style={{ display: 'none' }}> </Button> */}
-              <input name="pfp" placeholder="Link to Image" type="text" />
+              <CloudinaryUploadWidget
+                url={url}
+                setUrl={(val) => {
+                  setUrl(val);
+                  Users.collection.update(user._id, { $set: { pfp: val } }, (error) => (error ?
+                    console.log(error.message) : ''));
+                }}
+              />
               <p style={{ color: 'gray' }}>Images should be ~ 200px x 200px to work properly.</p>
             </label>
             {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
