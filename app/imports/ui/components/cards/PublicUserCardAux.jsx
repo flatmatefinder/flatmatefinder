@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, ListGroup } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import { UserData } from '../../../api/data/Data';
 import DataText from '../DataText';
 import { sleepIntToString } from '../../../utils/Utils';
@@ -51,7 +52,7 @@ const PublicUserCardAux = ({ user, userData, admin }) => (
         admin ? <SuspendButton publicUser={user} /> : '',
       ]}
       {
-        // eslint-disable-next-line max-len
+        admin ? <Link to={`/profile/${user._id}`} className="btn btn-secondary" role="button" id="button">Edit Profile</Link> : ''
       }
     </Card.Body>
   </Card>
