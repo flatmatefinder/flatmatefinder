@@ -48,12 +48,9 @@ const PublicUserCardAux = ({ user, userData, admin }) => (
       </ListGroup>
       <Card.Text />
       {[
-        admin ? <a href="/profile" className="btn btn-secondary" role="button" id="button">Edit Profile</a> : '',
+        admin ? <Link to={`/profile/${user._id}`} className="btn btn-secondary" role="button" id="button">Edit Profile</Link> : '',
         admin ? <SuspendButton publicUser={user} /> : '',
       ]}
-      {
-        admin ? <Link to={`/profile/${user._id}`} className="btn btn-secondary" role="button" id="button">Edit Profile</Link> : ''
-      }
     </Card.Body>
   </Card>
 );

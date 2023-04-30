@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
-
+// TODO: https://cloudinary.com/documentation/upload_widget#signed_uploads make it signed so that my storage doesnt die.
 /**
  * Note: I pulled all of this from cloudinary's official website on how to use the cloudinary-react module.
  *
@@ -62,7 +62,6 @@ import PropTypes from 'prop-types';
 //     );
 //   }
 // }
-
 const CloudinaryUploadWidget = ({ url, setUrl }) => {
   const setUrlTemp = (val) => {
     setUrl(val);
@@ -72,6 +71,8 @@ const CloudinaryUploadWidget = ({ url, setUrl }) => {
       cloudName: Meteor.settings.public.cloudinary.cloud_name,
       uploadPreset: Meteor.settings.public.cloudinary.upload_preset,
       cropping: true, // add a cropping step
+      showSkipCropButton: false,
+      croppingAspectRatio: 1,
       // showAdvancedOptions: true,  //add advanced options (public_id and tag)
       sources: ['local', 'url', 'camera'], // restrict the upload sources to URL and local files
       multiple: false, // restrict upload to a single file
