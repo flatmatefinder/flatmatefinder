@@ -30,7 +30,7 @@ const ProfilePicture = ({ userName }) => {
     return userName === '' ? (/** If the user doesn't exist */
       <PersonCircle size={60} /> /** Then just display a PersonCircle Icon */
     ) : (
-      <div style={{ borderRadius: '50%', border: 'darkgray', borderStyle: 'solid', width: '100px', height: '100px', overflow: 'hidden' }}>
+      <div style={{ borderRadius: '50%', border: 'darkgray', borderStyle: 'solid', width: '60px', height: '60px', overflow: 'hidden' }}>
         {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions */}
         <img
           alt="Pfp"
