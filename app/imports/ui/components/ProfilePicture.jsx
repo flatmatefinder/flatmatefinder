@@ -34,9 +34,9 @@ const ProfilePicture = ({ userName }) => {
         {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions */}
         <img
           alt="Pfp"
-          style={{ cursor: 'pointer', display: 'inline', margin: '0 auto', height: '100%' }}
+          style={{ cursor: 'pointer', display: 'inline', height: '100%' }}
           src={user.pfp}
-          onError={(e) => { e.target.src = 'https://cdn.icon-icons.com/icons2/2645/PNG/512/person_circle_icon_159926.png'; }}
+          onError={(e) => { e.target.src = 'https://img.freepik.com/free-photo/close-up-young-successful-man-smiling-camera-standing-casual-outfit-against-blue-background_1258-73370.jpg'; }}
         />
       </div> // TODO Make this an AdvancedImage with Cloudinary
     );

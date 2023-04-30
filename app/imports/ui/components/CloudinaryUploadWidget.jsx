@@ -97,7 +97,7 @@ const CloudinaryUploadWidget = ({ url, setUrl }) => {
         alt="Pfp"
         style={{ cursor: 'pointer', display: 'inline', margin: '0 auto', height: '100%' }}
         src={url}
-        onError={(e) => { e.target.src = 'https://cdn.icon-icons.com/icons2/2645/PNG/512/person_circle_icon_159926.png'; }}
+        onError={(e) => { e.target.src = 'https://img.freepik.com/free-photo/close-up-young-successful-man-smiling-camera-standing-casual-outfit-against-blue-background_1258-73370.jpg'; }}
       /> <br />
     </div> // TODO Make this an AdvancedImage with Cloudinary
   );
