@@ -17,16 +17,15 @@
   ],
 
   "defaultUsers": [
-    { "owner": "nicholas", "pfp": "https://avatars.githubusercontent.com/u/66411207?v=4", "name": "Nicholas Beydler", "alcohol": "false", "alcohol_preference": "false", "sleep": 20, "sleep_preference": 23, "sex": 0, "sex_preference": 0, "accountsuspended": false },
-    { "owner" : "xavier", "pfp" : "https://avatars.githubusercontent.com/u/78561598?v=4", "name" : "Xavier Burt", "alcohol" : false, "alcohol_preference" : false, "sleep" : 2, "sleep_preference" : 12, "sex" : 0, "sex_preference" : 0, "accountsuspended" : false },
+    { "owner": "nicholas", "pfp": "https://avatars.githubusercontent.com/u/66411207?v=4", "name": "Nicholas Beydler", "alcohol": false, "alcohol_preference": "false", "sleep": 20, "sleep_preference": 23, "sex": 0, "sex_preference": 0, "accountsuspended": false },
+    { "owner" : "xavier", "pfp" : "https://avatars.githubusercontent.com/u/97270148?v=4", "name" : "Xavier Burt", "alcohol" : false, "alcohol_preference" : false, "sleep" : 2, "sleep_preference" : 12, "sex" : 0, "sex_preference" : 0, "accountsuspended" : false },
     { "owner" : "kaysha", "pfp" : "https://avatars.githubusercontent.com/u/78561598?v=4", "name" : "Kaysha Kealalio", "alcohol" : true, "alcohol_preference" : false, "sleep" : 2, "sleep_preference" : 12, "sex" : 1, "sex_preference" : 1, "accountsuspended" : false },
     { "owner" : "briana", "pfp" : "https://avatars.githubusercontent.com/u/97265599?v=4", "name" : "Briana Lee", "alcohol" : false, "alcohol_preference" : false, "sleep" : 23, "sleep_preference" : 12, "sex" : 1, "sex_preference" : 1, "accountsuspended" : false },
     { "owner" : "badboi", "pfp" : "https://avatars.githubusercontent.com/u/122927817?v=4", "name" : "Erick Orozco-Ciprian", "alcohol" : false, "alcohol_preference" : false, "sleep" : 22, "sleep_preference" : 12, "sex" : 0, "sex_preference" : 0, "accountsuspended" : false },
     { "owner" : "john", "pfp" : "https://img.freepik.com/free-photo/close-up-young-successful-man-smiling-camera-standing-casual-outfit-against-blue-background_1258-73370.jpg", "name" : "John Foo", "alcohol" : true, "alcohol_preference" : false, "sleep" : 22, "sleep_preference" : 0, "sex" : 0, "sex_preference" : 0, "accountsuspended" : false },
     { "owner" : "admin", "pfp" : "https://img.freepik.com/free-photo/close-up-young-successful-man-smiling-camera-standing-casual-outfit-against-blue-background_1258-73370.jpg", "name" : "Admin Foo", "alcohol" : true, "alcohol_preference" : false, "sleep" : 22, "sleep_preference" : 0, "sex" : 0, "sex_preference" : 0, "accountsuspended" : false }
-
   ],
-  
+
   "public": {
     "cloudinary": {"cloud_name": "dlhx8lig8", "upload_preset": "wyyv97cf"}
   },

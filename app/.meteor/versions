@@ -59,6 +59,7 @@ mongo-dev-server@1.1.0
 mongo-id@1.0.8
 montiapm:agent@2.47.2
 montiapm:meteorx@2.2.0
+mrt:smart-publish@0.2.1
 npm-mongo@4.12.1
 ordered-dict@1.1.0
 promise@0.12.2

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Users } from '../api/user/User';
 
 export const sleepIntToString = (sleepInt) => {
@@ -37,4 +38,43 @@ export const sleepIntToString = (sleepInt) => {
 export const getUserIdFromPublicUser = (username) => {
   const user = Users.collection.find({ owner: username });
   return user._id;
+};
+
+export const pairTwo = (user1, user2) => {
+  // If user1 cares about alcohol and user2 drinks alcohol, or vice versa...
+  if ((user1.alcohol_preference && user2.alcohol) || (user2.alcohol_preference && user1.alcohol)) {
+    return false;
+  }
+  // If User1 wants to dorm with me, and user2 is not a male, or user1 wants to dorm with female, and user2 is not a female, or user1 wants to dorm with "other", and user2 is not "other", or vice versa.
+  if ((user1.sex_preference === 0 && user2.sex !== 0) || (user1.sex_preference === 1 && user2.sex !== 1) || (user1.sex_preference === 3 && user2.sex !== 2)
+      || (user2.sex_preference === 0 && user1.sex !== 0) || (user2.sex_preference === 1 && user1.sex !== 1) || (user2.sex_preference === 3 && user1.sex !== 2)) {
+    return false;
+  }
+  // TODO PUT LOGIC FOR THE SLEEP STUFF CUZ HONESTLY IDK HOW THE HELL TO DO THAT.
+  // TODO Also put logic for the extra preferences and habits and stuff.
+  return true;
+};
+pairTwo.propTypes = {
+  user1: PropTypes.shape({
+    pfp: PropTypes.string,
+    name: PropTypes.string,
+    owner: PropTypes.string,
+    alcohol: PropTypes.bool,
+    alcohol_preferences: PropTypes.bool,
+    sleep: PropTypes.number,
+    sleep_preferences: PropTypes.number,
+    sex: PropTypes.number,
+    sex_preference: PropTypes.number,
+  }).isRequired,
+  user2: PropTypes.shape({
+    pfp: PropTypes.string,
+    name: PropTypes.string,
+    owner: PropTypes.string,
+    alcohol: PropTypes.bool,
+    alcohol_preferences: PropTypes.bool,
+    sleep: PropTypes.number,
+    sleep_preferences: PropTypes.number,
+    sex: PropTypes.number,
+    sex_preference: PropTypes.number,
+  }).isRequired,
 };
