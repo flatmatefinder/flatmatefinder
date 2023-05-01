@@ -27,20 +27,24 @@ const SignUp = ({ location }) => {
   /* Handle SignUp submission. Create user account and a profile entry, then redirect to the home page. */
   const submit = (doc) => {
     const { email, username, password } = doc;
-    Accounts.createUser({ email, username, password }, (err) => {
-      if (err) {
-        setError(err.reason);
-      } else {
-        setError('');
-        setRedirectToRef(true);
-        Users.collection.insert({ owner: username }, (err2) => (err2 ?
-          swal('Error', error.message, 'error') :
-          swal('Success', 'Successfully added User.', 'success')));
-        PublicUsers.collection.insert({ owner: username }, (err2) => (err2 ?
-          swal('Error', error.message, 'error') :
-          swal('Success', 'Successfully added User.', 'success')));
-      }
-    });
+    if (email.includes('@hawaii.edu')) {
+      Accounts.createUser({ email, username, password }, (err) => {
+        if (err) {
+          setError(err.reason);
+        } else {
+          setError('');
+          setRedirectToRef(true);
+          Users.collection.insert({ owner: username }, (err2) => (err2 ?
+            swal('Error', error.message, 'error') :
+            swal('Success', 'Successfully added User.', 'success')));
+          PublicUsers.collection.insert({ owner: username }, (err2) => (err2 ?
+            swal('Error', error.message, 'error') :
+            swal('Success', 'Successfully added User.', 'success')));
+        }
+      });
+    } else {
+      setError('Email is not a hawaii.edu');
+    }
   };
 
   /* Display the signup form. Redirect to add page after successful registration and login. */
@@ -60,7 +64,7 @@ const SignUp = ({ location }) => {
             <Card>
               <Card.Body>
                 <TextField name="username" placeholder="Username" />
-                <TextField name="email" placeholder="E-mail address" />
+                <TextField name="email" placeholder="University of Hawai'i E-mail address" />
                 <TextField name="password" placeholder="Password" type="password" />
                 <ErrorsField />
                 <SubmitField />
