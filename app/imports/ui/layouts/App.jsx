@@ -18,7 +18,6 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import PrivacyPolicy from '../pages/info/PrivacyPolicy';
 import TermsAndConditions from '../pages/info/TermsAndConditions';
 import Suggestions from '../pages/Suggestions';
-import SuggestionsAdmin from '../pages/SuggestionsAdmin';
 import MeettheTeam from '../pages/info/MeettheTeam';
 import Profile from '../pages/Profile';
 import Settings from '../pages/Settings';
@@ -56,7 +55,6 @@ const App = () => {
           <Route path="/foryou" element={<ProtectedRoute><ForYou /></ProtectedRoute>} />
           <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
           <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
-          <Route path="/suggestionsadmin" element={<AdminProtectedRoute ready={ready}><SuggestionsAdmin /></AdminProtectedRoute>} />
           <Route path="/admin" element={<AdminProtectedRoute ready={ready}><ForYouAdmin /></AdminProtectedRoute>} />
           <Route path="/notauthorized" element={<NotAuthorized />} />
           <Route path="*" element={<NotFound />} />

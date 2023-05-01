@@ -22,6 +22,7 @@ const SignUp = ({ location }) => {
     username: String,
     password: String,
   });
+
   const bridge = new SimpleSchema2Bridge(schema);
 
   /* Handle SignUp submission. Create user account and a profile entry, then redirect to the home page. */
@@ -60,7 +61,7 @@ const SignUp = ({ location }) => {
             <Card>
               <Card.Body>
                 <TextField name="username" placeholder="Username" />
-                <TextField name="email" placeholder="E-mail address" />
+                <TextField name="email" placeholder="University of Hawaii E-mail address" />
                 <TextField name="password" placeholder="Password" type="password" />
                 <ErrorsField />
                 <SubmitField />

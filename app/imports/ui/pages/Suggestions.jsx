@@ -26,7 +26,7 @@ const Suggestions = () => {
               <iframe
                 title="form"
                 src="https://docs.google.com/forms/d/e/1FAIpQLSdTvYuRCeATWPROCT1r4I3DlaZWd4-5DsOE4T1yLT9QGjzQWg/viewform?embedded=true"
-                width="664"
+                width="564"
                 height="644"
                 frameBorder="0"
                 marginHeight="0"
@@ -38,7 +38,7 @@ const Suggestions = () => {
               <iframe
                 title="spreadsheet"
                 src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTGKwoEqoTYOTuSL2DUqJ4p_jPe-572PPG0LN7p4jh4i3OQdNriA3Oetj8SU8tr3gwYwRKfOnnVfKtL/pubhtml?widget=true&amp;headers=false"
-                width="664"
+                width="564"
                 height="644"
               />
             </Col>
