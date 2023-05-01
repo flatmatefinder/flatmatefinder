@@ -5,6 +5,7 @@ import { Users } from '../../api/user/User';
 import { UserData } from '../../api/data/Data';
 import { Contacts } from '../../api/contact/Contacts';
 import { PublicUsers } from '../../api/user/PublicUser';
+import { pairTwo } from '../../utils/Utils';
 
 // User-level publication.
 // If logged in, then publish documents owned by this user. Otherwise publish nothing.
@@ -38,9 +39,23 @@ Meteor.publish(Contacts.userPublicationName, function () {
   }
   return this.ready();
 });
-Meteor.publish(PublicUsers.userPublicationName, function () {
+Meteor.smartPublish(PublicUsers.userPublicationName, function () {
   if (this.userId) {
-    return PublicUsers.collection.find();
+    const primaryUser = Meteor.users.find({ _id: this.userId }).fetch()[0];
+    const userName = primaryUser.username;
+    let publicUserIds = [];
+    PublicUsers.collection.find().fetch().forEach((publicUser) => {
+      if (publicUser.owner === userName) {
+        publicUserIds = [...publicUserIds, publicUser._id];
+        return 1;
+      }
+      if (pairTwo(Users.collection.find({ owner: primaryUser.username }).fetch()[0], Users.collection.find({ owner: publicUser.owner }).fetch()[0])) {
+        publicUserIds = [...publicUserIds, publicUser._id];
+        return 1;
+      }
+      return 0;
+    });
+    return publicUserIds.map((userId) => PublicUsers.collection.find({ _id: userId }));
   }
   return this.ready();
 });
