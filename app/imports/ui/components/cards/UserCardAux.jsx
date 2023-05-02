@@ -31,7 +31,7 @@ const UserCardAux = ({ user, userData }) => (
         {/* All this did was make it so that all of their information loads first, and then the contact information. */}
       </ListGroup>
       <Card.Text />
-      <a href="/profile" className="btn btn-secondary" role="button" id="button">Edit Profile</a>
+      <a href="/profile/:_id" className="btn btn-secondary" role="button" id="button">Edit Profile</a>
 
     </Card.Body>
   </Card>

@@ -23,7 +23,7 @@ Contact.propTypes = {
     address: PropTypes.string,
     image: PropTypes.string,
     description: PropTypes.string,
-    // _id: PropTypes.string,
+    //  _id: PropTypes.string,
   }).isRequired,
 };
 

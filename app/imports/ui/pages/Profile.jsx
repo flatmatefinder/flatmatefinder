@@ -8,6 +8,7 @@ import { Trash } from 'react-bootstrap-icons';
 import { LocalizationProvider, StaticTimePicker } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import TextField from '@mui/material/TextField';
+import { useParams } from 'react-router';
 import { Users } from '../../api/user/User';
 import { UserData } from '../../api/data/Data';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -20,20 +21,41 @@ let data = null;
 let suspended = false;
 
 const Profile = () => {
+  // Get the documentID from the URL field. See imports/ui/layouts/App.jsx for the route containing :_id.
+  const { _id } = useParams();
+
   const { ready, users, datas, publicUsers } = useTracker(() => {
-    // Note that this subscription will get cleaned up
-    // when your component is unmounted or deps change.
-    const subscription = Meteor.subscribe(Users.userPublicationName);
-    const subscriptionData = Meteor.subscribe(UserData.userPublicationName);
-    const subscriptionPublicUser = Meteor.subscribe(PublicUsers.userPublicationName);
-    // Determine if the subscription is ready
-    const rdy1 = subscription.ready();
-    const rdy2 = subscriptionData.ready();
-    const rdy3 = subscriptionPublicUser.ready();
-    const rdy = rdy1 && rdy2 && rdy3;
-    const userItems = Users.collection.find({}).fetch();
-    const publicUserItems = PublicUsers.collection.find({}).fetch();
-    const userData = UserData.collection.find({}).fetch();
+    let rdy = null;
+    let userItems = null;
+    let publicUserItems = null;
+    let userData = null;
+    let subscriptionData = null;
+    if (_id === undefined) {
+      console.log(_id);
+      const subscription = Meteor.subscribe(Users.userPublicationName);
+      subscriptionData = Meteor.subscribe(UserData.userPublicationName);
+      const subscriptionPublicUser = Meteor.subscribe(PublicUsers.userPublicationName);
+      // Determine if the subscription is ready
+      const rdy1 = subscription.ready();
+      const rdy2 = subscriptionData.ready();
+      const rdy3 = subscriptionPublicUser.ready();
+      rdy = rdy1 && rdy2 && rdy3;
+      userItems = Users.collection.find({}).fetch();
+      publicUserItems = PublicUsers.collection.find({}).fetch();
+      userData = UserData.collection.find({}).fetch();
+    } else {
+      const subscription = Meteor.subscribe(Users.adminPublicationName);
+      subscriptionData = Meteor.subscribe(UserData.userPublicationName);
+      const subscriptionPublicUser = Meteor.subscribe(PublicUsers.userPublicationName);
+      // Determine if the subscription is ready
+      const rdy1 = subscription.ready();
+      const rdy2 = subscriptionData.ready();
+      const rdy3 = subscriptionPublicUser.ready();
+      rdy = rdy1 && rdy2 && rdy3;
+      userItems = Users.collection.find({}).fetch();
+      publicUserItems = PublicUsers.collection.find({}).fetch();
+      userData = UserData.collection.find({ _id: _id }).fetch();
+    }
 
     return {
       datas: userData,
@@ -51,10 +73,17 @@ const Profile = () => {
   // };
 
   if (ready) {
-    user = _.find(users, () => true);
-    publicUser = _.find(publicUsers, (publicUserItemThing) => publicUserItemThing.owner === user.owner);
-    data = _.filter(datas, (dat) => dat.owner === user.owner);
-    suspended = user.accountsuspended; // check if the user is suspended
+    if (_id === undefined) {
+      user = _.find(users, () => true);
+      publicUser = _.find(publicUsers, (publicUserItemThing) => publicUserItemThing.owner === user.owner);
+      data = _.filter(datas, (dat) => dat.owner === user.owner);
+      suspended = user.accountsuspended; // check if the user is suspended
+    } else {
+      publicUser = publicUsers[0];
+      user = _.find(users, (usr) => usr.owner === publicUser.owner);
+      data = _.filter(datas, (dat) => dat.owner === publicUser.owner);
+      suspended = user.accountsuspended;
+    }
   }
 
   const getPreferences = () => {
