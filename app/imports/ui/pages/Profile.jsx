@@ -488,7 +488,7 @@ const Profile = () => {
 
   return (ready && isInitialized ? (
     <div id="profile-page" className="px-5">
-      <form method="post" onSubmit={handleSubmit}>
+      <form id="profile-form" method="post" onSubmit={handleSubmit}>
         <Row>
           <Col xs="3">
             {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
@@ -515,13 +515,13 @@ const Profile = () => {
             {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
             <label>
               What is your name? <br />
-              <input name="name" placeholder={name || 'John Doe'} type="text" />
+              <input id="name" name="name" placeholder={name || 'John Doe'} type="text" />
             </label>
             <br /><br />
             {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
             <label>
               What are your Contact Methods? <br />
-              <input name="social" placeholder="Opal#42069" type="text" />
+              <input id="social" name="social" placeholder="Opal#42069" type="text" />
               <p style={{ color: 'gray' }}> Press submit after every entry. it can be multiple words, should have all information needed to contact you. </p>
             </label>
             <p> Linked Contact Methods: </p>
@@ -564,7 +564,7 @@ const Profile = () => {
                   {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
                   <label>
                     Any extra preferences? <br />
-                    <input name="preference" placeholder="clean" type="text" />
+                    <input id="preference" name="preference" placeholder="clean" type="text" />
                     <p style={{ color: 'gray' }}> Press submit after every entry. I want someone who is...</p>
                   </label>
                   <p> Existing Preferences: </p>
@@ -603,7 +603,7 @@ const Profile = () => {
                   {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
                   <label>
                     Any deal breakers? <br />
-                    <input name="dealbreaker" placeholder="dirty" type="text" />
+                    <input id="dealbreaker" name="dealbreaker" placeholder="dirty" type="text" />
                     <p style={{ color: 'gray' }}> Press submit after every preference. It should answer the question of: I don&apos;t want someone who is... </p>
                   </label>
                   <p> Existing Dealbreakers: </p>
@@ -642,7 +642,7 @@ const Profile = () => {
                   {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
                   <label>
                     Any extra information about yourself? <br />
-                    <input name="habit" placeholder="gamer" type="text" />
+                    <input id="habit" name="habit" placeholder="gamer" type="text" />
                     <p style={{ color: 'gray' }}> Press submit after every habit. It should answer the question of: I am ... OR I am a ... </p>
                   </label>
                   <p> Existing Habits: </p>
@@ -684,13 +684,14 @@ const Profile = () => {
                   <label>
                     Do you drink alcohol?
                     <Dropdown
+                      id="alcohol"
                       name="alcohol"
                       defaultValue={['true']}
                     >
                       <Dropdown.Toggle variant="success" id="dropdown-profile"> {alcohol === 'true' || alcohol === true ? 'Yes' : 'No'} </Dropdown.Toggle>
                       <Dropdown.Menu>
                         <Dropdown.Item as="button" onClick={alcohol_yes}>Yes</Dropdown.Item>
-                        <Dropdown.Item as="button" onClick={alcohol_no}>No</Dropdown.Item>
+                        <Dropdown.Item id="noButton1" as="button" onClick={alcohol_no}>No</Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
                   </label>
@@ -698,13 +699,14 @@ const Profile = () => {
                   <label>
                     Do you care if others drink alcohol?
                     <Dropdown
+                      id="alcohol_preference"
                       name="alcohol_preference"
                       defaultValue={['true']}
                     >
                       <Dropdown.Toggle variant="success" id="dropdown-profile"> {alcoholPref === 'true' || alcoholPref === true ? 'Yes' : 'No'} </Dropdown.Toggle>
                       <Dropdown.Menu>
                         <Dropdown.Item as="button" onClick={alcoholPref_yes}>Yes</Dropdown.Item>
-                        <Dropdown.Item as="button" onClick={alcoholPref_no}>No</Dropdown.Item>
+                        <Dropdown.Item id="noButton2" as="button" onClick={alcoholPref_no}>No</Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
                   </label>
@@ -712,12 +714,13 @@ const Profile = () => {
                   <label>
                     What is your gender?
                     <Dropdown
+                      id="gender"
                       name="gender"
                       defaultValue={['Other']}
                     >
                       <Dropdown.Toggle variant="success" id="dropdown-profile"> {gender} </Dropdown.Toggle>
                       <Dropdown.Menu>
-                        <Dropdown.Item as="button" onClick={gender_male}>Male</Dropdown.Item>
+                        <Dropdown.Item id="maleButton1" as="button" onClick={gender_male}>Male</Dropdown.Item>
                         <Dropdown.Item as="button" onClick={gender_female}>Female</Dropdown.Item>
                         <Dropdown.Item as="button" onClick={gender_other}>Other</Dropdown.Item>
                       </Dropdown.Menu>
@@ -727,12 +730,13 @@ const Profile = () => {
                   <label>
                     What is your gender preference?
                     <Dropdown
+                      id="gender_preference"
                       name="gender_preference"
                       defaultValue={['Other']}
                     >
                       <Dropdown.Toggle variant="success" id="dropdown-profile"> {genderPref} </Dropdown.Toggle>
                       <Dropdown.Menu>
-                        <Dropdown.Item as="button" onClick={genderPref_male}>Male</Dropdown.Item>
+                        <Dropdown.Item id="maleButton2" as="button" onClick={genderPref_male}>Male</Dropdown.Item>
                         <Dropdown.Item as="button" onClick={genderPref_female}>Female</Dropdown.Item>
                         <Dropdown.Item as="button" onClick={genderPref_noPreference}>No Preference</Dropdown.Item>
                         <Dropdown.Item as="button" onClick={genderPref_other}>Other</Dropdown.Item>
@@ -746,6 +750,7 @@ const Profile = () => {
                       {/* TODO https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-props-no-spreading.md */}
                       { /* eslint-disable react/jsx-props-no-spreading */ }
                       <StaticTimePicker
+                        id="sleep"
                         label="Sleep Time"
                         views={['hours']}
                         value={value}
@@ -793,6 +798,7 @@ const Profile = () => {
                       {/* TODO https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-props-no-spreading.md */}
                       { /* eslint-disable react/jsx-props-no-spreading */ }
                       <StaticTimePicker
+                        id="sleep_preference"
                         label="Sleep Time"
                         views={['hours']}
                         value={valuePref}
@@ -836,7 +842,7 @@ const Profile = () => {
                 </Col>
               </Row>
               <hr />
-              <Button disabled={suspended} variant={suspended ? 'danger' : 'success'} type="submit">Submit</Button>
+              <Button id="profile-submit-button" disabled={suspended} variant={suspended ? 'danger' : 'success'} type="submit">Submit</Button>
             </div>
           </Col>
         </Row>
