@@ -6,18 +6,17 @@ import { PublicUsers } from '../../../api/user/PublicUser';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import AdminUserCard from '../../components/cards/AdminUserCard';
 
+let userCount;
 /* Renders the ForYou page for adding a document. */
 const ForYouAdmin = () => {
   const { ready, users } = useTracker(() => {
     // Note that this subscription will get cleaned up
     // when your component is unmounted or deps change.
-    // Get access to Stuff documents.
     const subscription = Meteor.subscribe(PublicUsers.adminPublicationName);
     // Determine if the subscription is ready
     const rdy = subscription.ready();
-    // Get the Stuff documents
     const userItems = PublicUsers.collection.find({}).fetch();
-    console.log(userItems);
+    userCount = PublicUsers.collection.find({}).count();
     return {
       users: userItems,
       ready: rdy,
@@ -29,6 +28,7 @@ const ForYouAdmin = () => {
         <Col md={7}>
           <Col className="text-center">
             <h2>All Users <p style={{ color: 'red' }}> ADMIN </p></h2>
+            <h4>{userCount} Users</h4>
           </Col>
         </Col>
       </Row>

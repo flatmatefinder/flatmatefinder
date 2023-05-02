@@ -685,7 +685,7 @@ const Profile = () => {
                     <ul>
                       {socials.map(social => (
                         <li key={`list-item-${social}`}> {social}
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                           <Button
                             variant="danger"
                             onClick={
@@ -720,7 +720,7 @@ const Profile = () => {
                     <ul>
                       {preferences.map(preference => (
                         <li key={`list-item-${preference}`}> {preference}
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                           <Button
                             variant="danger"
                             onClick={
@@ -756,7 +756,7 @@ const Profile = () => {
                     <ul>
                       {dealbreakers.map(dealbreaker => (
                         <li key={`list-item-${dealbreaker}`}> {dealbreaker}
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                           <Button
                             variant="danger"
                             onClick={
@@ -791,7 +791,7 @@ const Profile = () => {
                     <ul>
                       {habits.map(habit => (
                         <li key={`list-item-${habit}`}> {habit}
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                           <Button
                             variant="danger"
                             onClick={

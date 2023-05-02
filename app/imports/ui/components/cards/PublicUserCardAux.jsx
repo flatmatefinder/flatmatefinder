@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, ListGroup } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { UserData } from '../../../api/data/Data';
 import DataText from '../DataText';
 import { sleepIntToString } from '../../../utils/Utils';
 import SuspendButton from './SuspendButton';
@@ -18,7 +17,7 @@ const PublicUserCardAux = ({ user, userData, admin }) => (
       <ListGroup variant="flush" style={{ height: '100px', overflowY: 'scroll', maxHeight: '100px', overflowX: 'hidden' }}>
         {/* eslint-disable-next-line no-nested-ternary */}
         { (user.sex !== 3) ? <ListGroup.Item>Gender: {user.sex === 0 ? 'Male' : user.sex === 1 ? 'Female' : 'Other'}</ListGroup.Item> : ''}
-        { (user.alcohol !== 2) ? <ListGroup.Item>Drinks Alcohol: {user.alcohol ? ' True' : ' False'}</ListGroup.Item> : ''}
+        { (user.alcohol !== 2) ? <ListGroup.Item>Drinks Alcohol: {user.alcohol === 0 ? ' True' : 'False'}</ListGroup.Item> : ''}
         { (user.sleep !== 24) ? <ListGroup.Item>Sleep Time: {sleepIntToString(user.sleep)}</ListGroup.Item> : ''}
         { userData.map((data) => {
           if (data.data_type === 'preference' && user.share_preferences === 0) {
@@ -70,14 +69,12 @@ PublicUserCardAux.propTypes = {
     accountsuspended: PropTypes.bool,
     _id: PropTypes.string,
   }).isRequired,
-  userData: PropTypes.arrayOf((propValue, key, componentName, location, propFullName) => {
-    if (!UserData.test(propValue[key])) {
-      return new Error(
-        `Invalid prop \`${propFullName}\` supplied to` +
-                ` \`${componentName}\`. Validation failed.`,
-      );
-    }
-    return true;
+  userData: PropTypes.arrayOf(() => {
+    PropTypes.shape({
+      data: PropTypes.string,
+      owner: PropTypes.string,
+      data_type: PropTypes.string,
+    });
   }).isRequired,
   admin: PropTypes.bool.isRequired,
 };

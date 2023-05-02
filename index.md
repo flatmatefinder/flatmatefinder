@@ -116,7 +116,7 @@ client/
 
 imports/
   api/           # Define collections
-    stuff/       # The Stuffs collection definition
+  
   startup/       # Define code to run when system starts up (client-only, server-only, both)
     client/
     server/

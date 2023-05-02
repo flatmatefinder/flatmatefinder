@@ -50,6 +50,10 @@ if (Meteor.users.find().count() === 0) {
       alcohol: alcohol ? 0 : 1,
       sleep: sleep,
       sex: sex,
+      share_preferences: 0, // Feeling quirky, so 0 = true, and 1 = false.
+      share_contacts: 0,
+      share_habits: 0,
+      share_dealbreakers: 0,
     }));
   } else {
     console.log('Cannot initialize the database!  Please invoke meteor with a settings file.');

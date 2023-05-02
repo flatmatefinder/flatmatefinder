@@ -11,12 +11,10 @@ const ForYou = () => {
   const { ready, users } = useTracker(() => {
     // Note that this subscription will get cleaned up
     // when your component is unmounted or deps change.
-    // Get access to Stuff documents.
     const subscription = Meteor.subscribe(PublicUsers.userPublicationName);
     // Determine if the subscription is ready
     const rdy1 = subscription.ready();
     const rdy = rdy1;
-    // Get the Stuff documents
     const userItems = PublicUsers.collection.find({}).fetch();
     return {
       users: userItems,
