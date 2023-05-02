@@ -23,7 +23,6 @@ const Profile = () => {
   const { ready, users, datas, publicUsers } = useTracker(() => {
     // Note that this subscription will get cleaned up
     // when your component is unmounted or deps change.
-    // Get access to Stuff documents.
     const subscription = Meteor.subscribe(Users.userPublicationName);
     const subscriptionData = Meteor.subscribe(UserData.userPublicationName);
     const subscriptionPublicUser = Meteor.subscribe(PublicUsers.userPublicationName);
@@ -32,7 +31,6 @@ const Profile = () => {
     const rdy2 = subscriptionData.ready();
     const rdy3 = subscriptionPublicUser.ready();
     const rdy = rdy1 && rdy2 && rdy3;
-    // Get the Stuff documents
     const userItems = Users.collection.find({}).fetch();
     const publicUserItems = PublicUsers.collection.find({}).fetch();
     const userData = UserData.collection.find({}).fetch();

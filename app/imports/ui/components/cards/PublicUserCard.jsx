@@ -11,14 +11,12 @@ const PublicUserCard = ({ username }) => {
   const { ready, user, data } = useTracker(() => {
     // Note that this subscription will get cleaned up
     // when your component is unmounted or deps change.
-    // Get access to Stuff documents.
     const subscription = Meteor.subscribe(PublicUsers.userPublicationName);
     const subscriptionData = Meteor.subscribe(UserData.userPublicationName);
     // Determine if the subscription is ready
     const rdy1 = subscription.ready();
     const rdy2 = subscriptionData.ready();
     const rdy = rdy1 && rdy2;
-    // Get the Stuff documents
     const userItems = PublicUsers.collection.find({ owner: username }).fetch();
     // The following is ran by Underscore package
     // eslint-disable-next-line no-undef
