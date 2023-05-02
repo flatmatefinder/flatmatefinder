@@ -6,6 +6,7 @@ import { PublicUsers } from '../../../api/user/PublicUser';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import AdminUserCard from '../../components/cards/AdminUserCard';
 
+let userCount;
 /* Renders the ForYou page for adding a document. */
 const ForYouAdmin = () => {
   const { ready, users } = useTracker(() => {
@@ -15,6 +16,7 @@ const ForYouAdmin = () => {
     // Determine if the subscription is ready
     const rdy = subscription.ready();
     const userItems = PublicUsers.collection.find({}).fetch();
+    userCount = PublicUsers.collection.find({}).count();
     console.log(userItems);
     return {
       users: userItems,
@@ -27,6 +29,7 @@ const ForYouAdmin = () => {
         <Col md={7}>
           <Col className="text-center">
             <h2>All Users <p style={{ color: 'red' }}> ADMIN </p></h2>
+            <h4>{userCount} Users</h4>
           </Col>
         </Col>
       </Row>
