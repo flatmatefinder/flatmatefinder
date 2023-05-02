@@ -37,13 +37,14 @@ Meteor.smartPublish(PublicUsers.userPublicationName, function () {
   if (this.userId) {
     const primaryUser = Meteor.users.find({ _id: this.userId }).fetch()[0];
     const userName = primaryUser.username;
+    const primaryUserData = UserData.collection.find({ owner: userName }).fetch();
     let publicUserIds = [];
     PublicUsers.collection.find().fetch().forEach((publicUser) => {
       if (publicUser.owner === userName) {
         publicUserIds = [...publicUserIds, publicUser._id];
         return 1;
       }
-      if (pairTwo(Users.collection.find({ owner: primaryUser.username }).fetch()[0], Users.collection.find({ owner: publicUser.owner }).fetch()[0])) {
+      if (pairTwo(Users.collection.find({ owner: primaryUser.username }).fetch()[0], Users.collection.find({ owner: publicUser.owner }).fetch()[0], primaryUserData, UserData.collection.find({ owner: publicUser.owner }).fetch())) {
         publicUserIds = [...publicUserIds, publicUser._id];
         return 1;
       }

@@ -17,7 +17,6 @@ const ForYouAdmin = () => {
     const rdy = subscription.ready();
     const userItems = PublicUsers.collection.find({}).fetch();
     userCount = PublicUsers.collection.find({}).count();
-    console.log(userItems);
     return {
       users: userItems,
       ready: rdy,
