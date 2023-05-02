@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, ListGroup } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { UserData } from '../../../api/data/Data';
 import DataText from '../DataText';
 import { sleepIntToString } from '../../../utils/Utils';
 import SuspendButton from './SuspendButton';
@@ -70,14 +69,12 @@ PublicUserCardAux.propTypes = {
     accountsuspended: PropTypes.bool,
     _id: PropTypes.string,
   }).isRequired,
-  userData: PropTypes.arrayOf((propValue, key, componentName, location, propFullName) => {
-    if (!UserData.test(propValue[key])) {
-      return new Error(
-        `Invalid prop \`${propFullName}\` supplied to` +
-                ` \`${componentName}\`. Validation failed.`,
-      );
-    }
-    return true;
+  userData: PropTypes.arrayOf(() => {
+    PropTypes.shape({
+      data: PropTypes.string,
+      owner: PropTypes.string,
+      data_type: PropTypes.string,
+    });
   }).isRequired,
   admin: PropTypes.bool.isRequired,
 };
