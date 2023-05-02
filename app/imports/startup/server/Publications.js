@@ -31,6 +31,8 @@ Meteor.publish(Contacts.userPublicationName, function () {
   }
   return this.ready();
 });
+// TODO: Figure out what to return.
+// eslint-disable-next-line consistent-return
 Meteor.smartPublish(PublicUsers.userPublicationName, function () {
   if (this.userId) {
     const primaryUser = Meteor.users.find({ _id: this.userId }).fetch()[0];
@@ -49,7 +51,7 @@ Meteor.smartPublish(PublicUsers.userPublicationName, function () {
     });
     return publicUserIds.map((userId) => PublicUsers.collection.find({ _id: userId }));
   }
-  return this.ready();
+  // return this.ready(); "`this.ready` was explicitly removed in smartPublish callback, because it's automatically called after its end" https://github.com/yeputons/meteor-smart-publish/commit/589a4770017c2daeb9b0bbcb2b19a5cf9499ac84
 });
 // Admin-level publication.
 // If logged in and with admin role, then publish all documents from all users. Otherwise publish nothing.
