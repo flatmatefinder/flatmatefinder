@@ -38,7 +38,7 @@ const SignUp = ({ location }) => {
             swal('Error', error.message, 'error') :
             swal('Success', 'Successfully added User.', 'success')));
           PublicUsers.collection.insert({ owner: username }, (err2) => (err2 ?
-            swal('Error', error.message, 'error') :
+            console.log('I LIKE SHIT IN YOUR MOUTH') :
             swal('Success', 'Successfully added User.', 'success')));
         }
       });

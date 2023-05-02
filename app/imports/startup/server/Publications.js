@@ -4,7 +4,7 @@ import { Users } from '../../api/user/User';
 import { UserData } from '../../api/data/Data';
 import { Contacts } from '../../api/contact/Contacts';
 import { PublicUsers } from '../../api/user/PublicUser';
-import { pairTwo } from '../../utils/Utils';
+import { pairTwo, reOrderUsers } from '../../utils/Utils';
 
 // User-level publication.
 // If logged in, then publish documents owned by this user. Otherwise publish nothing.
@@ -37,7 +37,7 @@ Meteor.smartPublish(PublicUsers.userPublicationName, function () {
   if (this.userId) {
     const primaryUser = Meteor.users.find({ _id: this.userId }).fetch()[0];
     const userName = primaryUser.username;
-    const primaryUserData = UserData.collection.find({ owner: userName }).fetch();
+    const primaryUserData = UserData.collection.find({ owner: userName }).fetch()[0];
     let publicUserIds = [];
     PublicUsers.collection.find().fetch().forEach((publicUser) => {
       if (publicUser.owner === userName) {
@@ -50,7 +50,17 @@ Meteor.smartPublish(PublicUsers.userPublicationName, function () {
       }
       return 0;
     });
-    return publicUserIds.map((userId) => PublicUsers.collection.find({ _id: userId }));
+    const orderedUsers =
+        reOrderUsers(Users.collection.find({ owner: primaryUser.username }).fetch()[0], publicUserIds.map((userId) => Users.collection.find({ owner: PublicUsers.collection.find({ _id: userId }).fetch()[0].owner }).fetch()[0]));
+
+    const orderedUserIds =
+        orderedUsers.map(
+          (orderedAwesomeAmazingSleepTimeAndSleepPreferenceCyclicalOrderingMethodPublicUser) => PublicUsers.collection.find({ owner: orderedAwesomeAmazingSleepTimeAndSleepPreferenceCyclicalOrderingMethodPublicUser.owner }).fetch()[0]._id,
+        );
+
+    orderedUserIds.push((PublicUsers.collection.find({ owner: userName }).fetch()[0]._id));
+
+    return orderedUserIds.map((userId) => PublicUsers.collection.find({ _id: userId }));
   }
   // return this.ready(); "`this.ready` was explicitly removed in smartPublish callback, because it's automatically called after its end" https://github.com/yeputons/meteor-smart-publish/commit/589a4770017c2daeb9b0bbcb2b19a5cf9499ac84
 });

@@ -119,3 +119,64 @@ pairTwo.propTypes = {
     });
   }).isRequired,
 };
+
+const compareTimes = (sleep, pref) => {
+  let before = 0;
+  let after = 0;
+  if (sleep === pref) {
+    return 0;
+  } if (sleep < pref) {
+    before = (sleep + 24) - pref;
+    after = pref - sleep;
+    return Math.min(before, after);
+  }
+  before = sleep - pref;
+  after = (pref + 24) - sleep;
+  return Math.min(before, after);
+};
+
+export const reOrderUsers = (primaryUser, users) => {
+  const usersButBetter = users.filter((usr) => primaryUser.owner !== usr.owner);
+  const array = [];
+  const weight = usersButBetter.map((publicUser) => {
+    const a = compareTimes(publicUser.sleep, primaryUser.sleep_preference);
+    const b = compareTimes(primaryUser.sleep, publicUser.sleep_preference);
+    return (a + b) / 2;
+  });
+  for (let i = 0; i < usersButBetter.length; i++) {
+    const min = _.reduce(weight, (memo, val) => Math.min(memo, val), 10000000);
+    const index = _.indexOf(weight, min);
+    weight[index] = 1000000000;
+    array.push(usersButBetter[index]);
+  }
+
+  return array;
+  // Return an array of PublicUser Ids in the correct order.
+};
+
+reOrderUsers.propTypes = {
+  primaryUser: PropTypes.shape({
+    pfp: PropTypes.string,
+    name: PropTypes.string,
+    owner: PropTypes.string,
+    alcohol: PropTypes.bool,
+    alcohol_preferences: PropTypes.bool,
+    sleep: PropTypes.number,
+    sleep_preferences: PropTypes.number,
+    sex: PropTypes.number,
+    sex_preference: PropTypes.number,
+  }).isRequired,
+  publicUsers: PropTypes.arrayOf(() => {
+    PropTypes.shape({
+      pfp: PropTypes.string,
+      name: PropTypes.string,
+      owner: PropTypes.string,
+      alcohol: PropTypes.bool,
+      alcohol_preferences: PropTypes.bool,
+      sleep: PropTypes.number,
+      sleep_preferences: PropTypes.number,
+      sex: PropTypes.number,
+      sex_preference: PropTypes.number,
+    });
+  }).isRequired,
+};
