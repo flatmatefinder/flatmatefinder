@@ -41,7 +41,7 @@ const ProfilePicture = ({ userName }) => {
       </div> // TODO Make this an AdvancedImage with Cloudinary
     );
   }
-  return <PersonCircle size={60} />;
+  return <PersonCircle size={50} />;
 };
 
 // Require a document to be passed to this component.

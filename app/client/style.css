@@ -124,6 +124,7 @@ h1 {
   padding: 50px;
 }
 
+/*Buttons*/
 #button {
   border-radius: 12px;
   width: auto;
@@ -136,10 +137,24 @@ h1 {
   color: white;
 }
 
-.landing-card {
-
+a {
+  outline: none;
 }
 
+#button2 {
+  width: auto;
+  transition-duration: 0.4s;
+  background: white;
+  color: black;
+  outline: none;
+}
+
+#button2:hover {
+  background: #3F4540;
+  color: black;
+}
+
+/*Cards*/
 #card-img {
   border-radius: 50%;
   width: 220px;
