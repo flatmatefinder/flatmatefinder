@@ -500,7 +500,6 @@ const Profile = () => {
     <div id="profile-page" className="px-5 justify-content-md-center">
       <form method="post" onSubmit={handleSubmit}>
         <Row>
-
           {/* Card with Profile */}
           <Col className="md-4 mb-3">
             <Card>
@@ -514,7 +513,9 @@ const Profile = () => {
                 /> <br />
               </div>
               {/* <Button variant="danger" onClick={(e) => pfpGetter(e)} style={{ display: 'none' }}> </Button> */}
-                <button className="btn btn-secondary" type="button" id="button2">
+
+                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                <a className="btn btn-secondary" role="button" id="button2">
                   <CloudinaryUploadWidget
                     url={url}
                     setUrl={(val) => {
@@ -524,9 +525,8 @@ const Profile = () => {
                     }}
                   />
                   Upload Profile
-                </button>
+                </a>
                 <p style={{ color: 'gray' }}>200px x 200px <br />Best for Profile Image</p>
-
               </Card.Body>
             </Card>
           </Col>
@@ -685,140 +685,155 @@ const Profile = () => {
                 </Card.Body>
               </Card>
             </Row>
-            <Row className="md-4 mb-3">
+
+            <Row classname="md-4 mb-3">
               {/* Linked Contact Methods */}
               <Card>
                 <Card.Body>
-                  <Col className="md-4 mb-3">
-                    {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-                    <p> Linked Contact Methods: </p>
-                    <ul>
-                      {socials.map(social => (
-                        <li key={`list-item-${social}`}> {social}
+                  <Row>
+                    <Col className="md-4 mb-3">
+                      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+                      <p> Linked Contact Methods: </p>
+                      <ul>
+                        {socials.map(social => (
+                          <li key={`list-item-${social}`}> {social}
                               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                          <Button
-                            variant="danger"
-                            onClick={
-                              () => {
-                                const i = socials.indexOf(social);
-                                let tempSocials = [];
-                                for (let j = 0; j < socials.length; j++) {
-                                  if (j !== i) {
-                                    tempSocials = [...tempSocials, socials[j]];
+                            <Button
+                              variant="danger"
+                              onClick={
+                                () => {
+                                  const i = socials.indexOf(social);
+                                  let tempSocials = [];
+                                  for (let j = 0; j < socials.length; j++) {
+                                    if (j !== i) {
+                                      tempSocials = [...tempSocials, socials[j]];
+                                    }
                                   }
+                                  setSocials(tempSocials);
+                                  const dataObjects = _.filter(data, (userData) => {
+                                    if (userData.data_type === 'contact' && userData.data === social) return true;
+                                    return false;
+                                  });
+                                  const dataObject = _.find(dataObjects, () => true);
+                                  const dataID = dataObject._id;
+                                  UserData.collection.remove({ _id: dataID });
                                 }
-                                setSocials(tempSocials);
-                                const dataObjects = _.filter(data, (userData) => userData.data_type === 'contact' && userData.data === social);
-                                const dataObject = _.find(dataObjects, () => true);
-                                const dataID = dataObject._id;
-                                UserData.collection.remove({ _id: dataID });
                               }
-                            }
-                          ><Trash />
-                          </Button>
-                        </li>
-                      ))}
-                    </ul>
-                    <br />
-                  </Col>
-
-                  <Col className="md-4 mb-3">
-                    <p> Existing Preferences: </p>
-                    <ul>
-                      {preferences.map(preference => (
-                        <li key={`list-item-${preference}`}> {preference}
+                            ><Trash />
+                            </Button>
+                          </li>
+                        ))}
+                      </ul>
+                    </Col>
+                    <Col className="md-4 mb-3">
+                      <p> Existing Preferences: </p>
+                      <ul>
+                        {preferences.map(preference => (
+                          <li key={`list-item-${preference}`}> {preference}
                               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                          <Button
-                            variant="danger"
-                            onClick={
-                              () => {
-                                const i = preferences.indexOf(preference);
-                                let tempPreferences = [];
-                                for (let j = 0; j < preferences.length; j++) {
-                                  if (j !== i) {
-                                    tempPreferences = [...tempPreferences, preferences[j]];
+                            <Button
+                              variant="danger"
+                              onClick={
+                                () => {
+                                  const i = preferences.indexOf(preference);
+                                  let tempPreferences = [];
+                                  for (let j = 0; j < preferences.length; j++) {
+                                    if (j !== i) {
+                                      tempPreferences = [...tempPreferences, preferences[j]];
+                                    }
                                   }
+                                  setPreferences(tempPreferences);
+
+                                  const dataObjects = _.filter(data, (userData) => {
+                                    if (userData.data_type === 'preference' && userData.data === preference) return true;
+                                    return false;
+                                  });
+                                  const dataObject = _.find(dataObjects, () => true);
+                                  const dataID = dataObject._id;
+                                  UserData.collection.remove({ _id: dataID });
                                 }
-                                setPreferences(tempPreferences);
-
-                                const dataObjects = _.filter(data, (userData) => userData.data_type === 'preference' && userData.data === preference);
-                                const dataObject = _.find(dataObjects, () => true);
-                                const dataID = dataObject._id;
-                                UserData.collection.remove({ _id: dataID });
                               }
-                            }
-                          ><Trash />
-                          </Button>
-                        </li>
-                      ))}
-                    </ul>
-                    <br />
-                  </Col>
+                            ><Trash />
+                            </Button>
+                          </li>
+                        ))}
+                      </ul>
+                    </Col>
 
-                  <Col className="md-4 mb-3">
-                    <p> Existing Dealbreakers: </p>
-                    <ul>
-                      {dealbreakers.map(dealbreaker => (
-                        <li key={`list-item-${dealbreaker}`}> {dealbreaker}
+                  </Row>
+                  <Row>
+                    <Col className="md-4 mb-3">
+                      <p> Existing Habits: </p>
+                      <ul>
+                        {habits.map(habit => (
+                          <li key={`list-item-${habit}`}> {habit}
                               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                          <Button
-                            variant="danger"
-                            onClick={
-                              () => {
-                                const i = dealbreakers.indexOf(dealbreaker);
-                                let tempDealbreakers = [];
-                                for (let j = 0; j < dealbreakers.length; j++) {
-                                  if (j !== i) {
-                                    tempDealbreakers = [...tempDealbreakers, dealbreakers[j]];
+                            <Button
+                              variant="danger"
+                              onClick={
+                                () => {
+                                  const i = habits.indexOf(habit);
+                                  let tempHabits = [];
+                                  for (let j = 0; j < habits.length; j++) {
+                                    if (j !== i) {
+                                      tempHabits = [...tempHabits, habits[j]];
+                                    }
                                   }
+                                  setSocials(tempHabits);
+
+                                  const dataObjects = _.filter(data, (userData) => {
+                                    if (userData.data_type === 'habit' && userData.data === habit) return true;
+                                    return false;
+                                  });
+                                  const dataObject = _.find(dataObjects, () => true);
+                                  const dataID = dataObject._id;
+                                  UserData.collection.remove({ _id: dataID });
                                 }
-                                setDealbreakers(tempDealbreakers);
-
-                                const dataObjects = _.filter(data, (userData) => userData.data_type === 'dealbreaker' && userData.data === dealbreaker);
-                                const dataObject = _.find(dataObjects, () => true);
-                                const dataID = dataObject._id;
-                                UserData.collection.remove({ _id: dataID });
                               }
-                            }
-                          ><Trash />
-                          </Button>
-                        </li>
-                      ))}
-                    </ul>
-                  </Col>
+                            ><Trash />
+                            </Button>
+                          </li>
+                        ))}
+                      </ul>
+                    </Col>
 
-                  <Col className="md-4 mb-3">
-                    <p> Existing Habits: </p>
-                    <ul>
-                      {habits.map(habit => (
-                        <li key={`list-item-${habit}`}> {habit}
+                    <Col className="md-4 mb-3">
+                      <p> Existing Dealbreakers: </p>
+                      <ul>
+                        {dealbreakers.map(dealbreaker => (
+                          <li key={`list-item-${dealbreaker}`}> {dealbreaker}
                               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                          <Button
-                            variant="danger"
-                            onClick={
-                              () => {
-                                const i = habits.indexOf(habit);
-                                console.log(i);
-                                let tempHabits = [];
-                                for (let j = 0; j < habits.length; j++) {
-                                  if (j !== i) {
-                                    tempHabits = [...tempHabits, habits[j]];
+                            <Button
+                              variant="danger"
+                              onClick={
+                                () => {
+                                  const i = dealbreakers.indexOf(dealbreaker);
+                                  let tempDealbreakers = [];
+                                  for (let j = 0; j < dealbreakers.length; j++) {
+                                    if (j !== i) {
+                                      tempDealbreakers = [...tempDealbreakers, dealbreakers[j]];
+                                    }
                                   }
-                                }
-                                setHabits(tempHabits);
+                                  setDealbreakers(tempDealbreakers);
 
-                                const dataObjects = _.filter(data, (userData) => userData.data_type === 'habit' && userData.data === habit);
-                                const dataObject = _.find(dataObjects, () => true);
-                                const dataID = dataObject._id;
-                                UserData.collection.remove({ _id: dataID });
+                                  const dataObjects = _.filter(data, (userData) => {
+                                    if (userData.data_type === 'dealbreaker' && userData.data === dealbreaker) return true;
+                                    return false;
+                                  });
+                                  const dataObject = _.find(dataObjects, () => true);
+                                  const dataID = dataObject._id;
+                                  UserData.collection.remove({ _id: dataID });
+                                }
                               }
-                            }
-                          ><Trash />
-                          </Button>
-                        </li>
-                      ))}
-                    </ul>
-                  </Col>
+                            ><Trash />
+                            </Button>
+                          </li>
+                        ))}
+                      </ul>
+                    </Col>
+
+                  </Row>
+
                 </Card.Body>
               </Card>
             </Row>
@@ -828,11 +843,14 @@ const Profile = () => {
               <Card.Body>
                 <Card.Title>What time do you go to sleep?</Card.Title>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  {/* TODO https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-props-no-spreading.md */}
+                  { /* eslint-disable react/jsx-props-no-spreading */ }
                   <StaticTimePicker
                     label="Sleep Time"
                     views={['hours']}
                     value={value}
                     onChange={(newValue) => { setValue(newValue); setSleep(newValue.getHours()); }}
+                    renderInput={(parameters) => <TextField {...parameters} />}
                   />
                 </LocalizationProvider>
               </Card.Body>
@@ -843,22 +861,25 @@ const Profile = () => {
               <Card.Body>
                 <Card.Title>What time do you want your roommate to go to sleep (at the latest)?</Card.Title>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  {/* TODO https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-props-no-spreading.md */}
+                  { /* eslint-disable react/jsx-props-no-spreading */ }
                   <StaticTimePicker
                     label="Sleep Time"
                     views={['hours']}
                     value={valuePref}
                     onChange={(newValue) => { setValuePref(newValue); setSleepPref(newValue.getHours()); }}
+                    renderInput={(parameters) => <TextField {...parameters} />}
                   />
                 </LocalizationProvider>
               </Card.Body>
             </Card>
           </Col>
 
+          <div className="text-center" style={{ paddingTop: '30px', paddingBottom: '30px', fontSize: '40px' }}>
+            <Button disabled={suspended} variant={suspended ? 'danger' : 'success'} type="submit" className="btn btn-primary">Submit</Button>
+          </div>
+
         </Row>
-        <div className="text-center" style={{ paddingTop: '30px', paddingBottom: '30px', fontSize: '40px' }}>
-          <Button disabled={suspended} variant={suspended ? 'danger' : 'success'} type="submit" className="btn btn-primary">Submit</Button>
-        </div>
-        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
       </form>
     </div>
 
