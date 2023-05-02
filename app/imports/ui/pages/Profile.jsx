@@ -8,6 +8,7 @@ import { Trash } from 'react-bootstrap-icons';
 import { LocalizationProvider, StaticTimePicker } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import TextField from '@mui/material/TextField';
+import { useParams } from 'react-router';
 import { Users } from '../../api/user/User';
 import { UserData } from '../../api/data/Data';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -20,22 +21,41 @@ let data = null;
 let suspended = false;
 
 const Profile = () => {
+  // Get the documentID from the URL field. See imports/ui/layouts/App.jsx for the route containing :_id.
+  const { _id } = useParams();
+
   const { ready, users, datas, publicUsers } = useTracker(() => {
-    // Note that this subscription will get cleaned up
-    // when your component is unmounted or deps change.
-    // Get access to Stuff documents.
-    const subscription = Meteor.subscribe(Users.userPublicationName);
-    const subscriptionData = Meteor.subscribe(UserData.userPublicationName);
-    const subscriptionPublicUser = Meteor.subscribe(PublicUsers.userPublicationName);
-    // Determine if the subscription is ready
-    const rdy1 = subscription.ready();
-    const rdy2 = subscriptionData.ready();
-    const rdy3 = subscriptionPublicUser.ready();
-    const rdy = rdy1 && rdy2 && rdy3;
-    // Get the Stuff documents
-    const userItems = Users.collection.find({}).fetch();
-    const publicUserItems = PublicUsers.collection.find({}).fetch();
-    const userData = UserData.collection.find({}).fetch();
+    let rdy = null;
+    let userItems = null;
+    let publicUserItems = null;
+    let userData = null;
+    let subscriptionData = null;
+
+    if (_id === undefined) {
+      const subscription = Meteor.subscribe(Users.userPublicationName);
+      subscriptionData = Meteor.subscribe(UserData.userPublicationName);
+      const subscriptionPublicUser = Meteor.subscribe(PublicUsers.userPublicationName);
+      // Determine if the subscription is ready
+      const rdy1 = subscription.ready();
+      const rdy2 = subscriptionData.ready();
+      const rdy3 = subscriptionPublicUser.ready();
+      rdy = rdy1 && rdy2 && rdy3;
+      userItems = Users.collection.find({}).fetch();
+      publicUserItems = PublicUsers.collection.find({}).fetch();
+      userData = UserData.collection.find({}).fetch();
+    } else {
+      const subscription = Meteor.subscribe(Users.adminPublicationName);
+      subscriptionData = Meteor.subscribe(UserData.userPublicationName);
+      const subscriptionPublicUser = Meteor.subscribe(PublicUsers.userPublicationName);
+      // Determine if the subscription is ready
+      const rdy1 = subscription.ready();
+      const rdy2 = subscriptionData.ready();
+      const rdy3 = subscriptionPublicUser.ready();
+      rdy = rdy1 && rdy2 && rdy3;
+      userItems = Users.collection.find({}).fetch();
+      publicUserItems = PublicUsers.collection.find({ _id: _id }).fetch();
+      userData = UserData.collection.find({}).fetch();
+    }
 
     return {
       datas: userData,
@@ -44,19 +64,19 @@ const Profile = () => {
       publicUsers: publicUserItems,
     };
   }, []);
-  // const pfpGetter = (e) => {
-  //   e.preventDefault();
-  //   const cloudinary = require('cloudinary').v2;
-  //   cloudinary.uploader
-  //     .upload(`${user.name}_pfp.jpg`)
-  //     .then(result => console.log(result));
-  // };
 
   if (ready) {
-    user = _.find(users, () => true);
-    publicUser = _.find(publicUsers, (publicUserItemThing) => publicUserItemThing.owner === user.owner);
-    data = _.filter(datas, (dat) => dat.owner === user.owner);
-    suspended = user.accountsuspended; // check if the user is suspended
+    if (_id === undefined) {
+      user = _.find(users, () => true);
+      publicUser = _.find(publicUsers, (publicUserItemThing) => publicUserItemThing.owner === user.owner);
+      data = _.filter(datas, (dat) => dat.owner === user.owner);
+      suspended = user.accountsuspended; // check if the user is suspended
+    } else {
+      publicUser = publicUsers[0];
+      user = _.find(users, (usr) => usr.owner === publicUser.owner);
+      data = _.filter(datas, (dat) => dat.owner === publicUser.owner);
+      suspended = user.accountsuspended;
+    }
   }
 
   const getPreferences = () => {
@@ -504,7 +524,7 @@ const Profile = () => {
                 /> <br />
               </div>
               {/* <Button variant="danger" onClick={(e) => pfpGetter(e)} style={{ display: 'none' }}> </Button> */}
-                <a className="btn btn-secondary" role="button" id="button2">
+                <button className="btn btn-secondary" type="button" id="button2">
                   <CloudinaryUploadWidget
                     url={url}
                     setUrl={(val) => {
@@ -514,7 +534,7 @@ const Profile = () => {
                     }}
                   />
                   Upload Profile
-                </a>
+                </button>
                 <p style={{ color: 'gray' }}>200px x 200px <br />Best for Profile Image</p>
 
               </Card.Body>
@@ -550,7 +570,7 @@ const Profile = () => {
                 <hr />
                 <Row>
                   <Col className="mb-0 sm-3">
-                    <Card.Title>Your Existing Habits</Card.Title>
+                    <Card.Title>Your Habits</Card.Title>
                     <Card.Text>I am (a)...
                     </Card.Text>
                   </Col>
@@ -797,13 +817,14 @@ const Profile = () => {
                             onClick={
                               () => {
                                 const i = habits.indexOf(habit);
+                                console.log(i);
                                 let tempHabits = [];
                                 for (let j = 0; j < habits.length; j++) {
                                   if (j !== i) {
                                     tempHabits = [...tempHabits, habits[j]];
                                   }
                                 }
-                                setSocials(tempHabits);
+                                setHabits(tempHabits);
 
                                 const dataObjects = _.filter(data, (userData) => {
                                   if (userData.data_type === 'habit' && userData.data === habit) return true;
@@ -863,7 +884,7 @@ const Profile = () => {
 
         </Row>
         <div className="text-center" style={{ paddingTop: '30px', paddingBottom: '30px', fontSize: '40px' }}>
-          <Button disabled={suspended} variant={suspended ? 'danger' : 'success'} type="submit" class="btn btn-primary">Submit</Button>
+          <Button disabled={suspended} variant={suspended ? 'danger' : 'success'} type="submit" className="btn btn-primary">Submit</Button>
         </div>
         {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
       </form>

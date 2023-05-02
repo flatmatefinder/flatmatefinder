@@ -55,7 +55,7 @@ const App = () => {
           <Route path="/map" element={<ProtectedRoute><Map /></ProtectedRoute>} />
           <Route path="/foryou" element={<ProtectedRoute><ForYou /></ProtectedRoute>} />
           <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-          <Route path="/profile/:_id" element={<ProtectedRoute><Profile /> </ProtectedRoute>} />
+          <Route path="/profile/:_id" element={<AdminProtectedRoute ready={ready}><Profile /> </AdminProtectedRoute>} />
           <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
           <Route path="/suggestionsadmin" element={<AdminProtectedRoute ready={ready}><SuggestionsAdmin /></AdminProtectedRoute>} />
           <Route path="/admin" element={<AdminProtectedRoute ready={ready}><ForYouAdmin /></AdminProtectedRoute>} />
