@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, ListGroup } from 'react-bootstrap';
-import { UserData } from '../../../api/data/Data';
 import DataText from '../DataText';
 import { sleepIntToString } from '../../../utils/Utils';
 
@@ -50,14 +49,12 @@ UserCardAux.propTypes = {
     sex: PropTypes.number,
     sex_preference: PropTypes.number,
   }).isRequired,
-  userData: PropTypes.arrayOf((propValue, key, componentName, location, propFullName) => {
-    if (!UserData.test(propValue[key])) {
-      return new Error(
-        `Invalid prop \`${propFullName}\` supplied to` +
-                ` \`${componentName}\`. Validation failed.`,
-      );
-    }
-    return true;
+  userData: PropTypes.arrayOf(() => {
+    PropTypes.shape({
+      data: PropTypes.string,
+      owner: PropTypes.string,
+      data_type: PropTypes.string,
+    });
   }).isRequired,
 };
 

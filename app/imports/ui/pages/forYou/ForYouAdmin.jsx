@@ -15,7 +15,6 @@ const ForYouAdmin = () => {
     // Determine if the subscription is ready
     const rdy = subscription.ready();
     const userItems = PublicUsers.collection.find({}).fetch();
-    console.log(userItems);
     return {
       users: userItems,
       ready: rdy,
