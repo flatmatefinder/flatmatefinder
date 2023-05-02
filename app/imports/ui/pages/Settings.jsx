@@ -4,7 +4,7 @@ import SideNav from '../components/settings/SideNav';
 import DeleteAccountPopup from '../components/settings/DeleteAccountPopup';
 
 const Settings = () => {
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedOption, setSelectedOption] = useState('data-visibility');
   const [showDeleteAccountPopup, setShowDeleteAccountPopup] = useState(false);
 
   const handleDeleteAccount = (password) => {

@@ -20,17 +20,17 @@ const NavBar = () => {
         <Navbar.Brand as={NavLink} to="/">
           <h2>Flatmate Finder</h2>
         </Navbar.Brand>
-        <Navbar.Toggle id="basic-nav-dropdown" />
-        <Navbar.Collapse id="basic-navbar-nav">
+        <Navbar.Toggle key="basic-nav-dropdown" id="basic-nav-dropdown" />
+        <Navbar.Collapse key="basic-navbar-nav" id="basic-navbar-nav">
           <Nav className="me-auto justify-content-start">
             {Roles.userIsInRole(Meteor.userId(), 'admin') ? ([
-              <Nav.Link id="list-contact-admin-nav" as={NavLink} to="/suggestionsadmin">Suggestions</Nav.Link>,
-              <Nav.Link id="admin-nav" as={NavLink} to="/admin">Admin</Nav.Link>,
-              <Nav.Link id="map-admin-nav" as={NavLink} to="/map">Map</Nav.Link>,
+              <Nav.Link key="list-contact-admin-nav" id="list-contact-admin-nav" as={NavLink} to="/suggestions">Suggestions</Nav.Link>,
+              <Nav.Link key="admin-nav" id="admin-nav" as={NavLink} to="/admin">Admin</Nav.Link>,
+              <Nav.Link key="map-admin-nav" id="map-admin-nav" as={NavLink} to="/map">Map</Nav.Link>,
             ]) : ''}
             {currentUser && !Roles.userIsInRole(Meteor.userId(), 'admin') ? ([
-              <Nav.Link id="foryou-nav" as={NavLink} to="/foryou">For You</Nav.Link>,
-              <Nav.Link id="map-nav" as={NavLink} to="/map">Map</Nav.Link>,
+              <Nav.Link key="foryou-nav" id="foryou-nav" as={NavLink} to="/foryou">For You</Nav.Link>,
+              <Nav.Link key="map-nav" id="map-nav" as={NavLink} to="/map">Map</Nav.Link>,
             ]) : ''}
           </Nav>
           <Nav className="justify-content-end">
@@ -54,7 +54,7 @@ const NavBar = () => {
                     <GearFill /> {' '} Settings
                   </NavDropdown.Item>
                   <NavDropdown.Item id="navbar-sign-out" as={NavLink} to="/signout">
-                    <BoxArrowRight /> {' '} Sign ut
+                    <BoxArrowRight /> {' '} Sign Out
                   </NavDropdown.Item>
                 </NavDropdown>
               </Container>

@@ -1,7 +1,7 @@
 /* eslint-disable no-undef  */
 import React, { useState } from 'react';
 import swal from 'sweetalert';
-import { Col, Dropdown, Row, Button, Card } from 'react-bootstrap';
+import { Button, Card, Col, Dropdown, Row } from 'react-bootstrap';
 import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
 import { Trash } from 'react-bootstrap-icons';
@@ -81,21 +81,11 @@ const Profile = () => {
 
   const getPreferences = () => {
     const list = _.filter(data, (userData) => userData.data_type === 'preference');
-    const list2 = list.map(dat => dat.data);
-    return list2;
+    return list.map(dat => dat.data);
   };
-  const getDealbreakers = () => {
-    const list = _.filter(data, (userData) => userData.data_type === 'dealbreaker').map(dat => dat.data);
-    return list;
-  };
-  const getSocials = () => {
-    const list = _.filter(data, (userData) => userData.data_type === 'contact').map(dat => dat.data);
-    return list;
-  };
-  const getHabits = () => {
-    const list = _.filter(data, (userData) => userData.data_type === 'habit').map(dat => dat.data);
-    return list;
-  };
+  const getDealbreakers = () => _.filter(data, (userData) => userData.data_type === 'dealbreaker').map(dat => dat.data);
+  const getSocials = () => _.filter(data, (userData) => userData.data_type === 'contact').map(dat => dat.data);
+  const getHabits = () => _.filter(data, (userData) => userData.data_type === 'habit').map(dat => dat.data);
 
   const [preferences, setPreferences] = useState([]);
   const [dealbreakers, setDealbreakers] = useState([]);
@@ -668,10 +658,10 @@ const Profile = () => {
         <Row>
           {/* Name Contact Method */}
           <Col className="md-4 mb-3 ">
-            <Row classname="md-4 mb-3">
+            <Row className="md-4 mb-3">
               <Card>
                 <Card.Body className="justify-content-center">
-                  <Col classname="md-4">
+                  <Col className="md-4">
                     <Row>
                       <Col className="mb-0 sm-3">
                         <Card.Title>Full Name</Card.Title>
@@ -695,7 +685,7 @@ const Profile = () => {
                 </Card.Body>
               </Card>
             </Row>
-            <Row classname="md-4 mb-3">
+            <Row className="md-4 mb-3">
               {/* Linked Contact Methods */}
               <Card>
                 <Card.Body>
@@ -718,10 +708,7 @@ const Profile = () => {
                                   }
                                 }
                                 setSocials(tempSocials);
-                                const dataObjects = _.filter(data, (userData) => {
-                                  if (userData.data_type === 'contact' && userData.data === social) return true;
-                                  return false;
-                                });
+                                const dataObjects = _.filter(data, (userData) => userData.data_type === 'contact' && userData.data === social);
                                 const dataObject = _.find(dataObjects, () => true);
                                 const dataID = dataObject._id;
                                 UserData.collection.remove({ _id: dataID });
@@ -754,10 +741,7 @@ const Profile = () => {
                                 }
                                 setPreferences(tempPreferences);
 
-                                const dataObjects = _.filter(data, (userData) => {
-                                  if (userData.data_type === 'preference' && userData.data === preference) return true;
-                                  return false;
-                                });
+                                const dataObjects = _.filter(data, (userData) => userData.data_type === 'preference' && userData.data === preference);
                                 const dataObject = _.find(dataObjects, () => true);
                                 const dataID = dataObject._id;
                                 UserData.collection.remove({ _id: dataID });
@@ -790,10 +774,7 @@ const Profile = () => {
                                 }
                                 setDealbreakers(tempDealbreakers);
 
-                                const dataObjects = _.filter(data, (userData) => {
-                                  if (userData.data_type === 'dealbreaker' && userData.data === dealbreaker) return true;
-                                  return false;
-                                });
+                                const dataObjects = _.filter(data, (userData) => userData.data_type === 'dealbreaker' && userData.data === dealbreaker);
                                 const dataObject = _.find(dataObjects, () => true);
                                 const dataID = dataObject._id;
                                 UserData.collection.remove({ _id: dataID });
@@ -826,10 +807,7 @@ const Profile = () => {
                                 }
                                 setHabits(tempHabits);
 
-                                const dataObjects = _.filter(data, (userData) => {
-                                  if (userData.data_type === 'habit' && userData.data === habit) return true;
-                                  return false;
-                                });
+                                const dataObjects = _.filter(data, (userData) => userData.data_type === 'habit' && userData.data === habit);
                                 const dataObject = _.find(dataObjects, () => true);
                                 const dataID = dataObject._id;
                                 UserData.collection.remove({ _id: dataID });
@@ -850,14 +828,11 @@ const Profile = () => {
               <Card.Body>
                 <Card.Title>What time do you go to sleep?</Card.Title>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
-                  {/* TODO https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-props-no-spreading.md */}
-                  { /* eslint-disable react/jsx-props-no-spreading */ }
                   <StaticTimePicker
                     label="Sleep Time"
                     views={['hours']}
                     value={value}
                     onChange={(newValue) => { setValue(newValue); setSleep(newValue.getHours()); }}
-                    renderInput={(parameters) => <TextField {...parameters} />}
                   />
                 </LocalizationProvider>
               </Card.Body>
@@ -868,14 +843,11 @@ const Profile = () => {
               <Card.Body>
                 <Card.Title>What time do you want your roommate to go to sleep (at the latest)?</Card.Title>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
-                  {/* TODO https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-props-no-spreading.md */}
-                  { /* eslint-disable react/jsx-props-no-spreading */ }
                   <StaticTimePicker
                     label="Sleep Time"
                     views={['hours']}
                     value={valuePref}
                     onChange={(newValue) => { setValuePref(newValue); setSleepPref(newValue.getHours()); }}
-                    renderInput={(parameters) => <TextField {...parameters} />}
                   />
                 </LocalizationProvider>
               </Card.Body>
