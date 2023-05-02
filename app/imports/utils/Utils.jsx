@@ -79,10 +79,7 @@ export const pairTwo = (user1, user2, user1Data, user2Data) => {
       return undefined;
     });
   });
-  if (returnFalse) {
-    return false;
-  }
-  return true;
+  return !returnFalse;
 };
 pairTwo.propTypes = {
   user1: PropTypes.shape({
