@@ -1,6 +1,7 @@
 // Map will go here
 import { GoogleMap, withGoogleMap } from 'react-google-maps';
 import React from 'react';
+import MapPin from './MapPin';
 
 const MapStuff = withGoogleMap(() => {
   const mapOptions = {
@@ -27,6 +28,7 @@ const MapStuff = withGoogleMap(() => {
       defaultCenter={{ lat: 21.483254, lng: -158.097018 }}
       options={mapOptions}
       mapContainerOptions={containerStyle}
+    < MapPin selectedUser={this.state.selectedUser} currentUser={this.props.currentUser} />
     />
   );
 });
