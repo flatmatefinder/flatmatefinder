@@ -28,10 +28,8 @@ const SuspendButton = ({ publicUser }) => {
   const { ready, users } = useTracker(() => {
     // Note that this subscription will get cleaned up
     // when your component is unmounted or deps change.
-    // Get access to Stuff documents.
     const subscription = Meteor.subscribe(Users.adminPublicationName);
     const rdy = subscription.ready();
-    // Get the Stuff documents
     const userItems = Users.collection.find({}).fetch();
 
     return {

@@ -13,14 +13,12 @@ const DataVisibilityForm = () => {
   const { ready, users, publicUsers } = useTracker(() => {
     // Note that this subscription will get cleaned up
     // when your component is unmounted or deps change.
-    // Get access to Stuff documents.
     const subscription = Meteor.subscribe(Users.userPublicationName);
     const subscriptionPublicUser = Meteor.subscribe(PublicUsers.userPublicationName);
     // Determine if the subscription is ready
     const rdy1 = subscription.ready();
     const rdy2 = subscriptionPublicUser.ready();
     const rdy = rdy1 && rdy2;
-    // Get the Stuff documents
     const userItems = Users.collection.find({}).fetch();
     const publicUserItems = PublicUsers.collection.find({}).fetch();
 

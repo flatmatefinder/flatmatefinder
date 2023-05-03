@@ -1,13 +1,14 @@
 /* eslint-disable no-undef  */
 import React, { useState } from 'react';
 import swal from 'sweetalert';
-import { Col, Dropdown, Row, Button } from 'react-bootstrap';
+import { Button, Card, Col, Dropdown, Row } from 'react-bootstrap';
 import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
 import { Trash } from 'react-bootstrap-icons';
 import { LocalizationProvider, StaticTimePicker } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import TextField from '@mui/material/TextField';
+import { useParams } from 'react-router';
 import { Users } from '../../api/user/User';
 import { UserData } from '../../api/data/Data';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -20,22 +21,41 @@ let data = null;
 let suspended = false;
 
 const Profile = () => {
+  // Get the documentID from the URL field. See imports/ui/layouts/App.jsx for the route containing :_id.
+  const { _id } = useParams();
+
   const { ready, users, datas, publicUsers } = useTracker(() => {
-    // Note that this subscription will get cleaned up
-    // when your component is unmounted or deps change.
-    // Get access to Stuff documents.
-    const subscription = Meteor.subscribe(Users.userPublicationName);
-    const subscriptionData = Meteor.subscribe(UserData.userPublicationName);
-    const subscriptionPublicUser = Meteor.subscribe(PublicUsers.userPublicationName);
-    // Determine if the subscription is ready
-    const rdy1 = subscription.ready();
-    const rdy2 = subscriptionData.ready();
-    const rdy3 = subscriptionPublicUser.ready();
-    const rdy = rdy1 && rdy2 && rdy3;
-    // Get the Stuff documents
-    const userItems = Users.collection.find({}).fetch();
-    const publicUserItems = PublicUsers.collection.find({}).fetch();
-    const userData = UserData.collection.find({}).fetch();
+    let rdy = null;
+    let userItems = null;
+    let publicUserItems = null;
+    let userData = null;
+    let subscriptionData = null;
+
+    if (_id === undefined) {
+      const subscription = Meteor.subscribe(Users.userPublicationName);
+      subscriptionData = Meteor.subscribe(UserData.userPublicationName);
+      const subscriptionPublicUser = Meteor.subscribe(PublicUsers.userPublicationName);
+      // Determine if the subscription is ready
+      const rdy1 = subscription.ready();
+      const rdy2 = subscriptionData.ready();
+      const rdy3 = subscriptionPublicUser.ready();
+      rdy = rdy1 && rdy2 && rdy3;
+      userItems = Users.collection.find({}).fetch();
+      publicUserItems = PublicUsers.collection.find({}).fetch();
+      userData = UserData.collection.find({}).fetch();
+    } else {
+      const subscription = Meteor.subscribe(Users.adminPublicationName);
+      subscriptionData = Meteor.subscribe(UserData.userPublicationName);
+      const subscriptionPublicUser = Meteor.subscribe(PublicUsers.userPublicationName);
+      // Determine if the subscription is ready
+      const rdy1 = subscription.ready();
+      const rdy2 = subscriptionData.ready();
+      const rdy3 = subscriptionPublicUser.ready();
+      rdy = rdy1 && rdy2 && rdy3;
+      userItems = Users.collection.find({}).fetch();
+      publicUserItems = PublicUsers.collection.find({ _id: _id }).fetch();
+      userData = UserData.collection.find({}).fetch();
+    }
 
     return {
       datas: userData,
@@ -44,38 +64,28 @@ const Profile = () => {
       publicUsers: publicUserItems,
     };
   }, []);
-  // const pfpGetter = (e) => {
-  //   e.preventDefault();
-  //   const cloudinary = require('cloudinary').v2;
-  //   cloudinary.uploader
-  //     .upload(`${user.name}_pfp.jpg`)
-  //     .then(result => console.log(result));
-  // };
 
   if (ready) {
-    user = _.find(users, () => true);
-    publicUser = _.find(publicUsers, (publicUserItemThing) => publicUserItemThing.owner === user.owner);
-    data = _.filter(datas, (dat) => dat.owner === user.owner);
-    suspended = user.accountsuspended; // check if the user is suspended
+    if (_id === undefined) {
+      user = _.find(users, () => true);
+      publicUser = _.find(publicUsers, (publicUserItemThing) => publicUserItemThing.owner === user.owner);
+      data = _.filter(datas, (dat) => dat.owner === user.owner);
+      suspended = user.accountsuspended; // check if the user is suspended
+    } else {
+      publicUser = publicUsers[0];
+      user = _.find(users, (usr) => usr.owner === publicUser.owner);
+      data = _.filter(datas, (dat) => dat.owner === publicUser.owner);
+      suspended = user.accountsuspended;
+    }
   }
 
   const getPreferences = () => {
     const list = _.filter(data, (userData) => userData.data_type === 'preference');
-    const list2 = list.map(dat => dat.data);
-    return list2;
+    return list.map(dat => dat.data);
   };
-  const getDealbreakers = () => {
-    const list = _.filter(data, (userData) => userData.data_type === 'dealbreaker').map(dat => dat.data);
-    return list;
-  };
-  const getSocials = () => {
-    const list = _.filter(data, (userData) => userData.data_type === 'contact').map(dat => dat.data);
-    return list;
-  };
-  const getHabits = () => {
-    const list = _.filter(data, (userData) => userData.data_type === 'habit').map(dat => dat.data);
-    return list;
-  };
+  const getDealbreakers = () => _.filter(data, (userData) => userData.data_type === 'dealbreaker').map(dat => dat.data);
+  const getSocials = () => _.filter(data, (userData) => userData.data_type === 'contact').map(dat => dat.data);
+  const getHabits = () => _.filter(data, (userData) => userData.data_type === 'habit').map(dat => dat.data);
 
   const [preferences, setPreferences] = useState([]);
   const [dealbreakers, setDealbreakers] = useState([]);
@@ -487,14 +497,16 @@ const Profile = () => {
   // };
 
   return (ready && isInitialized ? (
-    <div id="profile-page" className="px-5">
-      <form id="profile-form" method="post" onSubmit={handleSubmit}>
+
+    <div id="profile-page" className="px-5 justify-content-md-center">
+      <form method="post" onSubmit={handleSubmit}>
         <Row>
-          <Col xs="3">
-            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-            <label className="justify-content-center">
-              <p className="">Profile Picture:</p>
-              {/* <div style={{ borderRadius: '50%', border: 'darkgray', borderStyle: 'solid', width: '100px', height: '100px', overflow: 'hidden' }}>
+          {/* Card with Profile */}
+          <Col className="md-4 mb-3">
+            <Card>
+              <Card.Body className="justify-content-center">
+                {/* <p className="">Profile Picture:</p> */}
+                {/* <div style={{ borderRadius: '50%', border: 'darkgray', borderStyle: 'solid', width: '100px', height: '100px', overflow: 'hidden' }}>
                 <img
                   alt="Pfp"
                   style={{ cursor: 'pointer', display: 'inline', margin: '0 auto', height: '100%' }}
@@ -502,217 +514,73 @@ const Profile = () => {
                 /> <br />
               </div>
               {/* <Button variant="danger" onClick={(e) => pfpGetter(e)} style={{ display: 'none' }}> </Button> */}
-              <CloudinaryUploadWidget
-                url={url}
-                setUrl={(val) => {
-                  setUrl(val);
-                  Users.collection.update(user._id, { $set: { pfp: val } }, (error) => (error ?
-                    console.log(error.message) : ''));
-                }}
-              />
-              <p style={{ color: 'gray' }}>Images should be ~ 200px x 200px to work properly.</p>
-            </label>
-            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-            <label>
-              What is your name? <br />
-              <input id="name" name="name" placeholder={name || 'John Doe'} type="text" />
-            </label>
-            <br /><br />
-            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-            <label>
-              What are your Contact Methods? <br />
-              <input id="social" name="social" placeholder="Opal#42069" type="text" />
-              <p style={{ color: 'gray' }}> Press submit after every entry. it can be multiple words, should have all information needed to contact you. </p>
-            </label>
-            <p> Linked Contact Methods: </p>
-            <ul>
-              {socials.map(social => (
-                <li key={`list-item-${social}`}> {social}
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  <Button
-                    variant="danger"
-                    onClick={
-                      () => {
-                        const i = socials.indexOf(social);
-                        let tempSocials = [];
-                        for (let j = 0; j < socials.length; j++) {
-                          if (j !== i) {
-                            tempSocials = [...tempSocials, socials[j]];
-                          }
-                        }
-                        setSocials(tempSocials);
-                        const dataObjects = _.filter(data, (userData) => {
-                          if (userData.data_type === 'contact' && userData.data === social) return true;
-                          return false;
-                        });
-                        const dataObject = _.find(dataObjects, () => true);
-                        const dataID = dataObject._id;
-                        UserData.collection.remove({ _id: dataID });
-                      }
-                    }
-                  ><Trash />
-                  </Button>
-                </li>
-              ))}
-            </ul>
-            <br />
+                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                <a className="btn btn-secondary" role="button" id="button2">
+                  <CloudinaryUploadWidget
+                    url={url}
+                    setUrl={(val) => {
+                      setUrl(val);
+                      Users.collection.update(user._id, { $set: { pfp: val } }, (error) => (error ?
+                        console.log(error.message) : ''));
+                    }}
+                  />
+                  Upload Profile
+                </a>
+                <p style={{ color: 'gray' }}>200px x 200px <br />Best for Profile Image</p>
+              </Card.Body>
+            </Card>
           </Col>
-          <Col>
-            <div style={{ borderRight: 'white', borderBottom: 'white', borderTop: 'white', borderLeft: 'gray', borderStyle: 'solid' }} className="px-5 ">
-              <Row>
-                <Col xs={3}>
-                  {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-                  <label>
-                    Any extra preferences? <br />
-                    <input id="preference" name="preference" placeholder="clean" type="text" />
-                    <p style={{ color: 'gray' }}> Press submit after every entry. I want someone who is...</p>
-                  </label>
-                  <p> Existing Preferences: </p>
-                  <ul>
-                    {preferences.map(preference => (
-                      <li key={`list-item-${preference}`}> {preference}
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <Button
-                          variant="danger"
-                          onClick={
-                            () => {
-                              const i = preferences.indexOf(preference);
-                              let tempPreferences = [];
-                              for (let j = 0; j < preferences.length; j++) {
-                                if (j !== i) {
-                                  tempPreferences = [...tempPreferences, preferences[j]];
-                                }
-                              }
-                              setPreferences(tempPreferences);
 
-                              const dataObjects = _.filter(data, (userData) => {
-                                if (userData.data_type === 'preference' && userData.data === preference) return true;
-                                return false;
-                              });
-                              const dataObject = _.find(dataObjects, () => true);
-                              const dataID = dataObject._id;
-                              UserData.collection.remove({ _id: dataID });
-                            }
-                          }
-                        ><Trash />
-                        </Button>
-                      </li>
-                    ))}
-                  </ul>
-                  <br />
-                  {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-                  <label>
-                    Any deal breakers? <br />
-                    <input id="dealbreaker" name="dealbreaker" placeholder="dirty" type="text" />
-                    <p style={{ color: 'gray' }}> Press submit after every preference. It should answer the question of: I don&apos;t want someone who is... </p>
-                  </label>
-                  <p> Existing Dealbreakers: </p>
-                  <ul>
-                    {dealbreakers.map(dealbreaker => (
-                      <li key={`list-item-${dealbreaker}`}> {dealbreaker}
-                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <Button
-                          variant="danger"
-                          onClick={
-                            () => {
-                              const i = dealbreakers.indexOf(dealbreaker);
-                              let tempDealbreakers = [];
-                              for (let j = 0; j < dealbreakers.length; j++) {
-                                if (j !== i) {
-                                  tempDealbreakers = [...tempDealbreakers, dealbreakers[j]];
-                                }
-                              }
-                              setDealbreakers(tempDealbreakers);
+          {/* Roommate Questions  */}
+          <Col className="md-4">
+            <Card className="mb-2">
+              <Card.Body>
+                <Row>
+                  <Col className="mb-0 sm-3">
+                    <Card.Title>Roommate Habit Preferences</Card.Title>
+                    <Card.Text>I want someone who is...
+                    </Card.Text>
+                  </Col>
+                  <Col className="sm-5">
+                    <TextField name="preference" placeholder="clean" type="text" />
+                  </Col>
+                </Row>
+                <hr />
+                <Row>
+                  <Col className="mb-0 sm-3">
+                    <Card.Title>Roommate Habit Deal Breakers</Card.Title>
+                    {/* eslint-disable-next-line react/no-unescaped-entities */}
+                    <Card.Text>I don't want someone who is...
+                    </Card.Text>
+                  </Col>
+                  <Col className="sm-5">
+                    <TextField name="dealbreaker" placeholder="dirty" type="text" />
+                  </Col>
+                </Row>
+                <hr />
+                <Row>
+                  <Col className="mb-0 sm-3">
+                    <Card.Title>Your Habits</Card.Title>
+                    <Card.Text>I am (a)...
+                    </Card.Text>
+                  </Col>
+                  <Col className="sm-5">
+                    <TextField name="habit" placeholder="gamer" type="text" />
+                  </Col>
+                </Row>
+              </Card.Body>
+            </Card>
+          </Col>
 
-                              const dataObjects = _.filter(data, (userData) => {
-                                if (userData.data_type === 'dealbreaker' && userData.data === dealbreaker) return true;
-                                return false;
-                              });
-                              const dataObject = _.find(dataObjects, () => true);
-                              const dataID = dataObject._id;
-                              UserData.collection.remove({ _id: dataID });
-                            }
-                          }
-                        ><Trash />
-                        </Button>
-                      </li>
-                    ))}
-                  </ul>
-                  <br />
-                  {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-                  <label>
-                    Any extra information about yourself? <br />
-                    <input id="habit" name="habit" placeholder="gamer" type="text" />
-                    <p style={{ color: 'gray' }}> Press submit after every habit. It should answer the question of: I am ... OR I am a ... </p>
-                  </label>
-                  <p> Existing Habits: </p>
-                  <ul>
-                    {habits.map(habit => (
-                      <li key={`list-item-${habit}`}> {habit}
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <Button
-                          variant="danger"
-                          onClick={
-                            () => {
-                              const i = habits.indexOf(habit);
-                              let tempHabits = [];
-                              for (let j = 0; j < habits.length; j++) {
-                                if (j !== i) {
-                                  tempHabits = [...tempHabits, habits[j]];
-                                }
-                              }
-                              setSocials(tempHabits);
-
-                              const dataObjects = _.filter(data, (userData) => {
-                                if (userData.data_type === 'habit' && userData.data === habit) return true;
-                                return false;
-                              });
-                              const dataObject = _.find(dataObjects, () => true);
-                              const dataID = dataObject._id;
-                              UserData.collection.remove({ _id: dataID });
-                            }
-                          }
-                        ><Trash />
-                        </Button>
-                      </li>
-                    ))}
-                  </ul>
-                  <br />
-                </Col>
-                <Col xs={4}>
-                  {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-                  <label>
-                    Do you drink alcohol?
-                    <Dropdown
-                      id="alcohol"
-                      name="alcohol"
-                      defaultValue={['true']}
-                    >
-                      <Dropdown.Toggle variant="success" id="dropdown-profile"> {alcohol === 'true' || alcohol === true ? 'Yes' : 'No'} </Dropdown.Toggle>
-                      <Dropdown.Menu>
-                        <Dropdown.Item as="button" onClick={alcohol_yes}>Yes</Dropdown.Item>
-                        <Dropdown.Item id="noButton1" as="button" onClick={alcohol_no}>No</Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  </label>
-                  {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-                  <label>
-                    Do you care if others drink alcohol?
-                    <Dropdown
-                      id="alcohol_preference"
-                      name="alcohol_preference"
-                      defaultValue={['true']}
-                    >
-                      <Dropdown.Toggle variant="success" id="dropdown-profile"> {alcoholPref === 'true' || alcoholPref === true ? 'Yes' : 'No'} </Dropdown.Toggle>
-                      <Dropdown.Menu>
-                        <Dropdown.Item as="button" onClick={alcoholPref_yes}>Yes</Dropdown.Item>
-                        <Dropdown.Item id="noButton2" as="button" onClick={alcoholPref_no}>No</Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  </label>
-                  {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-                  <label>
-                    What is your gender?
+          {/* Gender and Alcohol */}
+          <Col className="md-4">
+            <Card className="mb-3">
+              <Card.Body>
+                <Row>
+                  <Col className="mb-0 sm-2">
+                    <Card.Title>Gender</Card.Title>
+                  </Col>
+                  <Col className="sm-4">
                     <Dropdown
                       id="gender"
                       name="gender"
@@ -725,10 +593,14 @@ const Profile = () => {
                         <Dropdown.Item as="button" onClick={gender_other}>Other</Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
-                  </label>
-                  {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-                  <label>
-                    What is your gender preference?
+                  </Col>
+                </Row>
+                <hr />
+                <Row>
+                  <Col className="mb-0 sm-2">
+                    <Card.Title>Preferred Roommate Gender</Card.Title>
+                  </Col>
+                  <Col className="sm-4">
                     <Dropdown
                       id="gender_preference"
                       name="gender_preference"
@@ -742,113 +614,277 @@ const Profile = () => {
                         <Dropdown.Item as="button" onClick={genderPref_other}>Other</Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
-                  </label>
-                  {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-                  <label>
-                    What time do you go to sleep?
-                    <LocalizationProvider dateAdapter={AdapterDateFns}>
-                      {/* TODO https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-props-no-spreading.md */}
-                      { /* eslint-disable react/jsx-props-no-spreading */ }
-                      <StaticTimePicker
-                        id="sleep"
-                        label="Sleep Time"
-                        views={['hours']}
-                        value={value}
-                        onChange={(newValue) => { setValue(newValue); setSleep(newValue.getHours()); }}
-                        renderInput={(parameters) => <TextField {...parameters} />}
-                      />
-                    </LocalizationProvider>
-                    {/*  <Dropdown */}
-                    {/*    name="sleep" */}
-                    {/*    defaultValue={['12:00AM']} */}
-                    {/*  > */}
-                    {/*    <Dropdown.Toggle variant="success" id="dropdown-profile"> {sleepIntToString(sleep)} </Dropdown.Toggle> */}
-                    {/*    <Dropdown.Menu style={{ height: '200px', overflowY: 'scroll', maxHeight: '400px', overflowX: 'hidden' }}> */}
-                    {/*      <Dropdown.Item as="button" onClick={sleep_0}>12:00AM</Dropdown.Item> */}
-                    {/*      <Dropdown.Item as="button" onClick={sleep_1}>1:00AM</Dropdown.Item> */}
-                    {/*      <Dropdown.Item as="button" onClick={sleep_2}>2:00AM</Dropdown.Item> */}
-                    {/*      <Dropdown.Item as="button" onClick={sleep_3}>3:00AM</Dropdown.Item> */}
-                    {/*      <Dropdown.Item as="button" onClick={sleep_4}>4:00AM</Dropdown.Item> */}
-                    {/*      <Dropdown.Item as="button" onClick={sleep_5}>5:00AM</Dropdown.Item> */}
-                    {/*      <Dropdown.Item as="button" onClick={sleep_6}>6:00AM</Dropdown.Item> */}
-                    {/*      <Dropdown.Item as="button" onClick={sleep_7}>7:00AM</Dropdown.Item> */}
-                    {/*      <Dropdown.Item as="button" onClick={sleep_8}>8:00AM</Dropdown.Item> */}
-                    {/*      <Dropdown.Item as="button" onClick={sleep_9}>9:00AM</Dropdown.Item> */}
-                    {/*      <Dropdown.Item as="button" onClick={sleep_10}>10:00AM</Dropdown.Item> */}
-                    {/*      <Dropdown.Item as="button" onClick={sleep_11}>11:00AM</Dropdown.Item> */}
-                    {/*      <Dropdown.Item as="button" onClick={sleep_12}>12:00PM</Dropdown.Item> */}
-                    {/*      <Dropdown.Item as="button" onClick={sleep_13}>1:00PM</Dropdown.Item> */}
-                    {/*      <Dropdown.Item as="button" onClick={sleep_14}>2:00PM</Dropdown.Item> */}
-                    {/*      <Dropdown.Item as="button" onClick={sleep_15}>3:00PM</Dropdown.Item> */}
-                    {/*      <Dropdown.Item as="button" onClick={sleep_16}>4:00PM</Dropdown.Item> */}
-                    {/*      <Dropdown.Item as="button" onClick={sleep_17}>5:00PM</Dropdown.Item> */}
-                    {/*      <Dropdown.Item as="button" onClick={sleep_18}>6:00PM</Dropdown.Item> */}
-                    {/*      <Dropdown.Item as="button" onClick={sleep_19}>7:00PM</Dropdown.Item> */}
-                    {/*      <Dropdown.Item as="button" onClick={sleep_20}>8:00PM</Dropdown.Item> */}
-                    {/*      <Dropdown.Item as="button" onClick={sleep_21}>9:00PM</Dropdown.Item> */}
-                    {/*      <Dropdown.Item as="button" onClick={sleep_22}>10:00PM</Dropdown.Item> */}
-                    {/*      <Dropdown.Item as="button" onClick={sleep_23}>11:00PM</Dropdown.Item> */}
-                    {/*    </Dropdown.Menu> */}
-                    {/*  </Dropdown> */}
-                  </label>
-                  {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-                  <label>
-                    What time do you want your roommate to go to sleep (at the latest)?
-                    <LocalizationProvider dateAdapter={AdapterDateFns}>
-                      {/* TODO https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-props-no-spreading.md */}
-                      { /* eslint-disable react/jsx-props-no-spreading */ }
-                      <StaticTimePicker
-                        id="sleep_preference"
-                        label="Sleep Time"
-                        views={['hours']}
-                        value={valuePref}
-                        onChange={(newValue) => { setValuePref(newValue); setSleepPref(newValue.getHours()); }}
-                        renderInput={(parameters) => <TextField {...parameters} />}
-                      />
-                    </LocalizationProvider>
-                    {/* <Dropdown */}
-                    {/*  name="sleep_preference" */}
-                    {/*  defaultValue={['12:00AM']} */}
-                    {/* > */}
-                    {/*  <Dropdown.Toggle variant="success" id="dropdown-profile"> {sleepIntToString(sleepPref)} </Dropdown.Toggle> */}
-                    {/*  <Dropdown.Menu style={{ height: '200px', overflowY: 'scroll', maxHeight: '400px', overflowX: 'hidden' }}> */}
-                    {/*    <Dropdown.Item as="button" onClick={sleepPref_0}>12:00AM</Dropdown.Item> */}
-                    {/*    <Dropdown.Item as="button" onClick={sleepPref_1}>1:00AM</Dropdown.Item> */}
-                    {/*    <Dropdown.Item as="button" onClick={sleepPref_2}>2:00AM</Dropdown.Item> */}
-                    {/*    <Dropdown.Item as="button" onClick={sleepPref_3}>3:00AM</Dropdown.Item> */}
-                    {/*    <Dropdown.Item as="button" onClick={sleepPref_4}>4:00AM</Dropdown.Item> */}
-                    {/*    <Dropdown.Item as="button" onClick={sleepPref_5}>5:00AM</Dropdown.Item> */}
-                    {/*    <Dropdown.Item as="button" onClick={sleepPref_6}>6:00AM</Dropdown.Item> */}
-                    {/*    <Dropdown.Item as="button" onClick={sleepPref_7}>7:00AM</Dropdown.Item> */}
-                    {/*    <Dropdown.Item as="button" onClick={sleepPref_8}>8:00AM</Dropdown.Item> */}
-                    {/*    <Dropdown.Item as="button" onClick={sleepPref_9}>9:00AM</Dropdown.Item> */}
-                    {/*    <Dropdown.Item as="button" onClick={sleepPref_10}>10:00AM</Dropdown.Item> */}
-                    {/*    <Dropdown.Item as="button" onClick={sleepPref_11}>11:00AM</Dropdown.Item> */}
-                    {/*    <Dropdown.Item as="button" onClick={sleepPref_12}>12:00PM</Dropdown.Item> */}
-                    {/*    <Dropdown.Item as="button" onClick={sleepPref_13}>1:00PM</Dropdown.Item> */}
-                    {/*    <Dropdown.Item as="button" onClick={sleepPref_14}>2:00PM</Dropdown.Item> */}
-                    {/*    <Dropdown.Item as="button" onClick={sleepPref_15}>3:00PM</Dropdown.Item> */}
-                    {/*    <Dropdown.Item as="button" onClick={sleepPref_16}>4:00PM</Dropdown.Item> */}
-                    {/*    <Dropdown.Item as="button" onClick={sleepPref_17}>5:00PM</Dropdown.Item> */}
-                    {/*    <Dropdown.Item as="button" onClick={sleepPref_18}>6:00PM</Dropdown.Item> */}
-                    {/*    <Dropdown.Item as="button" onClick={sleepPref_19}>7:00PM</Dropdown.Item> */}
-                    {/*    <Dropdown.Item as="button" onClick={sleepPref_20}>8:00PM</Dropdown.Item> */}
-                    {/*    <Dropdown.Item as="button" onClick={sleepPref_21}>9:00PM</Dropdown.Item> */}
-                    {/*    <Dropdown.Item as="button" onClick={sleepPref_22}>10:00PM</Dropdown.Item> */}
-                    {/*    <Dropdown.Item as="button" onClick={sleepPref_23}>11:00PM</Dropdown.Item> */}
-                    {/*  </Dropdown.Menu> */}
-                    {/* </Dropdown> */}
-                  </label>
-                </Col>
-              </Row>
-              <hr />
-              <Button id="profile-submit-button" disabled={suspended} variant={suspended ? 'danger' : 'success'} type="submit">Submit</Button>
-            </div>
+                  </Col>
+                </Row>
+                <hr />
+                <Row>
+                  <Col className="mb-0 sm-3">
+                    <Card.Title>Do you drink alcohol?</Card.Title>
+                  </Col>
+                  <Col className="sm-5">
+                    <Dropdown
+                      name="alcohol"
+                      defaultValue={['true']}
+                    >
+                      <Dropdown.Toggle variant="success" id="dropdown-profile"> {alcohol === 'true' || alcohol === true ? 'Yes' : 'No'} </Dropdown.Toggle>
+                      <Dropdown.Menu>
+                        <Dropdown.Item as="button" onClick={alcohol_yes}>Yes</Dropdown.Item>
+                        <Dropdown.Item as="button" onClick={alcohol_no}>No</Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  </Col>
+                </Row>
+                <hr />
+                <Row>
+                  <Col className="mb-0 sm-3">
+                    <Card.Title>Do you care if others drink alcohol?</Card.Title>
+                  </Col>
+                  <Col className="sm-4">
+                    <Dropdown
+                      name="alcohol_preference"
+                      defaultValue={['true']}
+                    >
+                      <Dropdown.Toggle variant="success" id="dropdown-profile"> {alcoholPref === 'true' || alcoholPref === true ? 'Yes' : 'No'} </Dropdown.Toggle>
+                      <Dropdown.Menu>
+                        <Dropdown.Item as="button" onClick={alcoholPref_yes}>Yes</Dropdown.Item>
+                        <Dropdown.Item as="button" onClick={alcoholPref_no}>No</Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  </Col>
+                </Row>
+              </Card.Body>
+            </Card>
           </Col>
         </Row>
-        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+
+        <Row>
+          {/* Name Contact Method */}
+          <Col className="md-4 mb-3 ">
+            <Row className="md-4 mb-3">
+              <Card>
+                <Card.Body className="justify-content-center">
+                  <Col className="md-4">
+                    <Row>
+                      <Col className="mb-0 sm-3">
+                        <Card.Title>Full Name</Card.Title>
+                      </Col>
+                      <Col className="sm-5">
+                        <TextField name="name" placeholder={name || 'John Doe'} />
+                      </Col>
+                    </Row>
+                    <hr />
+                    <Row>
+                      <Col className="mb-0 sm-3">
+                        <Card.Title>Contact Methods</Card.Title>
+                        <Card.Text>Submit after every entry of Phone Number, Instagram, Discord, Snapchat, etc.
+                        </Card.Text>
+                      </Col>
+                      <Col className="sm-5">
+                        <TextField name="social" placeholder="(808) 000-0000" type="text" />
+                      </Col>
+                    </Row>
+                  </Col>
+                </Card.Body>
+              </Card>
+            </Row>
+
+            <Row classname="md-4 mb-3">
+              {/* Linked Contact Methods */}
+              <Card>
+                <Card.Body>
+                  <Row>
+                    <Col className="md-4 mb-3">
+                      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+                      <p> Linked Contact Methods: </p>
+                      <ul>
+                        {socials.map(social => (
+                          <li key={`list-item-${social}`}> {social}
+                              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <Button
+                              variant="danger"
+                              onClick={
+                                () => {
+                                  const i = socials.indexOf(social);
+                                  let tempSocials = [];
+                                  for (let j = 0; j < socials.length; j++) {
+                                    if (j !== i) {
+                                      tempSocials = [...tempSocials, socials[j]];
+                                    }
+                                  }
+                                  setSocials(tempSocials);
+                                  const dataObjects = _.filter(data, (userData) => {
+                                    if (userData.data_type === 'contact' && userData.data === social) return true;
+                                    return false;
+                                  });
+                                  const dataObject = _.find(dataObjects, () => true);
+                                  const dataID = dataObject._id;
+                                  UserData.collection.remove({ _id: dataID });
+                                }
+                              }
+                            ><Trash />
+                            </Button>
+                          </li>
+                        ))}
+                      </ul>
+                    </Col>
+                    <Col className="md-4 mb-3">
+                      <p> Existing Preferences: </p>
+                      <ul>
+                        {preferences.map(preference => (
+                          <li key={`list-item-${preference}`}> {preference}
+                              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <Button
+                              variant="danger"
+                              onClick={
+                                () => {
+                                  const i = preferences.indexOf(preference);
+                                  let tempPreferences = [];
+                                  for (let j = 0; j < preferences.length; j++) {
+                                    if (j !== i) {
+                                      tempPreferences = [...tempPreferences, preferences[j]];
+                                    }
+                                  }
+                                  setPreferences(tempPreferences);
+
+                                  const dataObjects = _.filter(data, (userData) => {
+                                    if (userData.data_type === 'preference' && userData.data === preference) return true;
+                                    return false;
+                                  });
+                                  const dataObject = _.find(dataObjects, () => true);
+                                  const dataID = dataObject._id;
+                                  UserData.collection.remove({ _id: dataID });
+                                }
+                              }
+                            ><Trash />
+                            </Button>
+                          </li>
+                        ))}
+                      </ul>
+                    </Col>
+
+                  </Row>
+                  <Row>
+                    <Col className="md-4 mb-3">
+                      <p> Existing Habits: </p>
+                      <ul>
+                        {habits.map(habit => (
+                          <li key={`list-item-${habit}`}> {habit}
+                              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <Button
+                              variant="danger"
+                              onClick={
+                                () => {
+                                  const i = habits.indexOf(habit);
+                                  let tempHabits = [];
+                                  for (let j = 0; j < habits.length; j++) {
+                                    if (j !== i) {
+                                      tempHabits = [...tempHabits, habits[j]];
+                                    }
+                                  }
+                                  setSocials(tempHabits);
+
+                                  const dataObjects = _.filter(data, (userData) => {
+                                    if (userData.data_type === 'habit' && userData.data === habit) return true;
+                                    return false;
+                                  });
+                                  const dataObject = _.find(dataObjects, () => true);
+                                  const dataID = dataObject._id;
+                                  UserData.collection.remove({ _id: dataID });
+                                }
+                              }
+                            ><Trash />
+                            </Button>
+                          </li>
+                        ))}
+                      </ul>
+                    </Col>
+
+                    <Col className="md-4 mb-3">
+                      <p> Existing Dealbreakers: </p>
+                      <ul>
+                        {dealbreakers.map(dealbreaker => (
+                          <li key={`list-item-${dealbreaker}`}> {dealbreaker}
+                              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <Button
+                              variant="danger"
+                              onClick={
+                                () => {
+                                  const i = dealbreakers.indexOf(dealbreaker);
+                                  let tempDealbreakers = [];
+                                  for (let j = 0; j < dealbreakers.length; j++) {
+                                    if (j !== i) {
+                                      tempDealbreakers = [...tempDealbreakers, dealbreakers[j]];
+                                    }
+                                  }
+                                  setDealbreakers(tempDealbreakers);
+
+                                  const dataObjects = _.filter(data, (userData) => {
+                                    if (userData.data_type === 'dealbreaker' && userData.data === dealbreaker) return true;
+                                    return false;
+                                  });
+                                  const dataObject = _.find(dataObjects, () => true);
+                                  const dataID = dataObject._id;
+                                  UserData.collection.remove({ _id: dataID });
+                                }
+                              }
+                            ><Trash />
+                            </Button>
+                          </li>
+                        ))}
+                      </ul>
+                    </Col>
+
+                  </Row>
+
+                </Card.Body>
+              </Card>
+            </Row>
+          </Col>
+          <Col xs="3">
+            <Card>
+              <Card.Body>
+                <Card.Title>What time do you go to sleep?</Card.Title>
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  {/* TODO https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-props-no-spreading.md */}
+                  { /* eslint-disable react/jsx-props-no-spreading */ }
+                  <StaticTimePicker
+                    label="Sleep Time"
+                    views={['hours']}
+                    value={value}
+                    onChange={(newValue) => { setValue(newValue); setSleep(newValue.getHours()); }}
+                    renderInput={(parameters) => <TextField {...parameters} />}
+                  />
+                </LocalizationProvider>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col xs="3">
+            <Card>
+              <Card.Body>
+                <Card.Title>What time do you want your roommate to go to sleep (at the latest)?</Card.Title>
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  {/* TODO https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-props-no-spreading.md */}
+                  { /* eslint-disable react/jsx-props-no-spreading */ }
+                  <StaticTimePicker
+                    label="Sleep Time"
+                    views={['hours']}
+                    value={valuePref}
+                    onChange={(newValue) => { setValuePref(newValue); setSleepPref(newValue.getHours()); }}
+                    renderInput={(parameters) => <TextField {...parameters} />}
+                  />
+                </LocalizationProvider>
+              </Card.Body>
+            </Card>
+          </Col>
+
+          <div className="text-center" style={{ paddingTop: '30px', paddingBottom: '30px', fontSize: '40px' }}>
+            <Button disabled={suspended} variant={suspended ? 'danger' : 'success'} type="submit" className="btn btn-primary">Submit</Button>
+          </div>
+
+        </Row>
       </form>
     </div>
+
   ) : <LoadingSpinner />);
 };
 

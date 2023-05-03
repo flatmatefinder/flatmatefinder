@@ -1,3 +1,4 @@
+/* eslint-disable no-undef  */
 import PropTypes from 'prop-types';
 import { Users } from '../api/user/User';
 
@@ -40,7 +41,7 @@ export const getUserIdFromPublicUser = (username) => {
   return user._id;
 };
 
-export const pairTwo = (user1, user2) => {
+export const pairTwo = (user1, user2, user1Data, user2Data) => {
   // If user1 cares about alcohol and user2 drinks alcohol, or vice versa...
   if ((user1.alcohol_preference && user2.alcohol) || (user2.alcohol_preference && user1.alcohol)) {
     return false;
@@ -51,8 +52,34 @@ export const pairTwo = (user1, user2) => {
     return false;
   }
   // TODO PUT LOGIC FOR THE SLEEP STUFF CUZ HONESTLY IDK HOW THE HELL TO DO THAT.
-  // TODO Also put logic for the extra preferences and habits and stuff.
-  return true;
+
+  const user1Nonos = _.filter(user1Data, (data) => data.data_type === 'dealbreaker');
+  const user1Habits = _.filter(user1Data, (data) => data.data_type === 'habit');
+
+  const user2Nonos = _.filter(user2Data, (data) => data.data_type === 'dealbreaker');
+  const user2Habits = _.filter(user2Data, (data) => data.data_type === 'habit');
+
+  let returnFalse = false;
+
+  user1Nonos.forEach((user1Nono) => {
+    user2Habits.forEach((user2Habit) => {
+      if (user1Nono.data.toLowerCase() === user2Habit.data.toLowerCase()) {
+        returnFalse = true;
+        return undefined;
+      }
+      return undefined;
+    });
+  });
+  user2Nonos.forEach((user2Nono) => {
+    user1Habits.forEach((user1Habit) => {
+      if (user2Nono.data.toLowerCase() === user1Habit.data.toLowerCase()) {
+        returnFalse = true;
+        return undefined;
+      }
+      return undefined;
+    });
+  });
+  return !returnFalse;
 };
 pairTwo.propTypes = {
   user1: PropTypes.shape({
@@ -76,5 +103,80 @@ pairTwo.propTypes = {
     sleep_preferences: PropTypes.number,
     sex: PropTypes.number,
     sex_preference: PropTypes.number,
+  }).isRequired,
+  user1Data: PropTypes.arrayOf(() => {
+    PropTypes.shape({
+      data: PropTypes.string,
+      owner: PropTypes.string,
+      data_type: PropTypes.string,
+    });
+  }).isRequired,
+  user2Data: PropTypes.arrayOf(() => {
+    PropTypes.shape({
+      data: PropTypes.string,
+      owner: PropTypes.string,
+      data_type: PropTypes.string,
+    });
+  }).isRequired,
+};
+
+const compareTimes = (sleep, pref) => {
+  let before = 0;
+  let after = 0;
+  if (sleep === pref) {
+    return 0;
+  } if (sleep < pref) {
+    before = (sleep + 24) - pref;
+    after = pref - sleep;
+    return Math.min(before, after);
+  }
+  before = sleep - pref;
+  after = (pref + 24) - sleep;
+  return Math.min(before, after);
+};
+
+export const reOrderUsers = (primaryUser, users) => {
+  const usersButBetter = users.filter((usr) => primaryUser.owner !== usr.owner);
+  const array = [];
+  const weight = usersButBetter.map((publicUser) => {
+    const a = compareTimes(publicUser.sleep, primaryUser.sleep_preference);
+    const b = compareTimes(primaryUser.sleep, publicUser.sleep_preference);
+    return (a + b) / 2;
+  });
+  for (let i = 0; i < usersButBetter.length; i++) {
+    const min = _.reduce(weight, (memo, val) => Math.min(memo, val), 10000000);
+    const index = _.indexOf(weight, min);
+    weight[index] = 1000000000;
+    array.push(usersButBetter[index]);
+  }
+
+  return array;
+  // Return an array of PublicUser Ids in the correct order.
+};
+
+reOrderUsers.propTypes = {
+  primaryUser: PropTypes.shape({
+    pfp: PropTypes.string,
+    name: PropTypes.string,
+    owner: PropTypes.string,
+    alcohol: PropTypes.bool,
+    alcohol_preferences: PropTypes.bool,
+    sleep: PropTypes.number,
+    sleep_preferences: PropTypes.number,
+    sex: PropTypes.number,
+    sex_preference: PropTypes.number,
+  }).isRequired,
+  publicUsers: PropTypes.arrayOf(() => {
+    PropTypes.shape({
+      pfp: PropTypes.string,
+      name: PropTypes.string,
+      owner: PropTypes.string,
+      alcohol: PropTypes.bool,
+      alcohol_preferences: PropTypes.bool,
+      sleep: PropTypes.number,
+      sleep_preferences: PropTypes.number,
+      sex: PropTypes.number,
+      sex_preference: PropTypes.number,
+    });
   }).isRequired,
 };

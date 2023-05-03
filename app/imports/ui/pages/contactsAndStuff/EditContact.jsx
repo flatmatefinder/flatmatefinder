@@ -11,14 +11,13 @@ import { Contacts } from '../../../api/contact/Contacts';
 
 const bridge = new SimpleSchema2Bridge(Contacts.schema);
 
-/* Renders the EditStuff page for editing a single document. */
+/* Renders the EditContact page for editing a single document. */
 const EditContact = () => {
   // Get the documentID from the URL field. See imports/ui/layouts/App.jsx for the route containing :_id.
   const { _id } = useParams();
-  // console.log('EditStuff', _id);
+  // console.log('EditContact', _id);
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
   const { doc, ready } = useTracker(() => {
-    // Get access to Stuff documents.
     const subscription = Meteor.subscribe(Contacts.userPublicationName);
     // Determine if the subscription is ready
     const rdy = subscription.ready();
@@ -29,7 +28,7 @@ const EditContact = () => {
       ready: rdy,
     };
   }, [_id]);
-  // console.log('EditStuff', doc, ready);
+  // console.log('EditContact', doc, ready);
   // On successful submit, insert the data.
   const submit = (data) => {
     const { name, quantity, condition } = data;
@@ -42,7 +41,7 @@ const EditContact = () => {
     <Container className="py-3">
       <Row className="justify-content-center">
         <Col xs={5}>
-          <Col className="text-center"><h2>Edit Stuff</h2></Col>
+          <Col className="text-center"><h2>Edit Contact</h2></Col>
           <AutoForm schema={bridge} onSubmit={data => submit(data)} model={doc}>
             <Card>
               <Card.Body>
