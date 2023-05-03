@@ -5,7 +5,7 @@ const MeettheTeam = () => (
   <Container id="meettheteam-page" className="py-3 text-center" fluid>
     <Row className="py-3">
       <Col>
-        <h1>Meet the Team</h1>
+        <h1 style={{ color: 'white' }}>Meet the Team</h1>
       </Col>
     </Row>
     <Row>

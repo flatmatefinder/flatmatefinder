@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Form } from 'react-bootstrap';
+import { Form, Container } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
 import { Users } from '../../../api/user/User';
 import { PublicUsers } from '../../../api/user/PublicUser';
@@ -97,10 +97,11 @@ const DataVisibilityForm = () => {
   };
 
   return ready ? (
-    <div className="data-visibility-form">
-      <h2>Data Visibility</h2>
-      <Form>
+    <Container className="py-3">
+      <Form className="data-visibility-form">
         <Form.Group controlId="formBasicCheckbox">
+          <Form.Text><h2>Data Visibility</h2></Form.Text>
+
           <Form.Check
             id="c1"
             type="checkbox"
@@ -152,7 +153,7 @@ const DataVisibilityForm = () => {
           />
         </Form.Group>
       </Form>
-    </div>
+    </Container>
   ) : (<LoadingSpinner />);
 };
 

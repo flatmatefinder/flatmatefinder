@@ -27,8 +27,8 @@ const ForYouAdmin = () => {
       <Row className="justify-content-center">
         <Col md={7}>
           <Col className="text-center">
-            <h2>All Users <p style={{ color: 'red' }}> ADMIN </p></h2>
-            <h4>{userCount} Users</h4>
+            <h2 style={{ color: 'white' }}>All Users <p style={{ color: 'red' }}> ADMIN </p></h2>
+            <h4 style={{ color: 'white' }}>{userCount} Users</h4>
           </Col>
         </Col>
       </Row>

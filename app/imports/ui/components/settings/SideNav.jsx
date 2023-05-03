@@ -11,7 +11,7 @@ const SideNav = ({ selectedOption, setSelectedOption, handleDeleteAccountPopup }
 
   return (
     <Container className="settings-page">
-      <Row>
+      <Row className="justify-content-center">
         <Col md={4} className="sidebar">
           <Container id="data-visibility-button" className={`option ${selectedOption === 'data-visibility' ? 'selected' : ''}`} onClick={() => handleOptionClick('data-visibility')}>
             Data Visibility
@@ -23,7 +23,7 @@ const SideNav = ({ selectedOption, setSelectedOption, handleDeleteAccountPopup }
             Delete Account
           </Button>
         </Col>
-        <Col md={8} className="main-display">
+        <Col md={7} className="main-display">
           {selectedOption === 'data-visibility' && (
             <DataVisibilityForm />
           )}

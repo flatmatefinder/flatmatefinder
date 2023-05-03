@@ -20,8 +20,8 @@ const Settings = () => {
   };
 
   return (
-    <Container id="settings-page">
-      <h1 className="text-center mt-5">Settings</h1>
+    <Container id="settings-page" className="py-3">
+      <h1 className="text-center mt-5 " style={{ color: 'white' }}>Settings</h1>
       <SideNav selectedOption={selectedOption} setSelectedOption={setSelectedOption} handleDeleteAccountPopup={handleShowDeleteAccountPopup} />
       <DeleteAccountPopup show={showDeleteAccountPopup} handleClose={handleCloseDeleteAccountPopup} handleDeleteAccount={handleDeleteAccount} />
     </Container>

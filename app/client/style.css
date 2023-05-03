@@ -3,7 +3,7 @@
 
 /* Set up some CSS variables to theme the application. */
 :root {
-  --matr-navbar-bg: #ECECEC;
+  --matr-navbar-bg: #ffffff;
   --matr-navbar-bg-rgb: 236, 236, 236;
 }
 
@@ -12,6 +12,7 @@
  */
 body {
   --bs-light-rgb: var(--matr-navbar-bg-rgb);
+  background: url('/images/Background-Image-Color.png') repeat;
 }
 
 /* Set the alert background on the signin and signup pages. */
@@ -19,11 +20,21 @@ body {
   --bs-alert-bg: var(--matr-navbar-bg);
 }
 
+
+/*
+#signup-page {
+  background: url('/images/Background-Image-Color.png') repeat;
+  background-size: cover;
+  height: auto;
+}
+*/
 /* Define custom styles */
 .gray-background {
   background-color: var(--matr-navbar-bg);
   color: var(--bs-dark);
 }
+
+
 
 #landing-page-image1 {
   background: url('/images/LandingPageBackground.png') no-repeat center center fixed;
@@ -109,7 +120,7 @@ h1 {
 }
 
 .option:hover, .selected {
-  background-color: #007bff;
+  background-color: #3F4540;
   color: #fff;
 }
 
@@ -145,8 +156,12 @@ a {
   width: auto;
   transition-duration: 0.4s;
   background: white;
-  color: black;
+  color: #2A5623;
   outline: none;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  font-size: 25px;
+
 }
 
 #button2:hover {

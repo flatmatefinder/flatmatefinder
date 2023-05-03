@@ -7,7 +7,7 @@ const PrivacyPolicy = () => (
     <Row>
       <Row className="justify-content-center">
         <Col xs={5} className="text-center">
-          <h2>FlatmateFinder Privacy Policy</h2>
+          <h2 style={{ color: 'white' }}>FlatmateFinder Privacy Policy</h2>
         </Col>
       </Row>
     </Row>
