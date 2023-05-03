@@ -36,9 +36,6 @@ const DeleteAccountPopup = ({ show, handleClose, handleDeleteAccount, handleLogo
         <Button variant="danger" onClick={handleDeleteClick}>
           Delete Account
         </Button>
-        <Button variant="link" onClick={handleLogoutClick}>
-          Logout
-        </Button>
       </Modal.Footer>
     </Modal>
   );

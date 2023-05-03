@@ -55,7 +55,9 @@ test('Test that the settings page works', async (testController) => {
   await signinPage.signin(testController, credentials.username, credentials.password);
   await navBar.gotoSettingsPage(testController);
   await settingsPage.isDisplayed(testController);
+  await settingsPage.settingsCheck(testController);
 });
+
 test('Test that the for you page works', async (testController) => {
   await navBar.gotoSignInPage(testController);
   await signinPage.signin(testController, credentials.username, credentials.password);

@@ -12,7 +12,7 @@ class ProfilePage {
     await testController.wait(10000).expect(this.pageSelector.exists).ok();
   }
 
-  /** Fills out and submits the form to signin, then checks to see that login was successful. */
+  /** Checks if input are valid for profile form */
   async formCheck(testController) {
     await this.isDisplayed(testController);
     await testController.typeText('#name', 'John');
@@ -29,8 +29,6 @@ class ProfilePage {
     await testController.click('#gender_preference');
     await testController.click('#maleButton2');
     await testController.click('#profile-submit-button');
-    // await testController.click('#sleep', '12');
-    // await testController.click('#sleep_preference', '6');
   }
 }
 export const profilePage = new ProfilePage();

@@ -104,42 +104,49 @@ const DataVisibilityForm = () => {
       <Form>
         <Form.Group controlId="formBasicCheckbox">
           <Form.Check
+            id="c1"
             type="checkbox"
             label="Share whether you drink alcohol"
             checked={shareAlcohol}
             onChange={(e) => ShareAlcohol(e.target.checked)}
           />
           <Form.Check
+            id="c2"
             type="checkbox"
             label="Share Sleep Hours"
             checked={shareSleep}
             onChange={(e) => ShareSleep(e.target.checked)}
           />
           <Form.Check
+            id="c3"
             type="checkbox"
             label="Share gender"
             checked={shareSex}
             onChange={(e) => ShareSex(e.target.checked)}
           />
           <Form.Check
+            id="c4"
             type="checkbox"
             label="Share extra preferences"
             checked={sharePreferences}
             onChange={(e) => SharePreferences(e.target.checked)}
           />
           <Form.Check
+            id="c5"
             type="checkbox"
             label="Share relevant habits"
             checked={shareHabits}
             onChange={(e) => ShareHabits(e.target.checked)}
           />
           <Form.Check
+            id="c6"
             type="checkbox"
             label="Share Deal Breakers"
             checked={shareDealbreakers}
             onChange={(e) => ShareDealbreakers(e.target.checked)}
           />
           <Form.Check
+            id="c7"
             type="checkbox"
             label="Share contact methods (other than email)"
             checked={shareSocials}
