@@ -26,7 +26,7 @@ const ListContacts = () => {
       <Row className="justify-content-center">
         <Col md={7}>
           <Col className="text-center">
-            <h2>Users</h2>
+            <h2 style={{ color: 'white' }}>Users</h2>
           </Col>
           <Row xs={1} md={2} lg={3} className="g-4">
             {contacts.map((contact) => (<Col key={contact._id}><Contact contact={contact} /></Col>)) }

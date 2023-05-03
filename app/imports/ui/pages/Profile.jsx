@@ -498,7 +498,7 @@ const Profile = () => {
 
   return (ready && isInitialized ? (
     <div id="profile-page" className="px-5 justify-content-md-center">
-      <form method="post" onSubmit={handleSubmit}>
+      <form method="post" onSubmit={handleSubmit} style={{ paddingTop: '30px' }}>
         <Row>
           {/* Card with Profile */}
           <Col className="md-4 mb-3">
@@ -875,8 +875,8 @@ const Profile = () => {
             </Card>
           </Col>
 
-          <div className="text-center" style={{ paddingTop: '30px', paddingBottom: '30px', fontSize: '40px' }}>
-            <Button disabled={suspended} variant={suspended ? 'danger' : 'success'} type="submit" className="btn btn-primary">Submit</Button>
+          <div className="text-center">
+            <Button disabled={suspended} variant={suspended ? 'danger' : 'success'} type="submit" className="btn secondary" id="button2">Submit</Button>
           </div>
 
         </Row>

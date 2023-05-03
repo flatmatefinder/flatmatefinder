@@ -33,7 +33,7 @@ const ForYou = () => {
         <Row className="justify-content-center">
           <Col md={7}>
             <Col className="text-center">
-              <h2>Your Matched Users</h2>
+              <h2 style={{ color: 'white' }}>Your Matched Users</h2>
             </Col>
           </Col>
         </Row>

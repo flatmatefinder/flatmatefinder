@@ -6,7 +6,7 @@ const TermsAndConditions = () => (
   <Container id="termsandconditions-page" className="pt-3 text-center">
     <Row className="justify-content-center">
       <Col xs={5} className="text-center">
-        <h2>FlatmateFinder Terms of Service</h2>
+        <h2 style={{ color: 'white' }}>FlatmateFinder Terms of Service</h2>
       </Col>
     </Row>
     <Row>

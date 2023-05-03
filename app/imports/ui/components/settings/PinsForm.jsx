@@ -1,17 +1,21 @@
 import React from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Container } from 'react-bootstrap';
 
 const PinsForm = () => (
-  <Form>
-    <Form.Group>
-      <Form.Label>Add a Pin</Form.Label>
-      <Form.Control type="text" placeholder="Enter Pin Title" />
-      <Form.Control type="text" placeholder="Enter Pin Description" />
-      <Form.Control type="text" placeholder="Enter Pin Location" />
-    </Form.Group>
-    <Button variant="primary" type="submit">
-      Add Pin
-    </Button>
-  </Form>
+  <Container className="py-3">
+    <Form>
+      <Form.Group>
+        <Form.Text><h2>Add a Pin</h2></Form.Text>
+        <Form.Control type="text" placeholder="Enter Pin Title" /> <br />
+        <Form.Control type="text" placeholder="Enter Pin Description" /> <br />
+        <Form.Control type="text" placeholder="Enter Pin Location" />
+      </Form.Group>
+      <div style={{ paddingTop: '10px' }}>
+        <Button variant="secondary" type="submit">
+          Add Pin
+        </Button>
+      </div>
+    </Form>
+  </Container>
 );
 export default PinsForm;
