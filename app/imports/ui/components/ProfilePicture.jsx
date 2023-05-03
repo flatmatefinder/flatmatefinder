@@ -34,7 +34,7 @@ const ProfilePicture = ({ userName }) => {
           src={user.pfp}
           onError={(e) => { e.target.src = 'https://img.freepik.com/free-photo/close-up-young-successful-man-smiling-camera-standing-casual-outfit-against-blue-background_1258-73370.jpg'; }}
         />
-      </div> // TODO Make this an AdvancedImage with Cloudinary
+      </div>
     );
   }
   return <PersonCircle size={50} />;

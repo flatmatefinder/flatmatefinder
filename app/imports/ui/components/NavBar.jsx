@@ -7,6 +7,7 @@ import { Nav, Navbar, NavDropdown, Image, Container } from 'react-bootstrap';
 import { BoxArrowRight, PersonFill, PersonPlusFill, PersonAdd, GearFill } from 'react-bootstrap-icons';
 import ProfilePicture from './ProfilePicture';
 
+// TODO: Sometimes this doesn't rerender, and therefore the website still looks like you're logged in, even though you logged out.
 const NavBar = () => {
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
   const { currentUser } = useTracker(() => ({

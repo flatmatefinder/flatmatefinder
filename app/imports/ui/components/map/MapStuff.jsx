@@ -28,8 +28,9 @@ const MapStuff = withGoogleMap(() => {
       defaultCenter={{ lat: 21.483254, lng: -158.097018 }}
       options={mapOptions}
       mapContainerOptions={containerStyle}
-    < MapPin selectedUser={this.state.selectedUser} currentUser={this.props.currentUser} />
-    />
+    >
+      <MapPin selectedUser={this.state.selectedUser} currentUser={this.props.currentUser} />
+    </GoogleMap>
   );
 });
 

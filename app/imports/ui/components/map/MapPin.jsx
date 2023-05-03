@@ -9,31 +9,39 @@ class MapPin extends React.Component {
   constructor() {
     super();
     this.state = {
+      // eslint-disable-next-line react/no-unused-state
       open: false,
+      // eslint-disable-next-line react/no-unused-state
       createNew: [],
     };
   }
+
+  // eslint-disable-next-line react/sort-comp
   render() {
+    // eslint-disable-next-line react/destructuring-assignment
     return (this.props.ready) ? this.renderPage() : <Loader active>Getting data</Loader>;
   }
 
   renderPage() {
+    // eslint-disable-next-line react/destructuring-assignment
     const selectedUser = this.props.selectedUser;
+    // eslint-disable-next-line react/destructuring-assignment
     const currentUser = this.props.currentUser;
+    // eslint-disable-next-line no-unused-vars,react/destructuring-assignment
     const conversations = this.props.conversations.filter((conversation) => (conversation.users.some((user) => (user === selectedUser.owner)))).filter((conversation) => (conversation.users.length === 2));
     let messageButton;
     let reportButton;
     if (selectedUser.owner === currentUser.owner) {
-      messageButton = <></>;
-      reportButton = <></>;
+      messageButton = '';
+      reportButton = '';
     }
     return (
       <div width={9}>
         <Grid columns={2}>
-          <GridColumn textAlign='left'>
+          <GridColumn textAlign="left">
             {reportButton}
           </GridColumn>
-          <GridColumn textAlign='right'>
+          <GridColumn textAlign="right">
             {messageButton}
           </GridColumn>
         </Grid>
@@ -43,8 +51,12 @@ class MapPin extends React.Component {
 }
 
 MapPin.propTypes = {
+  // eslint-disable react/forbid-prop-types
+  // eslint-disable-next-line react/forbid-prop-types
   selectedUser: PropTypes.object.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
   currentUser: PropTypes.object.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
   conversations: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
