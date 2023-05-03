@@ -497,6 +497,7 @@ const Profile = () => {
   // };
 
   return (ready && isInitialized ? (
+
     <div id="profile-page" className="px-5 justify-content-md-center">
       <form method="post" onSubmit={handleSubmit}>
         <Row>
@@ -513,7 +514,6 @@ const Profile = () => {
                 /> <br />
               </div>
               {/* <Button variant="danger" onClick={(e) => pfpGetter(e)} style={{ display: 'none' }}> </Button> */}
-
                 {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                 <a className="btn btn-secondary" role="button" id="button2">
                   <CloudinaryUploadWidget
@@ -582,12 +582,13 @@ const Profile = () => {
                   </Col>
                   <Col className="sm-4">
                     <Dropdown
+                      id="gender"
                       name="gender"
                       defaultValue={['Other']}
                     >
                       <Dropdown.Toggle variant="success" id="dropdown-profile"> {gender} </Dropdown.Toggle>
                       <Dropdown.Menu>
-                        <Dropdown.Item as="button" onClick={gender_male}>Male</Dropdown.Item>
+                        <Dropdown.Item id="maleButton1" as="button" onClick={gender_male}>Male</Dropdown.Item>
                         <Dropdown.Item as="button" onClick={gender_female}>Female</Dropdown.Item>
                         <Dropdown.Item as="button" onClick={gender_other}>Other</Dropdown.Item>
                       </Dropdown.Menu>
@@ -601,12 +602,13 @@ const Profile = () => {
                   </Col>
                   <Col className="sm-4">
                     <Dropdown
+                      id="gender_preference"
                       name="gender_preference"
                       defaultValue={['Other']}
                     >
                       <Dropdown.Toggle variant="success" id="dropdown-profile"> {genderPref} </Dropdown.Toggle>
                       <Dropdown.Menu>
-                        <Dropdown.Item as="button" onClick={genderPref_male}>Male</Dropdown.Item>
+                        <Dropdown.Item id="maleButton2" as="button" onClick={genderPref_male}>Male</Dropdown.Item>
                         <Dropdown.Item as="button" onClick={genderPref_female}>Female</Dropdown.Item>
                         <Dropdown.Item as="button" onClick={genderPref_noPreference}>No Preference</Dropdown.Item>
                         <Dropdown.Item as="button" onClick={genderPref_other}>Other</Dropdown.Item>

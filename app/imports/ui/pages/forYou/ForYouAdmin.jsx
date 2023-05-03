@@ -23,7 +23,7 @@ const ForYouAdmin = () => {
     };
   }, []);
   return (ready ? (
-    <Container id="foryou-page" className="py-3">
+    <Container id="foryou-admin-page" className="py-3">
       <Row className="justify-content-center">
         <Col md={7}>
           <Col className="text-center">

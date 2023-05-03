@@ -8,13 +8,7 @@ const Settings = () => {
   const [showDeleteAccountPopup, setShowDeleteAccountPopup] = useState(false);
 
   const handleDeleteAccount = (password) => {
-    // TODO: Implement account deletion logic
     console.log('Deleting account with password:', password);
-  };
-
-  const handleLogout = () => {
-    // TODO: Implement logout logic
-    console.log('Logging out...');
   };
 
   const handleCloseDeleteAccountPopup = () => {
@@ -29,7 +23,7 @@ const Settings = () => {
     <Container id="settings-page">
       <h1 className="text-center mt-5">Settings</h1>
       <SideNav selectedOption={selectedOption} setSelectedOption={setSelectedOption} handleDeleteAccountPopup={handleShowDeleteAccountPopup} />
-      <DeleteAccountPopup show={showDeleteAccountPopup} handleClose={handleCloseDeleteAccountPopup} handleDeleteAccount={handleDeleteAccount} handleLogout={handleLogout} />
+      <DeleteAccountPopup show={showDeleteAccountPopup} handleClose={handleCloseDeleteAccountPopup} handleDeleteAccount={handleDeleteAccount} />
     </Container>
   );
 };
