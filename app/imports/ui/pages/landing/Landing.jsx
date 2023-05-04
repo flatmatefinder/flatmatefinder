@@ -13,7 +13,6 @@ const Landing = () => {
   const { currentUser } = useTracker(() => ({
     currentUser: Meteor.user() ? Meteor.user().username : '',
   }), []);
-  // TODO We seriously gotta fix the thing where we can scroll over to the right.
   return (
     <div id="landing-page">
       {/* eslint-disable-next-line no-nested-ternary */}
@@ -133,7 +132,7 @@ const Landing = () => {
           </Col>
           <Col className="text-center" style={{ padding: '100px', backgroundColor: '#586266', color: 'white', fontSize: '44px' }}>
             <h1>Connecting for better living situations</h1>
-            <p style={{ fontSize: '30px' }}>Reaching out to potential roommate matches and getting to know them decreases the odds that you will end up with someone that isn't a great fit.</p>
+            <p style={{ fontSize: '30px' }}>Reaching out to potential roommate matches and getting to know them decreases the odds that you will end up with someone that isn&apos;t a great fit.</p>
           </Col>
         </Row>,
         <Row style={{ background: '#3F4540', color: 'white', padding: '150px' }}>

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Modal, Button } from 'react-bootstrap';
 
-const DeleteAccountPopup = ({ show, handleClose, handleDeleteAccount, handleLogout }) => {
+const DeleteAccountPopup = ({ show, handleClose, handleDeleteAccount }) => {
   const [password, setPassword] = useState('');
 
   const handlePasswordChange = (event) => {
@@ -14,10 +14,10 @@ const DeleteAccountPopup = ({ show, handleClose, handleDeleteAccount, handleLogo
     handleClose();
   };
 
-  const handleLogoutClick = () => {
-    handleLogout();
-    handleClose();
-  };
+  // const handleLogoutClick = () => {
+  //   handleLogout();
+  //   handleClose();
+  // };
 
   return (
     <Modal show={show} onHide={handleClose} centered>
@@ -45,7 +45,6 @@ DeleteAccountPopup.propTypes = {
   show: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
   handleDeleteAccount: PropTypes.func.isRequired,
-  handleLogout: PropTypes.func.isRequired,
 };
 
 export default DeleteAccountPopup;
