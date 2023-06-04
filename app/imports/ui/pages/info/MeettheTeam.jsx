@@ -21,8 +21,8 @@ const MeettheTeam = () => (
       </Col>
       <Col>
         <Image src="https://avatars.githubusercontent.com/u/78561598?v=4" roundedCircle fluid />
-        <h4><a href="https://kayshakk.github.io/" id="meet-team-text">Kaysha Kealalio</a></h4>
-        <h6>kayshakk@hawaii.edu</h6>
+        <h4><a href="https://kayshakk.github.io/" id="meet-team-text">Kealohi K</a></h4>
+        <h6>kealohik@hawaii.edu</h6>
       </Col>
       <Col>
         <Image src="https://avatars.githubusercontent.com/u/97265599?v=4" roundedCircle fluid />
